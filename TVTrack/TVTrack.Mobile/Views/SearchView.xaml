@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels"
+             xmlns:m="clr-namespace:TVTrack.API.Models;assembly=TVTrack.API"
+             xmlns:fonts="clr-namespace:TVTrack.Mobile.Fonts"
+             x:Class="TVTrack.Mobile.Views.SearchView"
+             x:Name="Root"
+             x:DataType="vm:SearchViewModel">
+    <ScrollView Padding="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Entry Grid.Column="0" Text="{Binding SearchInput}"/>
+                <Button Grid.Column="1" Text="Search" Command="{Binding SearchCommand}"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <CollectionView ItemsSource="{Binding Results}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HeightRequest="120" Margin="10" x:DataType="m:Search">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenShowDetailCommand}"
+                                                          CommandParameter="{Binding Show.Id}"/>
+                                </Grid.GestureRecognizers>
+                                <Image Grid.Column="0" Source="{Binding Show.Image.Medium}" Aspect="AspectFit"/>
+                                <Label Grid.Column="1" Text="{Binding Show.Name}" VerticalOptions="Center" Padding="10, 0"/>
+                                <Image Grid.Column="2">
+                                    <Image.Source>
+                                        <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}"
+                                                        FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Grid>
+    </ScrollView>
+</ContentPage>

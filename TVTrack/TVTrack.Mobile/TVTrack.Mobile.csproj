@@ -53,6 +53,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Resources\Fonts\Fonts.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
@@ -60,6 +64,17 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\TVTrack.API\TVTrack.API.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiFont Include="Fonts\FontAwesomeIcons.cs" />
+	  <MauiFont Include="Fonts\Fonts.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\SearchView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

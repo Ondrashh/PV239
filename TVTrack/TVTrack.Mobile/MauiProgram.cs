@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using TVTrack.Mobile.Fonts;
 
 namespace TVTrack.Mobile;
 
@@ -15,6 +16,7 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("fa-solid-900.ttf", Fonts.Fonts.FontAwesome);
 			});
 
 #if DEBUG

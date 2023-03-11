@@ -41,9 +41,8 @@ namespace TVTrack.Mobile.ViewModels
         }
 
         [RelayCommand]
-        public async Task OpenShowDetail()
+        public async Task OpenShowDetailAsync(int id)
         {
-            int id = Results.FirstOrDefault().Show.Id;
             var result = await client.GetShowDetails(id);
         }
     }

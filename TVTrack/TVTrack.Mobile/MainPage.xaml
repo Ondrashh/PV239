@@ -3,42 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels"
              xmlns:m="clr-namespace:TVTrack.API.Models;assembly=TVTrack.API"
-             x:Class="TVTrack.Mobile.MainPage"
-             x:DataType="vm:SearchViewModel">
+             x:Class="TVTrack.Mobile.MainPage">
 
-    <ScrollView>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="100"/>
-                </Grid.ColumnDefinitions>
-                <Entry Grid.Column="0" Text="{Binding SearchInput}"/>
-                <Button Grid.Column="1" Text="Search" Command="{Binding SearchCommand}"/>
-                <Button Grid.Column="2" Text="Get First" Command="{Binding OpenShowDetailCommand}"/>
-            </Grid>
-            <Grid Grid.Row="1">
-                <CollectionView ItemsSource="{Binding Results}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HeightRequest="120" Margin="10" x:DataType="m:Search">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding Show.Image.Medium}" Aspect="AspectFit"/>
-                                <Label Grid.Column="1" Text="{Binding Show.Name}" VerticalOptions="Center" Padding="10, 0"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Grid>
-        </Grid>
-    </ScrollView>
+    <VerticalStackLayout>
+        <Label>
+            Home!
+        </Label>
+    </VerticalStackLayout>
 
 </ContentPage>
