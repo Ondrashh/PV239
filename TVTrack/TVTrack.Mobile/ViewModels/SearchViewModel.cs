@@ -13,11 +13,16 @@ namespace TVTrack.Mobile.ViewModels
 {
     public partial class SearchViewModel: ViewModelBase
     {
-        TVMazeClient client = new TVMazeClient();
+        private readonly TVMazeClient _client;
 
         public ObservableCollection<Search> Results { get; set; } = new ObservableCollection<Search>();
 
         public string SearchInput { get; set; }
+
+        public SearchViewModel(TVMazeClient client)
+        {
+            _client = client;
+        }
 
         [RelayCommand]
         public async Task Search()
@@ -28,7 +33,7 @@ namespace TVTrack.Mobile.ViewModels
                 return;
             }
 
-            var results = await client.Search(SearchInput);
+            var results = await _client.Search(SearchInput);
 
             Results.Clear();
             foreach(var searchResult in results)
@@ -43,7 +48,10 @@ namespace TVTrack.Mobile.ViewModels
         [RelayCommand]
         public async Task OpenShowDetailAsync(int id)
         {
-            var result = await client.GetShowDetails(id);
+            await Shell.Current.GoToAsync("detail", new Dictionary<string, object>
+            {
+                [nameof(id)] = id
+            });
         }
     }
 }

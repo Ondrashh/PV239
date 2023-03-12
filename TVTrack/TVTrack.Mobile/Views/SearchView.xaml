@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels"
              xmlns:m="clr-namespace:TVTrack.API.Models;assembly=TVTrack.API"
+             xmlns:views="clr-namespace:TVTrack.Mobile.Views"
              xmlns:fonts="clr-namespace:TVTrack.Mobile.Fonts"
              x:Class="TVTrack.Mobile.Views.SearchView"
              x:Name="Root"
@@ -19,7 +20,8 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Entry Grid.Column="0" Text="{Binding SearchInput}"/>
-                <Button Grid.Column="1" Text="Search" Command="{Binding SearchCommand}"/>
+                <Button Grid.Column="1" Text="Search" Command="{Binding SearchCommand}"
+                        HeightRequest="40"/>
             </Grid>
             <Grid Grid.Row="1">
                 <CollectionView ItemsSource="{Binding Results}">
@@ -37,10 +39,10 @@
                                 </Grid.GestureRecognizers>
                                 <Image Grid.Column="0" Source="{Binding Show.Image.Medium}" Aspect="AspectFit"/>
                                 <Label Grid.Column="1" Text="{Binding Show.Name}" VerticalOptions="Center" Padding="10, 0"/>
-                                <Image Grid.Column="2">
+                                <Image Grid.Column="2" >
                                     <Image.Source>
                                         <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}"
-                                                        FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                                                         FontFamily="{Static fonts:Fonts.FontAwesome}"/>
                                     </Image.Source>
                                 </Image>
                             </Grid>
@@ -50,4 +52,4 @@
             </Grid>
         </Grid>
     </ScrollView>
-</ContentPage>
+</views:ContentPageBase>

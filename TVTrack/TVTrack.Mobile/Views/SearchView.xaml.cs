@@ -2,12 +2,10 @@ using TVTrack.Mobile.ViewModels;
 
 namespace TVTrack.Mobile.Views;
 
-public partial class SearchView : ContentPage
+public partial class SearchView
 {
-	public SearchView()
+	public SearchView(SearchViewModel viewModel): base(viewModel)
 	{
 		InitializeComponent();
-
-        BindingContext = new SearchViewModel();
     }
 }

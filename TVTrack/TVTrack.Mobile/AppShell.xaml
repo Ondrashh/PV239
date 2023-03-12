@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TVTrack.Mobile"
     xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vshows="clr-namespace:TVTrack.Mobile.Views.Shows"
     xmlns:fonts="clr-namespace:TVTrack.Mobile.Fonts"
     Shell.FlyoutBehavior="Disabled">
 
@@ -30,10 +31,10 @@
             <Tab.Title>
                 Search
             </Tab.Title>
-        <ShellContent
-            Title="Search"
-            ContentTemplate="{DataTemplate views:SearchView}"
-            Route="search" />
+            <ShellContent
+                Title="Search"
+                ContentTemplate="{DataTemplate views:SearchView}"
+                Route="search" />
         </Tab>
     </TabBar>
 </Shell>

@@ -1,6 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using TVTrack.Mobile.Fonts;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using System.Reflection;
+using TVTrack.Mobile.ViewModels;
+using TVTrack.Mobile.Views;
+using TVTrack.Mobile.Views.Shows;
+using TVTrack.API;
 
 namespace TVTrack.Mobile;
 
@@ -19,10 +26,46 @@ public static class MauiProgram
 				fonts.AddFont("fa-solid-900.ttf", Fonts.Fonts.FontAwesome);
 			});
 
+		RegisterAPI(builder.Services);
+
+        RegisterViews(builder.Services);
+		RegisterViewModels(builder.Services);
+
+		RegisterRoutes();
+
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
 		return builder.Build();
+	}
+
+    private static void RegisterRoutes()
+    {
+		//Routing.RegisterRoute("///search", typeof(SearchView));
+        Routing.RegisterRoute("///search/detail", typeof(ShowDetailView));
+    }
+
+    private static void RegisterViewModels(IServiceCollection services)
+	{
+        services.Scan(selector => selector
+			.FromAssemblyOf<App>()
+			.AddClasses(filter => filter.AssignableTo<IViewModel>())
+			.AsSelfWithInterfaces()
+			.WithTransientLifetime());
+    }
+
+    private static void RegisterViews(IServiceCollection services)
+    {
+        services.Scan(selector => selector
+            .FromAssemblyOf<App>()
+            .AddClasses(filter => filter.AssignableTo<ContentPageBase>())
+            .AsSelf()
+            .WithTransientLifetime());
+    }
+
+	private static void RegisterAPI(IServiceCollection services)
+	{
+		services.AddSingleton(typeof(TVMazeClient));
 	}
 }

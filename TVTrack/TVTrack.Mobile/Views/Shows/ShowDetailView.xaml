@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TVTrack.Mobile.Views.Shows.ShowDetailView"
+             xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+             xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Shows"
+             Title="{Binding Show.Name, Mode=OneWay}"
+             x:DataType="vm:ShowDetailViewModel">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200" />
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0"
+                      Aspect="AspectFit"
+                    Source="{Binding Show.Image.Original}"/>
+                <Label 
+                    Grid.Column="1"
+                    Text="{Binding Show.Summary, Mode=OneWay}"
+                    TextType="Html"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</views:ContentPageBase>
