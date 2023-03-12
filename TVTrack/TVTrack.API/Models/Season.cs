@@ -16,13 +16,13 @@ namespace TVTrack.API.Models
         public string Url { get; set; }
 
         [JsonProperty("number")]
-        public int Number { get; set; }
+        public int? Number { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonProperty("episodeOrder")]
-        public int EpisodeOrder { get; set; }
+        public int? EpisodeOrder { get; set; }
 
         [JsonProperty("premiereDate")]
         public string PremiereDate { get; set; }
