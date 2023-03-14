@@ -18,7 +18,7 @@
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0"
                       Aspect="AspectFit"
-                    Source="{Binding Show.Image.Original}"/>
+                    Source="{Binding Show.ImageURL}"/>
                 <Label 
                     Grid.Column="1"
                     Text="{Binding Show.Summary, Mode=OneWay}"

@@ -8,6 +8,7 @@ using TVTrack.Mobile.ViewModels;
 using TVTrack.Mobile.Views;
 using TVTrack.Mobile.Views.Shows;
 using TVTrack.API;
+using TVTrack.Mobile.Mapper;
 
 namespace TVTrack.Mobile;
 
@@ -32,6 +33,8 @@ public static class MauiProgram
 		RegisterViewModels(builder.Services);
 
 		RegisterRoutes();
+
+		builder.Services.AddAutoMapper(typeof(TVMazeAPIProfile));
 
 #if DEBUG
         builder.Logging.AddDebug();
