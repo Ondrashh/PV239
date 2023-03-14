@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace TVTrack.Mobile.ViewModels.Shows
         private readonly TVMazeClient _client;
         private readonly IMapper _mapper;
 
-        public ShowDetailModel Show { get; set; }
+        [ObservableProperty]
+        public ShowDetailModel show;
 
         public ShowDetailViewModel(TVMazeClient client,
             IMapper mapper)

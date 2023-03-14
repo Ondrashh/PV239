@@ -7,10 +7,15 @@ using System.Threading.Tasks;
 
 namespace TVTrack.Mobile.Models
 {
-    public class ShowDetailModel: ObservableObject
+    public partial class ShowDetailModel: ObservableObject
     {
-        public string Name { get; }
-        public string Summary { get; }
-        public string ImageURL { get; }
+        [ObservableProperty]
+        public string name;
+
+        [ObservableProperty]
+        public string summary;
+
+        [ObservableProperty]
+        public string imageURL;
     }
 }
