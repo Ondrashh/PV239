@@ -7,8 +7,9 @@ using System.Reflection;
 using TVTrack.Mobile.ViewModels;
 using TVTrack.Mobile.Views;
 using TVTrack.Mobile.Views.Shows;
-using TVTrack.API;
 using TVTrack.Mobile.Mapper;
+using TVTrack.TVMaze.Client;
+using TVTrack.TVMaze.Client.Models;
 
 namespace TVTrack.Mobile;
 

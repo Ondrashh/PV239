@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TVTrack.API;
-using TVTrack.API.Models;
+using TVTrack.TVMaze.Client;
+using TVTrack.TVMaze.Client.Models;
 using TVTrack.Mobile.Models;
 
 namespace TVTrack.Mobile.ViewModels.Shows
