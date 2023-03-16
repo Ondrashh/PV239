@@ -15,6 +15,9 @@ namespace TVTrack.Mobile.Mapper
         {
             CreateMap<Show, ShowDetailModel>()
                 .ForMember(x => x.ImageURL, opt => opt.MapFrom(src => src.Image.Original));
+
+            CreateMap<Show, ShowPreviewModel>()
+                .ForMember(x => x.ImageURL, opt => opt.MapFrom(src => src.Image.Original));
         }
     }
 }

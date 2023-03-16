@@ -1,6 +1,6 @@
-using TVTrack.Mobile.ViewModels;
+using TVTrack.Mobile.ViewModels.Search;
 
-namespace TVTrack.Mobile.Views;
+namespace TVTrack.Mobile.Views.Search;
 
 public partial class SearchView
 {

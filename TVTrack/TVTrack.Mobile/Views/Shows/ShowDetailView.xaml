@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Shows"
              Title="{Binding Show.Name, Mode=OneWay}"
              x:DataType="vm:ShowDetailViewModel">
-    <ScrollView>
+    <ScrollView Padding="10">
         <VerticalStackLayout>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -17,13 +17,13 @@
                     <RowDefinition Height="200" />
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0"
-                      Aspect="AspectFit"
-                    Source="{Binding Show.ImageURL}"/>
+                       Aspect="AspectFit"
+                       Source="{Binding Show.ImageURL, TargetNullValue='/Images/dotnet_bot.svg'}"/>
                 <Label 
                     Grid.Column="1"
                     Text="{Binding Show.Summary, Mode=OneWay}"
                     TextType="Html"
-                    VerticalOptions="Center" 
+                    VerticalOptions="StartAndExpand" 
                     HorizontalOptions="Center" />
             </Grid>
         </VerticalStackLayout>

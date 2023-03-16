@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AutoMapper;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,12 @@ namespace TVTrack.Mobile.ViewModels
 {
     public abstract partial class ViewModelBase : ObservableObject, IViewModel
     {
+        protected readonly IMapper _mapper;
+        public ViewModelBase(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
         public virtual Task OnAppearingAsync()
         {
             return Task.CompletedTask;

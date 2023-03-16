@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AutoMapper;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -6,20 +7,22 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVTrack.Mobile.Models;
 using TVTrack.TVMaze.Client;
 using TVTrack.TVMaze.Client.Models;
 
-namespace TVTrack.Mobile.ViewModels
+namespace TVTrack.Mobile.ViewModels.Search
 {
     public partial class SearchViewModel: ViewModelBase
     {
         private readonly TVMazeClient _client;
 
-        public ObservableCollection<Search> Results { get; set; } = new ObservableCollection<Search>();
+        public ObservableCollection<TVTrack.TVMaze.Client.Models.Search> Results { get; set; } = new ObservableCollection<TVTrack.TVMaze.Client.Models.Search>();
 
         public string SearchInput { get; set; }
 
-        public SearchViewModel(TVMazeClient client)
+        public SearchViewModel(TVMazeClient client,
+            IMapper mapper): base(mapper)
         {
             _client = client;
         }

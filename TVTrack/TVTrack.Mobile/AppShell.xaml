@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TVTrack.Mobile"
-    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vsearch="clr-namespace:TVTrack.Mobile.Views.Search"
     xmlns:vshows="clr-namespace:TVTrack.Mobile.Views.Shows"
     xmlns:fonts="clr-namespace:TVTrack.Mobile.Fonts"
     Shell.FlyoutBehavior="Disabled">
@@ -33,7 +33,7 @@
             </Tab.Title>
             <ShellContent
                 Title="Search"
-                ContentTemplate="{DataTemplate views:SearchView}"
+                ContentTemplate="{DataTemplate vsearch:SearchView}"
                 Route="search" />
         </Tab>
     </TabBar>

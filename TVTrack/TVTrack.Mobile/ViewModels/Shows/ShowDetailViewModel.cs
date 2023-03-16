@@ -17,16 +17,14 @@ namespace TVTrack.Mobile.ViewModels.Shows
         public int Id { get; set; }
 
         private readonly TVMazeClient _client;
-        private readonly IMapper _mapper;
 
         [ObservableProperty]
         public ShowDetailModel show;
 
         public ShowDetailViewModel(TVMazeClient client,
-            IMapper mapper)
+            IMapper mapper) : base(mapper)
         {
             _client = client;
-            _mapper = mapper;
         }
 
         public override async Task OnAppearingAsync()
