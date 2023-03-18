@@ -17,7 +17,6 @@ namespace TVTrack.Mobile.ViewModels.Shows
     {
         public SeasonDetailViewModel(IMapper mapper) : base(mapper)
         {
-
         }
 
         public string SeasonJson { get; set; }

@@ -10,12 +10,14 @@
              x:DataType="vm:ShowDetailViewModel"
              x:Name="Root">
     <ScrollView Padding="10">
-        <Grid ColumnSpacing="10">
+        <Grid ColumnSpacing="10" RowSpacing="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="140" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -31,8 +33,59 @@
                 TextType="Html"
                 VerticalOptions="StartAndExpand" 
                 HorizontalOptions="Center" />
+            <HorizontalStackLayout Grid.Row="1">
+                <CollectionView ItemsSource="{Binding Show.Genres}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10" 
+                                   BorderColor="Gray" 
+                                   VerticalOptions="Center" 
+                                   BackgroundColor="Transparent"
+                                   Margin="0, 0, 5, 0"
+                                   Padding="12, 5">
+                                <Label Text="{Binding .}" TextColor="White"/>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </HorizontalStackLayout>
+            <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                    Text="Premiere Date"/>
+                <Label Grid.Row="0"
+                       Grid.Column="1"
+                    Text="{Binding Show.Premiered}"/>
 
-            <CollectionView Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Show.Seasons}">
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                    Text="End Date"/>
+                <Label Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding Show.Ended}"/>
+
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Text="Network"/>
+                <Label Grid.Row="2"
+                       Grid.Column="1"
+                       TextType="Html"
+                       Text="{Binding Show.Network}"/>
+            </Grid>
+            <CollectionView Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding Show.Seasons}" Margin="0, -7, 0, 0">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid x:DataType="m:SeasonModel" HeightRequest="30" Padding="10" Margin="0, 7">

@@ -20,6 +20,18 @@ namespace TVTrack.Mobile.Models
         public string imageURL;
 
         [ObservableProperty]
+        public DateTime? premiered;
+
+        [ObservableProperty]
+        public DateTime? ended;
+
+        [ObservableProperty]
+        public string network;
+
+        [ObservableProperty]
+        public ObservableCollection<string> genres;
+
+        [ObservableProperty]
         public ObservableCollection<SeasonModel> seasons;
 
         [ObservableProperty]
