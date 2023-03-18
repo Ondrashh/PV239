@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using TVTrack.TVMaze.Client;
 using TVTrack.TVMaze.Client.Models;
 using TVTrack.Mobile.Models;
+using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json;
 
 namespace TVTrack.Mobile.ViewModels.Shows
 {
@@ -31,6 +33,19 @@ namespace TVTrack.Mobile.ViewModels.Shows
         {
             var apiShow = await _client.GetShowDetails(Id);
             Show = _mapper.Map<ShowDetailModel>(apiShow);
+        }
+
+        [RelayCommand]
+        public async Task OpenSeasonAsync(int number)
+        {
+            string seasonJson = JsonConvert.SerializeObject(Show.Seasons.FirstOrDefault(x => x.Number == number));
+            string episodesJson = JsonConvert.SerializeObject(Show.Episodes.Where(x => x.Season == number).ToList());
+
+            await Shell.Current.GoToAsync("season", new Dictionary<string, object>
+            {
+                ["season"] = seasonJson,
+                ["episodes"] = episodesJson
+            });
         }
     }
 }

@@ -48,6 +48,7 @@ public static class MauiProgram
     {
 		//Routing.RegisterRoute("///search", typeof(SearchView));
         Routing.RegisterRoute("///search/detail", typeof(ShowDetailView));
+        Routing.RegisterRoute("///search/detail/season", typeof(SeasonDetailView));
     }
 
     private static void RegisterViewModels(IServiceCollection services)

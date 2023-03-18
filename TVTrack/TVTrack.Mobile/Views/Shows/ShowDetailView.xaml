@@ -3,29 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TVTrack.Mobile.Views.Shows.ShowDetailView"
              xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+             xmlns:fonts="clr-namespace:TVTrack.Mobile.Fonts"
              xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Shows"
-             Title="{Binding Show.Name, Mode=OneWay}"
-             x:DataType="vm:ShowDetailViewModel">
+             xmlns:m="clr-namespace:TVTrack.Mobile.Models"
+             Title="{Binding Show.Name}"
+             x:DataType="vm:ShowDetailViewModel"
+             x:Name="Root">
     <ScrollView Padding="10">
-        <VerticalStackLayout>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="200" />
-                </Grid.RowDefinitions>
-                <Image Grid.Column="0"
-                       Aspect="AspectFit"
-                       Source="{Binding Show.ImageURL, TargetNullValue='/Images/dotnet_bot.svg'}"/>
-                <Label 
-                    Grid.Column="1"
-                    Text="{Binding Show.Summary, Mode=OneWay}"
-                    TextType="Html"
-                    VerticalOptions="StartAndExpand" 
-                    HorizontalOptions="Center" />
-            </Grid>
-        </VerticalStackLayout>
+        <Grid ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Image Grid.Column="0"
+                   Grid.Row="0"
+                   Aspect="AspectFit"
+                   VerticalOptions="Start"
+                   Source="{Binding Show.ImageURL, TargetNullValue='/Images/dotnet_bot.svg'}"/>
+            <Label 
+                Grid.Column="1"
+                Grid.Row="0"
+                Text="{Binding Show.Summary}"
+                TextType="Html"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="Center" />
+
+            <CollectionView Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Show.Seasons}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid x:DataType="m:SeasonModel" HeightRequest="30" Padding="10" Margin="0, 7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="12"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenSeasonCommand}" 
+                                                      CommandParameter="{Binding Number}"/>
+                            </Grid.GestureRecognizers>
+                            <Label Text="{Binding Number}" Grid.Row="0" Grid.Column="0"/>
+                            <Label Text="{Binding FormattedName}" Grid.Row="0" Grid.Column="1" />
+                            <Image Grid.Column="2" >
+                                <Image.Source>
+                                    <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}"
+                                                             FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                                </Image.Source>
+                            </Image>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>                
+            </CollectionView>
+        </Grid>
     </ScrollView>
 </views:ContentPageBase>
