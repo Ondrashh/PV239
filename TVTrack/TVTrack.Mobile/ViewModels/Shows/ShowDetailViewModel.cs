@@ -38,13 +38,13 @@ namespace TVTrack.Mobile.ViewModels.Shows
         [RelayCommand]
         public async Task OpenSeasonAsync(int number)
         {
-            string seasonJson = JsonConvert.SerializeObject(Show.Seasons.FirstOrDefault(x => x.Number == number));
-            string episodesJson = JsonConvert.SerializeObject(Show.Episodes.Where(x => x.Season == number).ToList());
+            SeasonModel season = Show.Seasons.FirstOrDefault();
+            List<EpisodeModel> episodes = Show.Episodes.Where(x => x.Season == number).ToList();
 
             await Shell.Current.GoToAsync("season", new Dictionary<string, object>
             {
-                ["season"] = seasonJson,
-                ["episodes"] = episodesJson
+                ["season"] = season,
+                ["episodes"] = episodes,
             });
         }
     }
