@@ -34,21 +34,21 @@ namespace TVTrack.TVMaze.Client.Models
         public string Airtime { get; set; }
 
         [JsonProperty("airstamp")]
-        public DateTime Airstamp { get; set; }
+        public DateTime? Airstamp { get; set; }
 
         [JsonProperty("runtime")]
-        public int Runtime { get; set; }
+        public int? Runtime { get; set; }
 
         [JsonProperty("rating")]
-        public Rating Rating { get; set; }
+        public Rating? Rating { get; set; }
 
         [JsonProperty("image")]
-        public Image Image { get; set; }
+        public Image? Image { get; set; }
 
         [JsonProperty("summary")]
         public string Summary { get; set; }
 
         [JsonProperty("_links")]
-        public Links Links { get; set; }
+        public Links? Links { get; set; }
     }
 }

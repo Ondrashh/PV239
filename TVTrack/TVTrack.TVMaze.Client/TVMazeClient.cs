@@ -30,7 +30,9 @@ namespace TVTrack.TVMaze.Client
                 .AddQueryParameter("embed[]", "seasons", false);
             var response = await client.GetAsync(request);
 
-            return JsonConvert.DeserializeObject<Show>(response.Content);
+            var show = JsonConvert.DeserializeObject<Show>(response.Content);
+
+            return show;
         }
     }
 }
