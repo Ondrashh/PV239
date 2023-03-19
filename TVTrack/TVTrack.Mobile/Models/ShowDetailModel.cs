@@ -26,7 +26,25 @@ namespace TVTrack.Mobile.Models
         public DateTime? ended;
 
         [ObservableProperty]
+        public string status;
+
+        [ObservableProperty]
+        public string language;
+
+        [ObservableProperty]
+        public int? averageRuntime;
+
+        [ObservableProperty]
+        public string type;
+
+        [ObservableProperty]
+        public string officialSite;
+
+        [ObservableProperty]
         public string network;
+
+        [ObservableProperty]
+        public double? averageRating;
 
         [ObservableProperty]
         public ObservableCollection<string> genres;

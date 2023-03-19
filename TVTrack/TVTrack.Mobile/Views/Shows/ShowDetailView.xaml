@@ -9,6 +9,30 @@
              Title="{Binding Show.Name}"
              x:DataType="vm:ShowDetailViewModel"
              x:Name="Root">
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="{Binding Show.Name}"
+                   FontSize="Medium"
+                   VerticalOptions="Center"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalTextAlignment="Center"
+                   FontAttributes="Bold"/>
+            <ImageButton VerticalOptions="Center"
+                         HorizontalOptions="End"
+                         Grid.Column="1"
+                         Padding="0, 0, 10, 0"
+                         Command="{Binding AddToListCommand}">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.Plus}"
+                                     FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                </ImageButton.Source>
+            </ImageButton>
+        </Grid>
+    </Shell.TitleView>
     <ScrollView Padding="10">
         <Grid ColumnSpacing="10" RowSpacing="10">
             <Grid.ColumnDefinitions>
@@ -21,18 +45,83 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            
             <Image Grid.Column="0"
                    Grid.Row="0"
                    Aspect="AspectFit"
                    VerticalOptions="Start"
                    Source="{Binding Show.ImageURL, TargetNullValue='/Images/dotnet_bot.svg'}"/>
-            <Label 
-                Grid.Column="1"
-                Grid.Row="0"
-                Text="{Binding Show.Summary}"
-                TextType="Html"
-                VerticalOptions="StartAndExpand" 
-                HorizontalOptions="Center" />
+
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                    Text="Rating"/>
+                <Label Grid.Row="0"
+                       Grid.Column="1"
+                    Text="{Binding Show.AverageRating}"/>
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                    Text="Language"/>
+                <Label Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding Show.Language}"/>
+
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Text="Network"/>
+                <Label Grid.Row="2"
+                       Grid.Column="1"
+                       TextType="Html"
+                       Text="{Binding Show.Network}"/>
+
+                <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Text="Status"/>
+                <Label Grid.Row="3"
+                       Grid.Column="1"
+                       TextType="Html"
+                       Text="{Binding Show.Status}"/>
+
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Text="Premiered"/>
+                <Label Grid.Row="4"
+                       Grid.Column="1"
+                       TextType="Html"
+                       Text="{Binding Show.Premiered, StringFormat='{0:dd. MM. yyy}'}"/>
+
+                <Label Grid.Row="5"
+                       Grid.Column="0"
+                       Text="Ended"/>
+                <Label Grid.Row="5"
+                       Grid.Column="1"
+                       TextType="Html"
+                       Text="{Binding Show.Ended, StringFormat='{0:dd. MM. yyy}'}"/>
+
+                <Label Grid.Row="6"
+                       Grid.Column="0"
+                       Text="Runtime"/>
+                <Label Grid.Row="6"
+                       Grid.Column="1"
+                       TextType="Html"
+                       Text="{Binding Show.AverageRuntime, StringFormat='{0} min'}"/>
+            </Grid>
+
             <HorizontalStackLayout Grid.Row="1">
                 <CollectionView ItemsSource="{Binding Show.Genres}">
                     <CollectionView.ItemsLayout>
@@ -52,49 +141,27 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </HorizontalStackLayout>
-            <Grid Grid.Row="2" Grid.ColumnSpan="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                
-                <Label Grid.Row="0"
-                       Grid.Column="0"
-                    Text="Premiere Date"/>
-                <Label Grid.Row="0"
-                       Grid.Column="1"
-                    Text="{Binding Show.Premiered}"/>
 
-                <Label Grid.Row="1"
-                       Grid.Column="0"
-                    Text="End Date"/>
-                <Label Grid.Row="1"
-                       Grid.Column="1"
-                       Text="{Binding Show.Ended}"/>
+            <Label 
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Grid.Row="2"
+                Text="{Binding Show.Summary}"
+                TextType="Html"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="Center" />
 
-                <Label Grid.Row="2"
-                       Grid.Column="0"
-                       Text="Network"/>
-                <Label Grid.Row="2"
-                       Grid.Column="1"
-                       TextType="Html"
-                       Text="{Binding Show.Network}"/>
-            </Grid>
-            <CollectionView Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding Show.Seasons}" Margin="0, -7, 0, 0">
+            <CollectionView Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding Show.Seasons}" Margin="0, -20, 0, 0">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid x:DataType="m:SeasonModel" HeightRequest="30" Padding="10" Margin="0, 7">
+                        <Grid x:DataType="m:SeasonModel" Padding="10, 0" Margin="0, 7">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="12"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="20"/>
                             </Grid.RowDefinitions>
                             <Grid.GestureRecognizers>
@@ -102,14 +169,39 @@
                                     Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenSeasonCommand}" 
                                                       CommandParameter="{Binding Number}"/>
                             </Grid.GestureRecognizers>
-                            <Label Text="{Binding Number}" Grid.Row="0" Grid.Column="0"/>
-                            <Label Text="{Binding FormattedName}" Grid.Row="0" Grid.Column="1" />
-                            <Image Grid.Column="2" >
+                            <Label Text="{Binding Number, StringFormat='{0}.'}" 
+                                   Grid.Row="0" 
+                                   Grid.Column="0"
+                                   Margin="0, 0, 4, 0"
+                                   VerticalTextAlignment="Center"
+                                   StyleClass="SeasonHeader"/>
+                            <Label Text="{Binding FormattedName}" 
+                                   Grid.Row="0" 
+                                   Grid.Column="1" 
+                                   StyleClass="SeasonHeader"
+                                   VerticalTextAlignment="Center" />
+                            <Image Grid.Column="2" Grid.RowSpan="2" >
                                 <Image.Source>
                                     <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}"
                                                              FontFamily="{Static fonts:Fonts.FontAwesome}"/>
                                 </Image.Source>
                             </Image>
+
+                            <Grid Grid.Row="1"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="2"
+                                  ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding EpisodeOrder, StringFormat='{0} episodes'}" Grid.Column="0" StyleClass="SeasonSubtext" TextColor="LightGray"/>
+                                <Label Text="{Binding Premiered, StringFormat='{0:yyyy}'}" Grid.Column="1" StyleClass="SeasonSubtext" TextColor="LightGray"/>
+                                <Label Text="-" Grid.Column="2" TextColor="LightGrey"/>
+                                <Label Text="{Binding Ended, StringFormat='{0:yyyy}'}" Grid.Column="3" StyleClass="SeasonSubtext" TextColor="LightGray"/>
+                            </Grid>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>                

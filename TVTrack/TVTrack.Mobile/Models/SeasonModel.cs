@@ -26,6 +26,15 @@ namespace TVTrack.Mobile.Models
         [ObservableProperty]
         public string summary;
 
+        [ObservableProperty]
+        public int? episodeOrder;
+
+        [ObservableProperty]
+        public DateTime? premiered;
+
+        [ObservableProperty]
+        public DateTime? ended;
+
         public string FormattedName
         {
             get

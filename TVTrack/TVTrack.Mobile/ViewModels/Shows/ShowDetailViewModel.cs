@@ -38,7 +38,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
         [RelayCommand]
         public async Task OpenSeasonAsync(int number)
         {
-            SeasonModel season = Show.Seasons.FirstOrDefault();
+            SeasonModel season = Show.Seasons.FirstOrDefault(x => x.Number == number);
             List<EpisodeModel> episodes = Show.Episodes.Where(x => x.Season == number).ToList();
 
             await Shell.Current.GoToAsync("season", new Dictionary<string, object>
@@ -46,6 +46,13 @@ namespace TVTrack.Mobile.ViewModels.Shows
                 ["season"] = season,
                 ["episodes"] = episodes,
             });
+        }
+
+
+        [RelayCommand]
+        public async Task AddToListAsync()
+        {
+            await Task.CompletedTask;
         }
     }
 }

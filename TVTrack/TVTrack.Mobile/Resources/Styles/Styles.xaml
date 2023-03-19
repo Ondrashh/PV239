@@ -406,4 +406,12 @@
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"/>
     </Style>
 
+    <Style Class="SeasonHeader" TargetType="Label">
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style Class="SeasonSubtext" TargetType="Label">
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+
 </ResourceDictionary>
