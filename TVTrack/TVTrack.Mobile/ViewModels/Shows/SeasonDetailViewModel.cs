@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,6 @@ namespace TVTrack.Mobile.ViewModels.Shows
         {
         }
 
-        public string EpisodesJson { get; set; }
-
         [ObservableProperty]
         public SeasonModel season;
         [ObservableProperty]
@@ -29,6 +28,12 @@ namespace TVTrack.Mobile.ViewModels.Shows
         public override Task OnAppearingAsync()
         {
             return base.OnAppearingAsync();
+        }
+
+        [RelayCommand]
+        public async Task OpenEpisodeDetailAsync(Image chevron)
+        {
+            await chevron.RotateTo(180, 1000);
         }
     }
 }

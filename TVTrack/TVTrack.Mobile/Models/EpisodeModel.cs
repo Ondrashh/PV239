@@ -30,6 +30,12 @@ namespace TVTrack.Mobile.Models
         [ObservableProperty]
         public int season;
 
+        [ObservableProperty]
+        public DateTime? aired;
+
+        [ObservableProperty]
+        public double? averageRating;
+
         public string FormattedName
         {
             get

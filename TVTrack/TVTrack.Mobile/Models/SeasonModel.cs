@@ -35,6 +35,9 @@ namespace TVTrack.Mobile.Models
         [ObservableProperty]
         public DateTime? ended;
 
+        [ObservableProperty]
+        public string network;
+
         public string FormattedName
         {
             get

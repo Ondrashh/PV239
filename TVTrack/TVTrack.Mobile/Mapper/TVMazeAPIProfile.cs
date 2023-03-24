@@ -30,10 +30,13 @@ namespace TVTrack.Mobile.Mapper
                 .ForMember(x => x.ImageUrl, opt => opt.MapFrom(src => src.Image.Original))
                 .ForMember(x => x.FormattedName, opt => opt.Ignore())
                 .ForMember(x => x.Premiered, opt => opt.MapFrom(src => DateTime.Parse(src.PremiereDate)))
-                .ForMember(x => x.Ended, opt => opt.MapFrom(src => DateTime.Parse(src.EndDate)));
+                .ForMember(x => x.Ended, opt => opt.MapFrom(src => DateTime.Parse(src.EndDate)))
+                .AfterMap((src, dest) => dest.Network = src.WebChannel != null ? src.WebChannel.Name : ( src.Network != null ? src.Network.Name : "<i>Unknown</i>" ));
 
             CreateMap<Episode, EpisodeModel>()
                 .ForMember(x => x.ImageUrl, opt => opt.MapFrom(src => src.Image.Original))
+                .ForMember(x => x.Aired, opt => opt.MapFrom(src => src.Airstamp))
+                .ForMember(x => x.AverageRating, opt => opt.MapFrom(src => src.Rating.Average))
                 .ForMember(x => x.FormattedName, opt => opt.Ignore());
         }
     }
