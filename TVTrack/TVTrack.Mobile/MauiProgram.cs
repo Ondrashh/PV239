@@ -10,6 +10,7 @@ using TVTrack.Mobile.Views.Shows;
 using TVTrack.Mobile.Mapper;
 using TVTrack.TVMaze.Client;
 using TVTrack.TVMaze.Client.Models;
+using TVTrack.Mobile.Views.Popup;
 
 namespace TVTrack.Mobile;
 
@@ -65,6 +66,7 @@ public static class MauiProgram
         services.Scan(selector => selector
             .FromAssemblyOf<App>()
             .AddClasses(filter => filter.AssignableTo<ContentPageBase>())
+            .AddClasses(filter => filter.AssignableTo<PopupBase>())
             .AsSelf()
             .WithTransientLifetime());
     }
