@@ -2,11 +2,11 @@
 
 namespace TVTrack.Mobile;
 
-public partial class MainPage : ContentPage
+public partial class MainPage
 {
-	public MainPage()
+	public MainPage(MainPageViewModel viewModel): base(viewModel)
 	{
-        InitializeComponent();
+		InitializeComponent();
     }
 }
 

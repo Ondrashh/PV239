@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "978122374720",
+    "project_id": "tvtrack-maui",
+    "storage_bucket": "tvtrack-maui.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978122374720:android:23bb8332422cdcae2fe9a5",
+        "android_client_info": {
+          "package_name": "com.companyname.tvtrack.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978122374720-u9mubdpq49v5h1h0avjnko6m3t140o90.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRq0xH9VdkDNHNHC-zSi54-VVGrwdWY8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978122374720-u9mubdpq49v5h1h0avjnko6m3t140o90.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
