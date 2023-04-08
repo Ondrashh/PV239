@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using TVTrack.Mobile.Views.Popup;
 using CommunityToolkit.Maui.Views;
 using Microsoft.Extensions.DependencyInjection;
+using TVTrack.Mobile.Helpers;
 
 namespace TVTrack.Mobile.ViewModels.Shows
 {
@@ -22,17 +23,17 @@ namespace TVTrack.Mobile.ViewModels.Shows
         public int Id { get; set; }
 
         private readonly TVMazeClient _client;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly PopupHelper _popupHelper;
 
         [ObservableProperty]
         public ShowDetailModel show;
 
         public ShowDetailViewModel(TVMazeClient client,
-            IServiceProvider serviceProvider,
+            PopupHelper popupHelper,
             IMapper mapper) : base(mapper)
         {
             _client = client;
-            _serviceProvider = serviceProvider;
+            _popupHelper = popupHelper;
         }
 
         public override async Task OnAppearingAsync()
@@ -58,9 +59,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
         [RelayCommand]
         public async Task AddToListAsync()
         {
-            var popup = _serviceProvider.GetRequiredService<AddSeasonPopup>();
-
-            await Application.Current.MainPage.ShowPopupAsync(popup);
+            await _popupHelper.ShowPopupAsync<AddShowPopup>(Id);
         }
     }
 }

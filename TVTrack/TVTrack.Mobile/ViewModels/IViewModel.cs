@@ -8,6 +8,7 @@ namespace TVTrack.Mobile.ViewModels
 {
     public interface IViewModel
     {
+        public int ID { get; set; }
         Task OnAppearingAsync();
     }
 

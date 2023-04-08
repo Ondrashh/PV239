@@ -92,10 +92,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Popup\AddShowPopup.xaml.cs">
+	    <DependentUpon>AddShowPopup.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\ContentPageBase.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Popup\AddSeasonPopup.xaml">
+	  <MauiXaml Update="Views\Popup\AddShowPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Popup\PopupBase.xaml">

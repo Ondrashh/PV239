@@ -17,6 +17,9 @@ namespace TVTrack.Mobile.ViewModels
             _mapper = mapper;
         }
 
+        [ObservableProperty]
+        public int iD;
+
         public virtual Task OnAppearingAsync()
         {
             return Task.CompletedTask;

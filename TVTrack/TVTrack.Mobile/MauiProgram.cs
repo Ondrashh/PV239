@@ -11,42 +11,42 @@ using TVTrack.Mobile.Mapper;
 using TVTrack.TVMaze.Client;
 using TVTrack.TVMaze.Client.Models;
 using TVTrack.Mobile.Views.Popup;
+using TVTrack.Mobile.Helpers;
 
 namespace TVTrack.Mobile;
 
 public static class MauiProgram
 {
-	public static MauiApp CreateMauiApp()
-	{
-		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
-			.UseMauiCommunityToolkit()
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-				fonts.AddFont("fa-solid-900.ttf", Fonts.Fonts.FontAwesome);
-			});
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("fa-solid-900.ttf", Fonts.Fonts.FontAwesome);
+            })
+            .ConfigureAppSettings()
+            .ConfigureHelpers()
+            .ConfigureAPI()
+            .ConfigureViews()
+            .ConfigureViewModels();
 
-        RegisterAppSettings(builder);
-		RegisterAPI(builder.Services);
+        RegisterRoutes();
 
-        RegisterViews(builder.Services);
-		RegisterViewModels(builder.Services);
-
-		RegisterRoutes();
-
-		builder.Services.AddAutoMapper(typeof(TVMazeAPIProfile));
+        builder.Services.AddAutoMapper(typeof(TVMazeAPIProfile));
 
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
 
-		return builder.Build();
-	}
+        return builder.Build();
+    }
 
-    private static void RegisterAppSettings(MauiAppBuilder builder)
+    private static MauiAppBuilder ConfigureAppSettings(this MauiAppBuilder builder)
     {
         var configurationBuilder = new ConfigurationBuilder();
 
@@ -60,36 +60,50 @@ public static class MauiProgram
 
         var configuration = configurationBuilder.Build();
         builder.Configuration.AddConfiguration(configuration);
+        return builder;
     }
 
     private static void RegisterRoutes()
     {
-		//Routing.RegisterRoute("///search", typeof(SearchView));
+        //Routing.RegisterRoute("///search", typeof(SearchView));
         Routing.RegisterRoute("///search/detail", typeof(ShowDetailView));
         Routing.RegisterRoute("///search/detail/season", typeof(SeasonDetailView));
     }
 
-    private static void RegisterViewModels(IServiceCollection services)
-	{
-        services.Scan(selector => selector
-			.FromAssemblyOf<App>()
-			.AddClasses(filter => filter.AssignableTo<IViewModel>())
-			.AsSelfWithInterfaces()
-			.WithTransientLifetime());
+    private static MauiAppBuilder ConfigureViewModels(this MauiAppBuilder builder)
+    {
+        builder.Services.Scan(selector => selector
+             .FromAssemblyOf<App>()
+             .AddClasses(filter => filter.AssignableTo<IViewModel>())
+             .AsSelfWithInterfaces()
+             .WithTransientLifetime());
+        return builder;
     }
 
-    private static void RegisterViews(IServiceCollection services)
+    private static MauiAppBuilder ConfigureViews(this MauiAppBuilder builder)
     {
-        services.Scan(selector => selector
+        builder.Services.Scan(selector => selector
+            .FromAssemblyOf<App>()
+            .AddClasses(filter => filter.AssignableTo<IHelper>())
+            .AsSelf()
+            .WithTransientLifetime());
+        return builder;
+    }
+
+    private static MauiAppBuilder ConfigureHelpers(this MauiAppBuilder builder)
+    {
+        builder.Services.Scan(selector => selector
             .FromAssemblyOf<App>()
             .AddClasses(filter => filter.AssignableTo<ContentPageBase>())
             .AddClasses(filter => filter.AssignableTo<PopupBase>())
             .AsSelf()
             .WithTransientLifetime());
+        return builder;
     }
 
-	private static void RegisterAPI(IServiceCollection services)
-	{
-		services.AddSingleton(typeof(TVMazeClient));
-	}
+    private static MauiAppBuilder ConfigureAPI(this MauiAppBuilder builder)
+    {
+        builder.Services.AddSingleton(typeof(TVMazeClient));
+        return builder;
+    }
 }
