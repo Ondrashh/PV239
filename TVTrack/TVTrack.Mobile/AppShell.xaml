@@ -3,17 +3,17 @@
     x:Class="TVTrack.Mobile.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Fonts"
     xmlns:local="clr-namespace:TVTrack.Mobile"
     xmlns:vsearch="clr-namespace:TVTrack.Mobile.Views.Search"
+    xmlns:vsettings="clr-namespace:TVTrack.Mobile.Views.Settings"
     xmlns:vshows="clr-namespace:TVTrack.Mobile.Views.Shows"
-    xmlns:fonts="clr-namespace:TVTrack.Mobile.Fonts"
     Shell.FlyoutBehavior="Disabled">
 
     <TabBar>
         <Tab>
             <Tab.Icon>
-                <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.House}"
-                             FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.House}" />
             </Tab.Icon>
             <Tab.Title>
                 Home
@@ -25,8 +25,7 @@
         </Tab>
         <Tab>
             <Tab.Icon>
-                <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.MagnifyingGlass}"
-                             FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.MagnifyingGlass}" />
             </Tab.Icon>
             <Tab.Title>
                 Search
@@ -34,6 +33,18 @@
             <ShellContent
                 Title="Search"
                 ContentTemplate="{DataTemplate vsearch:SearchView}"
+                Route="search" />
+        </Tab>
+        <Tab>
+            <Tab.Icon>
+                <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Gear}" />
+            </Tab.Icon>
+            <Tab.Title>
+                Settings
+            </Tab.Title>
+            <ShellContent
+                Title="Settings"
+                ContentTemplate="{DataTemplate vsettings:SettingsListView}"
                 Route="search" />
         </Tab>
     </TabBar>

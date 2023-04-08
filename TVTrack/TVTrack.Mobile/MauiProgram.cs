@@ -33,9 +33,8 @@ public static class MauiProgram
             .ConfigureHelpers()
             .ConfigureAPI()
             .ConfigureViews()
-            .ConfigureViewModels();
-
-        RegisterRoutes();
+            .ConfigureViewModels()
+            .RegisterRoutes();
 
         builder.Services.AddAutoMapper(typeof(TVMazeAPIProfile));
 
@@ -61,13 +60,6 @@ public static class MauiProgram
         var configuration = configurationBuilder.Build();
         builder.Configuration.AddConfiguration(configuration);
         return builder;
-    }
-
-    private static void RegisterRoutes()
-    {
-        //Routing.RegisterRoute("///search", typeof(SearchView));
-        Routing.RegisterRoute("///search/detail", typeof(ShowDetailView));
-        Routing.RegisterRoute("///search/detail/season", typeof(SeasonDetailView));
     }
 
     private static MauiAppBuilder ConfigureViewModels(this MauiAppBuilder builder)

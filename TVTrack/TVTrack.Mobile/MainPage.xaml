@@ -1,17 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels"
-             xmlns:views="clr-namespace:TVTrack.Mobile.Views"
-             xmlns:m="clr-namespace:TVTrack.API.Models;assembly=TVTrack.API"
-             x:Class="TVTrack.Mobile.MainPage"
-             x:DataType="vm:MainPageViewModel">
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels"
+    x:DataType="vm:MainPageViewModel">
     <VerticalStackLayout Padding="10">
-        <Label Text="Title"/>
-        <Entry Text="{Binding NotificationTitle}"/>
-        <Label Text="Body"/>
-        <Entry Text="{Binding NotificationBody}"/>
-        <Button Command="{Binding SendNotificationCommand}" Text="Send Notification"/>
+        <Label Text="Hello, World!" />
     </VerticalStackLayout>
 
 </views:ContentPageBase>

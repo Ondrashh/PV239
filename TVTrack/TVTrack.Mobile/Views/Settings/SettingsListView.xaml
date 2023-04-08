@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.Views.Settings.SettingsListView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Fonts"
+    xmlns:m="clr-namespace:TVTrack.Mobile.Models"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Settings"
+    x:Name="Root"
+    Title="Settings"
+    x:DataType="vm:SettingsViewModel">
+    <ScrollView>
+        <CollectionView ItemsSource="{Binding Items}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:DataType="m:SettingsListItemModel">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenSettingsItemCommand}" CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
+                        <Image Grid.Column="0">
+                            <Image.Source>
+                                <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Binding FontIcon}" />
+                            </Image.Source>
+                        </Image>
+                        <Label
+                            Grid.Column="1"
+                            Margin="5,0,0,0"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding Name}"
+                            VerticalTextAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ScrollView>
+</views:ContentPageBase>

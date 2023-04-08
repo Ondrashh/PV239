@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.Views.Settings.DeveloperToolsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Settings"
+    x:Name="Root"
+    Title="Developer Tools"
+    x:DataType="vm:DeveloperToolsViewModel">
+    <VerticalStackLayout Padding="10">
+        <Label Text="Title" />
+        <Entry Text="{Binding NotificationTitle}" />
+        <Label Text="Body" />
+        <Entry Text="{Binding NotificationBody}" />
+        <Button Command="{Binding SendNotificationCommand}" Text="Send Notification" />
+    </VerticalStackLayout>
+</views:ContentPageBase>
