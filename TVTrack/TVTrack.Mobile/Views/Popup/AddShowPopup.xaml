@@ -10,27 +10,28 @@
     x:DataType="vm:AddShowViewModel"
     HorizontalOptions="Fill"
     VerticalOptions="End">
-    <VerticalStackLayout>
-        <Grid BackgroundColor="White" HorizontalOptions="FillAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-            </Grid.RowDefinitions>
-            <Label
-                Grid.Row="0"
-                HorizontalOptions="FillAndExpand"
-                Text="Welcome to .NET MAUI!"
-                TextColor="Black"
-                VerticalOptions="Center" />
-            <Label
-                Grid.Row="1"
-                HorizontalOptions="FillAndExpand"
-                Text="{Binding ID}"
-                TextColor="Black"
-                VerticalOptions="Center" />
-        </Grid>
-    </VerticalStackLayout>
+    <Grid
+        Padding="10"
+        BackgroundColor="Black"
+        HorizontalOptions="FillAndExpand">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Label
+            Grid.Row="0"
+            HorizontalOptions="FillAndExpand"
+            Text="Welcome to .NET MAUI!"
+            TextColor="White"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="1"
+            HorizontalOptions="FillAndExpand"
+            Text="{Binding ID}"
+            TextColor="White"
+            VerticalOptions="Center" />
+    </Grid>
 </views:PopupBase>
