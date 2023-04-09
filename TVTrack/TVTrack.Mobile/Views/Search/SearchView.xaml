@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Search"
              xmlns:m="clr-namespace:TVTrack.TVMaze.Client.Models;assembly=TVTrack.TVMaze.Client"
              xmlns:views="clr-namespace:TVTrack.Mobile.Views"
-             xmlns:fonts="clr-namespace:TVTrack.Mobile.Fonts"
+             xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TVTrack.Mobile.Views.Search.SearchView"
              x:Name="Root"

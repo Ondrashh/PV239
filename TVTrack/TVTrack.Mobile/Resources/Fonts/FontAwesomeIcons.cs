@@ -1,6 +1,6 @@
 using System;
 
-namespace TVTrack.Mobile.Fonts
+namespace TVTrack.Mobile.Resources.Fonts
 {
     /// <summary>
     /// The unicode values for all FontAwesome v6.2.0 icons.

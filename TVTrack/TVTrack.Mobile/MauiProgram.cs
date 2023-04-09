@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
-using TVTrack.Mobile.Fonts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.Reflection;
@@ -12,6 +11,7 @@ using TVTrack.TVMaze.Client;
 using TVTrack.TVMaze.Client.Models;
 using TVTrack.Mobile.Views.Popup;
 using TVTrack.Mobile.Helpers;
+using TVTrack.Mobile.Resources.Fonts;
 
 namespace TVTrack.Mobile;
 
@@ -27,7 +27,7 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                fonts.AddFont("fa-solid-900.ttf", Fonts.Fonts.FontAwesome);
+                fonts.AddFont("fa-solid-900.ttf", Fonts.FontAwesome);
             })
             .ConfigureAppSettings()
             .ConfigureHelpers()

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TVTrack.Mobile.Fonts
+namespace TVTrack.Mobile.Resources.Fonts
 {
     public class Fonts
     {

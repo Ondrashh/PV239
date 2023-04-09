@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TVTrack.Mobile.Views.Shows.ShowDetailView"
              xmlns:views="clr-namespace:TVTrack.Mobile.Views"
-             xmlns:fonts="clr-namespace:TVTrack.Mobile.Fonts"
+             xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
              xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Shows"
              xmlns:m="clr-namespace:TVTrack.Mobile.Models"
              Title="{Binding Show.Name}"

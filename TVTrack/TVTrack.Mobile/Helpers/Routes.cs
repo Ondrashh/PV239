@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TVTrack.Mobile.Fonts;
 using TVTrack.Mobile.Models;
+using TVTrack.Mobile.Resources.Fonts;
 using TVTrack.Mobile.Views.Settings;
 using TVTrack.Mobile.Views.Shows;
 
