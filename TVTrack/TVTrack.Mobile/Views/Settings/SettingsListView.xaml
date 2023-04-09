@@ -14,15 +14,19 @@
         <CollectionView ItemsSource="{Binding Items}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid x:DataType="m:SettingsListItemModel">
+                    <Grid
+                        Padding="30"
+                        x:DataType="m:SettingsListItemModel"
+                        Grid.ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="22" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="15" />
                         </Grid.ColumnDefinitions>
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenSettingsItemCommand}" CommandParameter="{Binding .}" />
                         </Grid.GestureRecognizers>
-                        <Image Grid.Column="0">
+                        <Image Grid.Column="0" Aspect="AspectFit">
                             <Image.Source>
                                 <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Binding FontIcon}" />
                             </Image.Source>
@@ -33,6 +37,11 @@
                             HorizontalTextAlignment="Start"
                             Text="{Binding Name}"
                             VerticalTextAlignment="Center" />
+                        <Image Grid.Column="2" Aspect="AspectFit">
+                            <Image.Source>
+                                <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}" />
+                            </Image.Source>
+                        </Image>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

@@ -9,6 +9,7 @@
     Title="Developer Tools"
     x:DataType="vm:DeveloperToolsViewModel">
     <VerticalStackLayout Padding="10">
+        <Label StyleClass="Header" Text="Notification Test" />
         <Label Text="Title" />
         <Entry Text="{Binding NotificationTitle}" />
         <Label Text="Body" />
