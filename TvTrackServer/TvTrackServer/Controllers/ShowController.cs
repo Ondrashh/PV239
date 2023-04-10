@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TvTrackServer.Models.Database;
+using TvTrackServer.Models.TvMaze;
+using TvTrackServer.TvMazeConnector;
 
 namespace TvTrackServer.Controllers;
 
@@ -10,18 +12,60 @@ namespace TvTrackServer.Controllers;
 public class ShowController : CustomControllerBase
 {
     private readonly TvTrackServerDbContext _context;
+    private readonly TvMazeClient _tvMazeClient;
     public ShowController(TvTrackServerDbContext dbContext) : base(dbContext)
     {
         _context = dbContext;
+        _tvMazeClient = new TvMazeClient();
+    }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string search)
+    {
+        var result = await _tvMazeClient.Search(search);
+        return Ok(result);
     }
 
     [HttpGet("{tvMazeId}")]
     public async Task<IActionResult> GetShow(int tvMazeId, [FromQuery] string? username)
     {
-        // TODO this needs to be routed properly throught tvmaze
         var user = await FindByUsernameAsync(username);
-        var showActivity = await _context.ShowActivities.FirstOrDefaultAsync(s => s.UserId == user.Id && s.TvMazeId == tvMazeId);
-        return Ok(showActivity);
+        var showDetails = await _tvMazeClient.GetShowDetails(tvMazeId);
+
+        if (user == null) return Ok(showDetails);
+
+        await LoadUserActivityInfo(tvMazeId, user, showDetails);
+        await LoadTvTrackRatingInfo(tvMazeId, showDetails);
+        return Ok(showDetails);
+    }
+
+    private async Task LoadUserActivityInfo(int tvMazeId, User user, Show showDetails)
+    {
+        // TODO include here but defs need to be updated for it to work
+        var usersShowActivity = await _context.ShowActivities.Include(s => s.EpisodeActivities).FirstOrDefaultAsync(s => s.UserId == user.Id && s.TvMazeId == tvMazeId);
+        if (usersShowActivity != null)
+        {
+            showDetails.UserRated = usersShowActivity.UserRated;
+            showDetails.UserRating = usersShowActivity.UserRating;
+            showDetails.Notifications = usersShowActivity.Notifications;
+            showDetails.Calendar = usersShowActivity.Calendar;
+
+            foreach(var userEpisodeActivity in usersShowActivity.EpisodeActivities)
+            {
+                showDetails.Embedded.Episodes.First(e => e.Id == userEpisodeActivity.TvMazeId).UserWatched = userEpisodeActivity.Watched;
+            }
+        }
+    }
+
+    private async Task LoadTvTrackRatingInfo(int tvMazeId, Show showDetails)
+    {
+        var userRatedShow = await _context.UserRatedShows.FirstOrDefaultAsync(s => s.TvMazeId == tvMazeId);
+        if (userRatedShow != null)
+        {
+            showDetails.Rating ??= new Rating();
+            showDetails.Rating.TvTrackRatingCount = userRatedShow.UserRatingCount;
+            showDetails.Rating.TvTrackRating = userRatedShow.UserRating;
+        }
     }
 
     [HttpPatch("{tvMazeId}/notifications")]
@@ -82,7 +126,27 @@ public class ShowController : CustomControllerBase
 
     // TODO mark all show as watched
     // TODO mark as watched up to episode X
-    // TODO mark one episode as watched
+    [HttpPatch("{showTvMazeId}/episodes/{episodeTvMazeId}")]
+    public async Task<IActionResult> ToggleEpisodeWatchedStatus(int showTvMazeId, int episodeTvMazeId, [FromQuery] string username, [FromBody] bool watched)
+    {
+        var user = await FindByUsernameAsync(username);
+        if (user == null) return BadRequest("No user with given username.");
+
+        var userShowActivity = await FetchOrCreateUserShowActivityAsync(showTvMazeId, user);
+        var episodeShowActivity = await FetchOrCreateUserEpisodeActivityAsync(userShowActivity.Id, episodeTvMazeId);
+
+        if (watched)
+        {
+            episodeShowActivity.Watched = true;
+        }
+        else
+        {
+            _context.EpisodeActivities.Remove(episodeShowActivity);
+        }
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
 
     [HttpPost("{tvMazeId}/ratings")]
     public async Task<IActionResult> PostRating(int tvMazeId, [FromQuery] string username, int rating)
@@ -91,21 +155,9 @@ public class ShowController : CustomControllerBase
         if (user == null) return BadRequest($"No user wíth username {username}.");
         if (rating < 0 || rating > 5) return BadRequest("Rating has to be between 0 and 5, included.");
 
-        var userShowActivity = await _context.ShowActivities.Where(a => a.UserId == user.Id && a.TvMazeId == tvMazeId).FirstOrDefaultAsync();
+        var userShowActivity = await FetchOrCreateUserShowActivityAsync(tvMazeId, user);
 
-        if (userShowActivity == null)
-        {
-            var newShowActivity = new ShowActivity
-            {
-                TvMazeId = tvMazeId,
-                User = user,
-                UserRating = rating,
-                UserRated = true
-            };
-            _context.ShowActivities.Add(newShowActivity);
-            await NoteUserRating(tvMazeId, rating, false);
-        }
-        else if (userShowActivity.UserRated == false)
+        if (userShowActivity.UserRated == false)
         {
             userShowActivity.UserRated = true;
             userShowActivity.UserRating = rating;
@@ -121,6 +173,37 @@ public class ShowController : CustomControllerBase
         await _context.SaveChangesAsync();
 
         return Ok();
+    }
+
+    private async Task<ShowActivity> FetchOrCreateUserShowActivityAsync(int tvMazeId, User user)
+    {
+        var userShowActivity = await _context.ShowActivities.Where(a => a.UserId == user.Id && a.TvMazeId == tvMazeId).FirstOrDefaultAsync();
+        if (userShowActivity == null)
+        {
+            userShowActivity = new ShowActivity
+            {
+                TvMazeId = tvMazeId,
+                User = user
+            };
+            _context.ShowActivities.Add(userShowActivity);
+        }
+
+        return userShowActivity;
+    }
+
+    private async Task<EpisodeActivity> FetchOrCreateUserEpisodeActivityAsync(int showActivityId, int episodeTvMazeId)
+    {
+        var episodeActivity = await _context.EpisodeActivities.Where(e => e.TvMazeId == episodeTvMazeId && e.ShowActivityId == showActivityId).FirstOrDefaultAsync();
+        if (episodeActivity == null)
+        {
+            episodeActivity = new EpisodeActivity
+            {
+                TvMazeId = episodeTvMazeId,
+                ShowActivityId = showActivityId
+            };
+            _context.EpisodeActivities.Add(episodeActivity);
+        }
+        return episodeActivity;
     }
 
     private async Task NoteUserRating(int tvMazeId, int newRating, bool ratedBefore, int oldRating = 0)

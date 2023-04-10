@@ -76,4 +76,9 @@ public class Show
 
     [JsonProperty("_embedded")]
     public Embedded? Embedded { get; set; }
+
+    public bool UserRated { get; set; } = false;
+    public int? UserRating { get; set; } = null;
+    public bool Notifications { get; set; } = false;
+    public bool Calendar { get; set; } = false;
 }

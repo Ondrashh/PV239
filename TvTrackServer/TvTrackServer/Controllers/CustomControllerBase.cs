@@ -13,8 +13,9 @@ public class CustomControllerBase : ControllerBase
         _context = dbContext;
     }
 
-    protected Task<User?> FindByUsernameAsync(string username)
+    protected Task<User?> FindByUsernameAsync(string? username)
     {
+        if (username == null) return null;
         return _context.Users.FirstOrDefaultAsync(u => u.Username == username);
     }
 }

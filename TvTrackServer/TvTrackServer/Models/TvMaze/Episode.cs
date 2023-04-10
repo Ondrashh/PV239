@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TvTrackServer.Models.TvMaze;
 
 namespace TVTrack.TVMaze.Client.Models;
@@ -51,4 +46,6 @@ public class Episode
 
     [JsonProperty("_links")]
     public Links? Links { get; set; }
+
+    public bool UserWatched { get; set; } = false;
 }

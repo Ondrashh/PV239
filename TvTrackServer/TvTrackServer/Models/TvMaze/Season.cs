@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using TVTrack.TVMaze.Client.Models;
 
 namespace TvTrackServer.Models.TvMaze;
 

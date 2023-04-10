@@ -6,4 +6,7 @@ public class EpisodeActivity
     public int TvMazeId { get; set; }
     
     public bool Watched { get; set; }
+
+    public int ShowActivityId { get; set; }
+    public ShowActivity ShowActivity { get; set; } = null!;
 }

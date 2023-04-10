@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TvTrackServer;
 
@@ -10,9 +11,11 @@ using TvTrackServer;
 namespace TvTrackServer.Migrations
 {
     [DbContext(typeof(TvTrackServerDbContext))]
-    partial class TvTrackServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230410190252_ShowEpisodeActivityLink")]
+    partial class ShowEpisodeActivityLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
