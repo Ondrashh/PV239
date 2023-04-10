@@ -3,96 +3,95 @@ using Microsoft.EntityFrameworkCore;
 using TvTrackServer.Models;
 using TvTrackServer.Models.Database;
 
-namespace TvTrackServer.Controllers
+namespace TvTrackServer.Controllers;
+
+[Route("users")]
+[ApiController]
+public class UsersController : CustomControllerBase
 {
-    [Route("users")]
-    [ApiController]
-    public class UsersController : CustomControllerBase
+    private readonly TvTrackServerDbContext _context;
+
+    public UsersController(TvTrackServerDbContext context) : base(context)
     {
-        private readonly TvTrackServerDbContext _context;
+        _context = context;
+    }
 
-        public UsersController(TvTrackServerDbContext context) : base(context)
+    // GET: /users
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+    {
+        if (_context.Users == null)
         {
-            _context = context;
+            return NotFound();
+        }
+        return await _context.Users.ToListAsync();
+    }
+
+    // GET: /users/user123
+    [HttpGet("{username}")]
+    public async Task<ActionResult<User>> GetUser(string username)
+    {
+        if (_context.Users == null)
+        {
+            return NotFound();
+        }
+        var user = await FindByUsernameAsync(username);
+
+        if (user == null)
+        {
+            return NotFound();
         }
 
-        // GET: /users
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        return user;
+    }
+
+    // POST /users
+    [HttpPost]
+    public async Task<ActionResult<User>> PostUser(string username)
+    {
+        if (_context.Users == null)
         {
-            if (_context.Users == null)
-            {
-                return NotFound();
-            }
-            return await _context.Users.ToListAsync();
+            return Problem("Entity set 'TVTrackServerDbContext.Users'  is null.");
         }
 
-        // GET: /users/user123
-        [HttpGet("{username}")]
-        public async Task<ActionResult<User>> GetUser(string username)
+        if (await FindByUsernameAsync(username) != null)
         {
-            if (_context.Users == null)
-            {
-                return NotFound();
-            }
-            var user = await FindByUsernameAsync(username);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return user;
+            return BadRequest($"User with username {username} already exists.");
         }
 
-        // POST /users
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(string username)
+        var user = new User() { Username = username };
+        var defaultList = new ShowList()
         {
-            if (_context.Users == null)
-            {
-                return Problem("Entity set 'TVTrackServerDbContext.Users'  is null.");
-            }
+            Name = "Watch Next",
+            Description = "",
+            Default = true,
+            User = user
+        };
+        user.ShowLists.Add(defaultList);
+        _context.Users.Add(user);
+        _context.ShowLists.Add(defaultList);
+        await _context.SaveChangesAsync();
 
-            if (await FindByUsernameAsync(username) != null)
-            {
-                return BadRequest($"User with username {username} already exists.");
-            }
+        return Created(nameof(GetUser), user.Username);
+    }
 
-            var user = new User() { Username = username };
-            var defaultList = new ShowList()
-            {
-                Name = "Watch Next",
-                Description = "",
-                Default = true,
-                User = user
-            };
-            user.ShowLists.Add(defaultList);
-            _context.Users.Add(user);
-            _context.ShowLists.Add(defaultList);
-            await _context.SaveChangesAsync();
-
-            return Created(nameof(GetUser), user.Username);
+    // DELETE: users/user123
+    [HttpDelete("{username}")]
+    public async Task<IActionResult> DeleteUser(string username)
+    {
+        if (_context.Users == null)
+        {
+            return NotFound();
+        }
+        User? user = await FindByUsernameAsync(username);
+        if (user == null)
+        {
+            return NotFound();
         }
 
-        // DELETE: users/user123
-        [HttpDelete("{username}")]
-        public async Task<IActionResult> DeleteUser(string username)
-        {
-            if (_context.Users == null)
-            {
-                return NotFound();
-            }
-            User? user = await FindByUsernameAsync(username);
-            if (user == null)
-            {
-                return NotFound();
-            }
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
+        return NoContent();
     }
 }

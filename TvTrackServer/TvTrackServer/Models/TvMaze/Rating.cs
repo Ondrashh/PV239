@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
 
-namespace TvTrackServer.Models.TvMaze
+namespace TvTrackServer.Models.TvMaze;
+
+public class Rating
 {
-    public class Rating
-    {
-        [JsonProperty("average")]
-        public double? Average { get; set; }
-    }
+    [JsonProperty("average")]
+    public double? Average { get; set; }
 }

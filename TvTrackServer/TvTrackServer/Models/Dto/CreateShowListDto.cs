@@ -1,8 +1,7 @@
-﻿namespace TvTrackServer.Models.Dto
+﻿namespace TvTrackServer.Models.Dto;
+
+public class CreateShowListDto
 {
-    public class CreateShowListDto
-    {
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-    }
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 }
