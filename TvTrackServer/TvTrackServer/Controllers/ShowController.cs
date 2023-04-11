@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TvTrackServer.Models.Database;
+using TvTrackServer.Models.Dto;
 using TvTrackServer.Models.TvMaze;
 using TvTrackServer.TvMazeConnector;
 
@@ -68,7 +69,7 @@ public class ShowController : CustomControllerBase
     }
 
     [HttpPatch("{tvMazeId}/notifications")]
-    public async Task<IActionResult> ToggleNotifications(int tvMazeId, [FromQuery] string username, [FromBody] bool enabled)
+    public async Task<IActionResult> ToggleNotifications(int tvMazeId, [FromQuery] string username, [FromBody] EnabledDto enabledDto)
     {
         var user = await FindByUsernameAsync(username, includeShowActivity: true);
         if (user == null) return BadRequest("Invalid username.");
@@ -78,7 +79,7 @@ public class ShowController : CustomControllerBase
         {
             var newShowActivity = new ShowActivity()
             {
-                Notifications = enabled,
+                Notifications = enabledDto.Enabled,
                 UserId = user.Id,
                 TvMazeId = tvMazeId
             };
@@ -87,7 +88,7 @@ public class ShowController : CustomControllerBase
         }
         else
         {
-            userShowActivity.Notifications = enabled;
+            userShowActivity.Notifications = enabledDto.Enabled;
             _context.Entry(userShowActivity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
@@ -96,7 +97,7 @@ public class ShowController : CustomControllerBase
     }
 
     [HttpPatch("{tvMazeId}/calendar")]
-    public async Task<IActionResult> ToggleCalendar(int tvMazeId, [FromQuery] string username, [FromBody] bool enabled)
+    public async Task<IActionResult> ToggleCalendar(int tvMazeId, [FromQuery] string username, [FromBody] EnabledDto enabledDto)
     {
         var user = await FindByUsernameAsync(username, includeShowActivity: true);
         if (user == null) return BadRequest("Invalid username.");
@@ -106,7 +107,7 @@ public class ShowController : CustomControllerBase
         {
             var newShowActivity = new ShowActivity()
             {
-                Calendar = enabled,
+                Calendar = enabledDto.Enabled,
                 UserId = user.Id,
                 TvMazeId = tvMazeId
             };
@@ -115,7 +116,7 @@ public class ShowController : CustomControllerBase
         }
         else
         {
-            userShowActivity.Calendar = enabled;
+            userShowActivity.Calendar = enabledDto.Enabled;
             _context.Entry(userShowActivity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
@@ -124,9 +125,11 @@ public class ShowController : CustomControllerBase
     }
 
     // TODO mark all show as watched
-    // TODO mark as watched up to episode X
+    // TODO mark all episodes from season as watched
+
+
     [HttpPatch("{showTvMazeId}/episodes/{episodeTvMazeId}")]
-    public async Task<IActionResult> ToggleEpisodeWatchedStatus(int showTvMazeId, int episodeTvMazeId, [FromQuery] string username, [FromBody] bool watched)
+    public async Task<IActionResult> ToggleEpisodeWatchedStatus(int showTvMazeId, int episodeTvMazeId, [FromQuery] string username, [FromBody] WatchedDto watchedDto)
     {
         var user = await FindByUsernameAsync(username);
         if (user == null) return BadRequest("No user with given username.");
@@ -134,7 +137,7 @@ public class ShowController : CustomControllerBase
         var userShowActivity = await FetchOrCreateUserShowActivityAsync(showTvMazeId, user);
         var episodeShowActivity = await FetchOrCreateUserEpisodeActivityAsync(userShowActivity.Id, episodeTvMazeId);
 
-        if (watched)
+        if (watchedDto.Watched)
         {
             episodeShowActivity.Watched = true;
         }
