@@ -5,25 +5,11 @@
 namespace TvTrackServer.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class NewInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "EpisodeActivities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TvMazeId = table.Column<int>(type: "int", nullable: false),
-                    Watched = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EpisodeActivities", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "UserRatedShows",
                 columns: table => new
@@ -61,7 +47,8 @@ namespace TvTrackServer.Migrations
                     TvMazeId = table.Column<int>(type: "int", nullable: false),
                     Notifications = table.Column<bool>(type: "bit", nullable: false),
                     Calendar = table.Column<bool>(type: "bit", nullable: false),
-                    UserRating = table.Column<int>(type: "int", nullable: true),
+                    UserRated = table.Column<bool>(type: "bit", nullable: false),
+                    UserRating = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -98,13 +85,34 @@ namespace TvTrackServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EpisodeActivities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TvMazeId = table.Column<int>(type: "int", nullable: false),
+                    Watched = table.Column<bool>(type: "bit", nullable: false),
+                    ShowActivityId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EpisodeActivities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EpisodeActivities_ShowActivities_ShowActivityId",
+                        column: x => x.ShowActivityId,
+                        principalTable: "ShowActivities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShowListItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TvMazeId = table.Column<int>(type: "int", nullable: false),
-                    ShowListId = table.Column<int>(type: "int", nullable: true)
+                    ShowListId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,8 +121,14 @@ namespace TvTrackServer.Migrations
                         name: "FK_ShowListItems_ShowLists_ShowListId",
                         column: x => x.ShowListId,
                         principalTable: "ShowLists",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EpisodeActivities_ShowActivityId",
+                table: "EpisodeActivities",
+                column: "ShowActivityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShowActivities_UserId",
@@ -139,13 +153,13 @@ namespace TvTrackServer.Migrations
                 name: "EpisodeActivities");
 
             migrationBuilder.DropTable(
-                name: "ShowActivities");
-
-            migrationBuilder.DropTable(
                 name: "ShowListItems");
 
             migrationBuilder.DropTable(
                 name: "UserRatedShows");
+
+            migrationBuilder.DropTable(
+                name: "ShowActivities");
 
             migrationBuilder.DropTable(
                 name: "ShowLists");

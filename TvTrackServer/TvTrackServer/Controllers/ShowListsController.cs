@@ -23,20 +23,14 @@ public class ShowListsController : CustomControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ShowList>>> GetShowLists([FromQuery] string username)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        var user = await FindByUsernameAsync(username, includeShowLists: true);
 
         if (user == null)
         {
             return BadRequest($"User with username '{username}' doesn't exist.");
         }
 
-        if (_context.ShowLists == null)
-        {
-            return NotFound();
-        }
-
-        var lists = await _context.ShowLists.Where(l => l.UserId == user.Id).ToListAsync();
-        var listsDtos = _mapper.Map<List<ShowList>, List<ShowListPreviewDto>>(lists);
+        var listsDtos = _mapper.Map<List<ShowList>, List<ShowListPreviewDto>>(user.ShowLists);
         return Ok(listsDtos);
     }
 
@@ -139,9 +133,9 @@ public class ShowListsController : CustomControllerBase
     public async Task<IActionResult> AddShowsToDefaultList(int tvMazeId, [FromQuery] string username)
     {
         if (_context.ShowLists == null) return BadRequest("No lists in the database.");
-        var user = await FindByUsernameAsync(username);
+        var user = await FindByUsernameAsync(username, includeShowLists: true);
         if (user == null) return BadRequest($"No user wíth username {username}.");
-        var defaultList = _context.ShowLists.FirstOrDefault(sl => sl.UserId == user.Id && sl.Default);
+        var defaultList = user.ShowLists.FirstOrDefault(l => l.Default);
         if (defaultList == null) return Problem("User has no default list.");
 
         return await AddShowToList(tvMazeId, defaultList);
@@ -172,14 +166,12 @@ public class ShowListsController : CustomControllerBase
     [HttpDelete("default/shows/{tvMazeShowId}")]
     public async Task<IActionResult> DeleteShowFromDefaultList(int tvMazeShowId, [FromQuery] string username)
     {
-        var user = await FindByUsernameAsync(username);
+        var user = await FindByUsernameAsync(username, includeShowLists: true);
         if (user == null) return NotFound("No user with given username.");
-        var usersDefaultList = await _context.ShowLists.FirstOrDefaultAsync(l => l.UserId == user.Id && l.Default);
+        var usersDefaultList = user.ShowLists.FirstOrDefault(l => l.Default);
         if (usersDefaultList == null) return Problem("User has no default list, even though every user should.");
         return await DeleteShowFromList(usersDefaultList, tvMazeShowId);
     }
-
-
 
     [HttpDelete("{listId}/shows/{tvMazeShowId}")]
     public async Task<IActionResult> DeleteShowFromList(int listId, int tvMazeShowId)

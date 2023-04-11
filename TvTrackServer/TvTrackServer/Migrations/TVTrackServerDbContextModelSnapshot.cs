@@ -167,7 +167,7 @@ namespace TvTrackServer.Migrations
             modelBuilder.Entity("TvTrackServer.Models.Database.EpisodeActivity", b =>
                 {
                     b.HasOne("TvTrackServer.Models.Database.ShowActivity", "ShowActivity")
-                        .WithMany()
+                        .WithMany("EpisodeActivities")
                         .HasForeignKey("ShowActivityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -178,7 +178,7 @@ namespace TvTrackServer.Migrations
             modelBuilder.Entity("TvTrackServer.Models.Database.ShowActivity", b =>
                 {
                     b.HasOne("TvTrackServer.Models.Database.User", "User")
-                        .WithMany()
+                        .WithMany("ShowActivities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -189,7 +189,7 @@ namespace TvTrackServer.Migrations
             modelBuilder.Entity("TvTrackServer.Models.Database.ShowList", b =>
                 {
                     b.HasOne("TvTrackServer.Models.Database.User", "User")
-                        .WithMany()
+                        .WithMany("ShowLists")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -199,16 +199,30 @@ namespace TvTrackServer.Migrations
 
             modelBuilder.Entity("TvTrackServer.Models.Database.ShowListItem", b =>
                 {
-                    b.HasOne("TvTrackServer.Models.Database.ShowList", null)
+                    b.HasOne("TvTrackServer.Models.Database.ShowList", "ShowList")
                         .WithMany("Shows")
                         .HasForeignKey("ShowListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ShowList");
+                });
+
+            modelBuilder.Entity("TvTrackServer.Models.Database.ShowActivity", b =>
+                {
+                    b.Navigation("EpisodeActivities");
                 });
 
             modelBuilder.Entity("TvTrackServer.Models.Database.ShowList", b =>
                 {
                     b.Navigation("Shows");
+                });
+
+            modelBuilder.Entity("TvTrackServer.Models.Database.User", b =>
+                {
+                    b.Navigation("ShowActivities");
+
+                    b.Navigation("ShowLists");
                 });
 #pragma warning restore 612, 618
         }

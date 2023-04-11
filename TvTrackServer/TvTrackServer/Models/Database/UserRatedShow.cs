@@ -1,7 +1,10 @@
-﻿namespace TvTrackServer.Models.Database;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TvTrackServer.Models.Database;
 
 public class UserRatedShow
 {
+    [Key]
     public int Id { get; set; }
     public int TvMazeId { get; set; }
 

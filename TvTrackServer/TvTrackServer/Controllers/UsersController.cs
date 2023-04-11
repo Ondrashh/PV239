@@ -45,6 +45,9 @@ public class UsersController : CustomControllerBase
         return user;
     }
 
+    // GET /users/user123/stats
+    // TODO @hojkas
+
     // POST /users
     [HttpPost]
     public async Task<ActionResult<User>> PostUser(string username)

@@ -1,7 +1,11 @@
-﻿namespace TvTrackServer.Models.Database;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TvTrackServer.Models.Database;
 
 public class ShowActivity
 {
+    [Key]
     public int Id { get; set; }
     public int TvMazeId { get; set; }
 
@@ -11,8 +15,11 @@ public class ShowActivity
     public bool UserRated { get; set; } = false;
     public int UserRating { get; set; } = 0;
 
-    public int UserId { get; set; }
-    public User User { get; set; } = null!;
 
+    [ForeignKey(nameof(User))]
+    public int UserId { get; set; }
+    public virtual User User { get; set; } = null!;
+
+    [InverseProperty(nameof(EpisodeActivity.ShowActivity))]
     public List<EpisodeActivity> EpisodeActivities = new();
 }

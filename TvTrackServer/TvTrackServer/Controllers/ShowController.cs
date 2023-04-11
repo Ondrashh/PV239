@@ -41,7 +41,6 @@ public class ShowController : CustomControllerBase
 
     private async Task LoadUserActivityInfo(int tvMazeId, User user, Show showDetails)
     {
-        // TODO include here but defs need to be updated for it to work
         var usersShowActivity = await _context.ShowActivities.Include(s => s.EpisodeActivities).FirstOrDefaultAsync(s => s.UserId == user.Id && s.TvMazeId == tvMazeId);
         if (usersShowActivity != null)
         {
@@ -71,10 +70,10 @@ public class ShowController : CustomControllerBase
     [HttpPatch("{tvMazeId}/notifications")]
     public async Task<IActionResult> ToggleNotifications(int tvMazeId, [FromQuery] string username, [FromBody] bool enabled)
     {
-        var user = await FindByUsernameAsync(username);
+        var user = await FindByUsernameAsync(username, includeShowActivity: true);
         if (user == null) return BadRequest("Invalid username.");
 
-        var userShowActivity = await _context.ShowActivities.FirstOrDefaultAsync(s => s.UserId == user.Id && s.TvMazeId == tvMazeId);
+        var userShowActivity = user.ShowActivities.FirstOrDefault(s=> s.TvMazeId == tvMazeId);
         if (userShowActivity == null)
         {
             var newShowActivity = new ShowActivity()
@@ -99,10 +98,10 @@ public class ShowController : CustomControllerBase
     [HttpPatch("{tvMazeId}/calendar")]
     public async Task<IActionResult> ToggleCalendar(int tvMazeId, [FromQuery] string username, [FromBody] bool enabled)
     {
-        var user = await FindByUsernameAsync(username);
+        var user = await FindByUsernameAsync(username, includeShowActivity: true);
         if (user == null) return BadRequest("Invalid username.");
 
-        var userShowActivity = await _context.ShowActivities.FirstOrDefaultAsync(s => s.UserId == user.Id && s.TvMazeId == tvMazeId);
+        var userShowActivity = user.ShowActivities.FirstOrDefault(s => s.TvMazeId == tvMazeId);
         if (userShowActivity == null)
         {
             var newShowActivity = new ShowActivity()
