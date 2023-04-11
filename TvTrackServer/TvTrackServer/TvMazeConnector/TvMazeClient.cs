@@ -22,12 +22,23 @@ public class TvMazeClient
         return response;
     }
 
-    public async Task<Show> GetShowDetails(int id)
+    public async Task<Show> GetShowDetailsWithSeasonsAndEpisodes(int id)
     {
         var request = new RestRequest(TvMazeEndpoints.SHOW)
             .AddUrlSegment("id", id)
             .AddQueryParameter("embed[]", "episodes", false)
             .AddQueryParameter("embed[]", "seasons", false);
+        var response = await _client.GetAsync(request);
+
+        var show = JsonConvert.DeserializeObject<Show>(response.Content);
+
+        return show;
+    }
+
+    public async Task<Show> GetShowDetails(int id)
+    {
+        var request = new RestRequest(TvMazeEndpoints.SHOW)
+            .AddUrlSegment("id", id);
         var response = await _client.GetAsync(request);
 
         var show = JsonConvert.DeserializeObject<Show>(response.Content);

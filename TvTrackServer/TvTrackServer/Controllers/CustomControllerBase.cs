@@ -13,12 +13,21 @@ public class CustomControllerBase : ControllerBase
         _context = dbContext;
     }
 
-    protected async Task<User?> FindByUsernameAsync(string? username, bool includeShowActivity = false, bool includeShowLists = false)
+    protected async Task<User?> FindByUsernameAsync(string? username)
     {
         if (username == null) return null;
-        var usersQuery = _context.Users;
-        if (includeShowActivity) usersQuery.Include(u => u.ShowActivities);
-        if (includeShowLists) usersQuery.Include(u => u.ShowLists);
-        return await usersQuery.FirstOrDefaultAsync(u => u.Username == username);
+        return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+    }
+
+    protected async Task<User?> FindByUsernameWithShowListsAsync(string? username)
+    {
+        if (username == null) return null;
+        return await _context.Users.Include(u => u.ShowLists).ThenInclude(l => l.Shows).FirstOrDefaultAsync(u => u.Username == username);
+    }
+
+    protected async Task<User?> FindByUsernameWithShowActivitiesAsync(string? username)
+    {
+        if (username == null) return null;
+        return await _context.Users.Include(u => u.ShowActivities).ThenInclude(s => s.EpisodeActivities).FirstOrDefaultAsync(u => u.Username == username);
     }
 }

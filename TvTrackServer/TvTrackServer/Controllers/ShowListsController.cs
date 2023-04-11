@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TvTrackServer.Models.Database;
 using TvTrackServer.Models.Dto;
+using TvTrackServer.TvMazeConnector;
 
 namespace TvTrackServer.Controllers;
 
@@ -12,18 +13,20 @@ public class ShowListsController : CustomControllerBase
 {
     private readonly TvTrackServerDbContext _context;
     private readonly IMapper _mapper;
+    private readonly TvMazeClient _tvMazeClient;
 
     public ShowListsController(TvTrackServerDbContext context, IMapper mapper) : base(context)
     {
         _context = context;
         _mapper = mapper;
+        _tvMazeClient = new TvMazeClient();
     }
 
     // GET: /showlists?username=user
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ShowList>>> GetShowLists([FromQuery] string username)
     {
-        var user = await FindByUsernameAsync(username, includeShowLists: true);
+        var user = await FindByUsernameWithShowListsAsync(username);
 
         if (user == null)
         {
@@ -38,20 +41,15 @@ public class ShowListsController : CustomControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<ShowList>> GetShowList(int id)
     {
-        if (_context.ShowLists == null)
-        {
-            return NotFound();
-        }
-        var showList = await _context.ShowLists.FindAsync(id);
+        var showList = await _context.ShowLists.Include(e => e.Shows).FirstOrDefaultAsync(e => e.Id == id);
+        if (showList == null) return BadRequest("No show list with given id exists.");
 
-        if (showList == null)
+        List<Models.TvMaze.Show> shows = new();
+        foreach (var showListItem in showList.Shows)
         {
-            return NotFound();
+            shows.Add(await _tvMazeClient.GetShowDetails(showListItem.TvMazeId));
         }
-
-        // TODO here will be the extra linking stuff
-        // return showList;
-        return Ok("This endpoint is under construction.");
+        return Ok(shows);
     }
 
     // PUT: showlists/5
@@ -133,7 +131,7 @@ public class ShowListsController : CustomControllerBase
     public async Task<IActionResult> AddShowsToDefaultList(int tvMazeId, [FromQuery] string username)
     {
         if (_context.ShowLists == null) return BadRequest("No lists in the database.");
-        var user = await FindByUsernameAsync(username, includeShowLists: true);
+        var user = await FindByUsernameWithShowListsAsync(username);
         if (user == null) return BadRequest($"No user wíth username {username}.");
         var defaultList = user.ShowLists.FirstOrDefault(l => l.Default);
         if (defaultList == null) return Problem("User has no default list.");
@@ -166,7 +164,7 @@ public class ShowListsController : CustomControllerBase
     [HttpDelete("default/shows/{tvMazeShowId}")]
     public async Task<IActionResult> DeleteShowFromDefaultList(int tvMazeShowId, [FromQuery] string username)
     {
-        var user = await FindByUsernameAsync(username, includeShowLists: true);
+        var user = await FindByUsernameWithShowListsAsync(username);
         if (user == null) return NotFound("No user with given username.");
         var usersDefaultList = user.ShowLists.FirstOrDefault(l => l.Default);
         if (usersDefaultList == null) return Problem("User has no default list, even though every user should.");
