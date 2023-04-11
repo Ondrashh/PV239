@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 using TvTrackServer.Models.Database;
 using TvTrackServer.Models.Dto;
 using TvTrackServer.Models.TvMaze;
@@ -20,6 +21,7 @@ public class ShowController : CustomControllerBase
         _tvMazeClient = new TvMazeClient();
     }
 
+    [SwaggerOperation(Summary = "Search for show")]
     [HttpGet("search")]
     public async Task<IActionResult> Search([FromQuery] string search)
     {
@@ -27,17 +29,29 @@ public class ShowController : CustomControllerBase
         return Ok(result);
     }
 
+    [SwaggerOperation(Summary = "Get show details, including user's activity regarding it")]
     [HttpGet("{tvMazeId}")]
     public async Task<IActionResult> GetShow(int tvMazeId, [FromQuery] string? username)
     {
-        var user = await FindByUsernameAsync(username);
+        var user = await FindByUsernameWithShowListsAsync(username);
         var showDetails = await _tvMazeClient.GetShowDetailsWithSeasonsAndEpisodes(tvMazeId);
 
         if (user == null) return Ok(showDetails);
 
         await LoadUserActivityInfo(tvMazeId, user, showDetails);
         await LoadTvTrackRatingInfo(tvMazeId, showDetails);
+
+        showDetails.InUsersDefaultList = ShowInUsersDefaultList(tvMazeId, user);
+
         return Ok(showDetails);
+    }
+
+    private bool ShowInUsersDefaultList(int tvMazeId, User user)
+    {
+        var usersDefaultList = user.ShowLists.FirstOrDefault(e => e.Default);
+        if (usersDefaultList == null) return false;
+        var showItemInDefaultList = usersDefaultList.Shows.FirstOrDefault(s => s.TvMazeId == tvMazeId);
+        return showItemInDefaultList != null;
     }
 
     private async Task LoadUserActivityInfo(int tvMazeId, User user, Show showDetails)
@@ -68,6 +82,7 @@ public class ShowController : CustomControllerBase
         }
     }
 
+    [SwaggerOperation(Summary = "Turn on or off notifications for this show")]
     [HttpPatch("{tvMazeId}/notifications")]
     public async Task<IActionResult> ToggleNotifications(int tvMazeId, [FromQuery] string username, [FromBody] EnabledDto enabledDto)
     {
@@ -96,6 +111,7 @@ public class ShowController : CustomControllerBase
         return Ok();
     }
 
+    [SwaggerOperation(Summary = "Turn on or off showing show in user's calendar")]
     [HttpPatch("{tvMazeId}/calendar")]
     public async Task<IActionResult> ToggleCalendar(int tvMazeId, [FromQuery] string username, [FromBody] EnabledDto enabledDto)
     {
@@ -127,7 +143,7 @@ public class ShowController : CustomControllerBase
     // TODO mark all show as watched
     // TODO mark all episodes from season as watched
 
-
+    [SwaggerOperation(Summary = "Set whether the user has watched this episode or not")]
     [HttpPatch("{showTvMazeId}/episodes/{episodeTvMazeId}")]
     public async Task<IActionResult> ToggleEpisodeWatchedStatus(int showTvMazeId, int episodeTvMazeId, [FromQuery] string username, [FromBody] WatchedDto watchedDto)
     {
@@ -150,6 +166,7 @@ public class ShowController : CustomControllerBase
         return Ok();
     }
 
+    [SwaggerOperation(Summary = "Post user's show rating")]
     [HttpPost("{tvMazeId}/ratings")]
     public async Task<IActionResult> PostRating(int tvMazeId, [FromQuery] string username, int rating)
     {

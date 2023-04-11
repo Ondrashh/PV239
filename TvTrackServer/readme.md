@@ -44,4 +44,3 @@ erDiagram
 	User 1--many(0) ShowActivity: has
 	ShowActivity 1--many(0) EpisodeActivity: contains
 ```
-

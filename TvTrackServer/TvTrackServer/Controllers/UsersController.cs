@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 using TvTrackServer.Models;
 using TvTrackServer.Models.Database;
 
@@ -17,6 +18,7 @@ public class UsersController : CustomControllerBase
     }
 
     // GET: /users
+    [SwaggerOperation(Summary = "Gets all users")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
@@ -28,6 +30,7 @@ public class UsersController : CustomControllerBase
     }
 
     // GET: /users/user123
+    [SwaggerOperation(Summary = "Gets single users information")]
     [HttpGet("{username}")]
     public async Task<ActionResult<User>> GetUser(string username)
     {
@@ -49,6 +52,7 @@ public class UsersController : CustomControllerBase
     // TODO @hojkas
 
     // POST /users
+    [SwaggerOperation(Summary = "Creates user")]
     [HttpPost]
     public async Task<ActionResult<User>> PostUser(string username)
     {
@@ -79,6 +83,7 @@ public class UsersController : CustomControllerBase
     }
 
     // DELETE: users/user123
+    [SwaggerOperation(Summary = "Removes user")]
     [HttpDelete("{username}")]
     public async Task<IActionResult> DeleteUser(string username)
     {

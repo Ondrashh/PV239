@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 using TvTrackServer.Models.Database;
 using TvTrackServer.Models.Dto;
 using TvTrackServer.TvMazeConnector;
@@ -23,6 +24,7 @@ public class ShowListsController : CustomControllerBase
     }
 
     // GET: /showlists?username=user
+    [SwaggerOperation(Summary = "Get user's show lists overview")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ShowList>>> GetShowLists([FromQuery] string username)
     {
@@ -38,6 +40,7 @@ public class ShowListsController : CustomControllerBase
     }
 
     // GET: /showlists/5
+    [SwaggerOperation(Summary = "Get show list detail including detail of shows in it")]
     [HttpGet("{id}")]
     public async Task<ActionResult<ShowList>> GetShowList(int id)
     {
@@ -53,6 +56,7 @@ public class ShowListsController : CustomControllerBase
     }
 
     // PUT: showlists/5
+    [SwaggerOperation(Summary = "Edits show list")]
     [HttpPut("{id}")]
     public async Task<IActionResult> PutShowList(int id, CreateShowListDto showListDto)
     {
@@ -85,6 +89,7 @@ public class ShowListsController : CustomControllerBase
     }
 
     // POST: /showlists
+    [SwaggerOperation(Summary = "Creates user's show list")]
     [HttpPost]
     public async Task<ActionResult<ShowList>> PostShowList(CreateShowListDto showListDto, [FromQuery] string username)
     {
@@ -104,6 +109,7 @@ public class ShowListsController : CustomControllerBase
     }
 
     // DELETE: /showlists/5
+    [SwaggerOperation(Summary = "Deletes user's show list, cannot delete default")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteShowList(int id)
     {
@@ -127,6 +133,7 @@ public class ShowListsController : CustomControllerBase
         return NoContent();
     }
 
+    [SwaggerOperation(Summary = "Add show to user's default list")]
     [HttpPost("default/shows")]
     public async Task<IActionResult> AddShowsToDefaultList(int tvMazeId, [FromQuery] string username)
     {
@@ -139,6 +146,7 @@ public class ShowListsController : CustomControllerBase
         return await AddShowToList(tvMazeId, defaultList);
     }
 
+    [SwaggerOperation(Summary = "Add show to given show list")]
     [HttpPost("{listId}/shows")]
     public async Task<IActionResult> AddShowToList(int listId, int tvMazeId)
     {
@@ -161,6 +169,7 @@ public class ShowListsController : CustomControllerBase
         return Ok();
     }
 
+    [SwaggerOperation(Summary = "Remove show from user's default list")]
     [HttpDelete("default/shows/{tvMazeShowId}")]
     public async Task<IActionResult> DeleteShowFromDefaultList(int tvMazeShowId, [FromQuery] string username)
     {
@@ -171,6 +180,7 @@ public class ShowListsController : CustomControllerBase
         return await DeleteShowFromList(usersDefaultList, tvMazeShowId);
     }
 
+    [SwaggerOperation(Summary = "Remove show from given show list")]
     [HttpDelete("{listId}/shows/{tvMazeShowId}")]
     public async Task<IActionResult> DeleteShowFromList(int listId, int tvMazeShowId)
     {
