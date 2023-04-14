@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TVTrack.TVMaze.Client;
-using TVTrack.TVMaze.Client.Models;
 using TVTrack.Mobile.Models;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;

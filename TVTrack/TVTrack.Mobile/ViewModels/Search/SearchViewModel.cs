@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TVTrack.Mobile.Models;
 using TVTrack.TVMaze.Client;
-using TVTrack.TVMaze.Client.Models;
 
 namespace TVTrack.Mobile.ViewModels.Search
 {
@@ -17,7 +16,7 @@ namespace TVTrack.Mobile.ViewModels.Search
     {
         private readonly TVMazeClient _client;
 
-        public ObservableCollection<TVTrack.TVMaze.Client.Models.Search> Results { get; set; } = new ObservableCollection<TVTrack.TVMaze.Client.Models.Search>();
+        public ObservableCollection<TVTrack.Models.TvMaze.Search> Results { get; set; } = new ObservableCollection<TVTrack.Models.TvMaze.Search>();
 
         public string SearchInput { get; set; }
 

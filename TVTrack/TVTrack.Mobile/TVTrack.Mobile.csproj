@@ -79,11 +79,14 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Scrutor" Version="4.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\TVTrack.Models\TVTrack.Models.TVMaze\TVTrack.Models.TvMaze.csproj" />
+	  <ProjectReference Include="..\TVTrack.API.Client\TVTrack.API.Client.csproj" />
 	  <ProjectReference Include="..\TVTrack.TVMaze.Client\TVTrack.TVMaze.Client.csproj" />
 	</ItemGroup>
 

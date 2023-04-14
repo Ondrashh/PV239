@@ -1,6 +1,4 @@
-﻿using TvTrackServer.Models.Database;
-
-namespace TvTrackServer.Models.Dto;
+﻿namespace TvTrackServer.Models.Dto;
 public class ShowListPreviewDto
 {
     public int Id { get; set; }

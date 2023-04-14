@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
-using TvTrackServer.Models.Database;
+using TVTrack.Models.Database;
+using TVTrack.Models.TvMaze;
 using TvTrackServer.Models.Dto;
 using TvTrackServer.TvMazeConnector;
 
@@ -47,7 +48,7 @@ public class ShowListsController : CustomControllerBase
         var showList = await _context.ShowLists.Include(e => e.Shows).FirstOrDefaultAsync(e => e.Id == id);
         if (showList == null) return BadRequest("No show list with given id exists.");
 
-        List<Models.TvMaze.Show> shows = new();
+        List<Show> shows = new();
         foreach (var showListItem in showList.Shows)
         {
             shows.Add(await _tvMazeClient.GetShowDetails(showListItem.TvMazeId));

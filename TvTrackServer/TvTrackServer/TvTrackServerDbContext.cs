@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TvTrackServer.Models;
-using TvTrackServer.Models.Database;
+using TVTrack.Models.Database;
 
 namespace TvTrackServer;
 
