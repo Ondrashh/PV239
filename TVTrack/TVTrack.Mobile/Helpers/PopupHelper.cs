@@ -28,7 +28,7 @@ namespace TVTrack.Mobile.Helpers
         {
             var popup = _serviceProvider.GetRequiredService<T>();
             popup.ID = id;
-            var w = DeviceDisplay.MainDisplayInfo.Width;
+            var w = DeviceDisplay.MainDisplayInfo.Width * 0.37;
             popup.Size = new Size(w, popup.Size.Height);
 
             await Application.Current.MainPage.ShowPopupAsync(popup);

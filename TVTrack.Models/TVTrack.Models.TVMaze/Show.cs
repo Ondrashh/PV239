@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace TVTrack.Models.TvMaze;
 
@@ -71,9 +72,11 @@ public class Show
     public int Updated { get; set; }
 
     [JsonProperty("_links")]
+    [JsonPropertyName("_link")]
     public Links Links { get; set; }
 
     [JsonProperty("_embedded")]
+    [JsonPropertyName("_embedded")]
     public Embedded? Embedded { get; set; }
 
     public bool? UserRated { get; set; } = null;

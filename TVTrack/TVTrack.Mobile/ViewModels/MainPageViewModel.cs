@@ -25,5 +25,14 @@ namespace TVTrack.Mobile.ViewModels
             _settings = AppSettings.Get(configuration);
         }
 
+
+        [RelayCommand]
+        public async Task OpenShowDetailAsync(string id)
+        {
+            await Shell.Current.GoToAsync("detail", new Dictionary<string, object>
+            {
+                [nameof(id)] = int.Parse(id)
+            });
+        }
     }
 }

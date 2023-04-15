@@ -1,4 +1,6 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using TVTrack.Models.TvMaze;
 
 namespace TVTrack.API.Client
 {
@@ -16,5 +18,81 @@ namespace TVTrack.API.Client
         {
             _client.Dispose();
         }
+
+        public async Task<ICollection<Search>> Search(string query)
+        {
+            var request = new RestRequest(TVTrackEndpoints.SEARCH)
+                .AddQueryParameter("search", query);
+            request.Method = Method.Get;
+            var response = await _client.GetAsync<ICollection<Search>>(request);
+
+            return response;
+        }
+
+        public async Task<Show> GetShowDetails(int id)
+        {
+            var request = new RestRequest(TVTrackEndpoints.SHOW)
+                .AddUrlSegment("id", id)
+                .AddQueryParameter("embed[]", "episodes", false)
+                .AddQueryParameter("embed[]", "seasons", false);
+            request.Method = Method.Get;
+            var response = await _client.GetAsync<Show>(request);
+
+            return response;
+        }
+
+        public async Task ToggleNotifications(int id, string username, bool enabled)
+        {
+            var request = new RestRequest(TVTrackEndpoints.NOTIFICATION)
+                .AddUrlSegment("id", id)
+                .AddQueryParameter("username", username)
+                .AddBody(new EnabledDto() { Enabled = enabled});
+            request.Method = Method.Patch;
+            await _client.PatchAsync(request);
+        }
+
+        public async Task ToggleCalendar(int id, string username, bool enabled)
+        {
+            var request = new RestRequest(TVTrackEndpoints.CALENDAR)
+                .AddUrlSegment("id", id)
+                .AddQueryParameter("username", username)
+                .AddBody(new EnabledDto() { Enabled = enabled });
+            request.Method = Method.Patch;
+            await _client.PatchAsync(request);
+        }
+
+        public async Task PostRating(int id, string username, int rating)
+        {
+            var request = new RestRequest(TVTrackEndpoints.RATE)
+                .AddUrlSegment("id", id)
+                .AddQueryParameter("username", username)
+                .AddQueryParameter("rating", rating);
+            request.Method = Method.Post;
+            await _client.PostAsync(request);
+        }
+
+
+        public async Task AddWatchNext(int id, string username)
+        {
+            var request = new RestRequest(TVTrackEndpoints.LIST_DEFAULT)
+                .AddQueryParameter("tvMazeId", id)
+                .AddQueryParameter("username", username);
+            request.Method = Method.Post;
+            await _client.PostAsync(request);
+        }
+
+        public async Task RemoveWatchNext(int id, string username)
+        {
+            var request = new RestRequest(TVTrackEndpoints.LIST_DEFAULT_DELETE)
+                .AddUrlSegment("tvMazeId", id)
+                .AddQueryParameter("username", username);
+            request.Method = Method.Delete;
+            await _client.DeleteAsync(request);
+        }
     }
+    public class EnabledDto
+    {
+        public bool Enabled { get; set; }
+    }
+
 }

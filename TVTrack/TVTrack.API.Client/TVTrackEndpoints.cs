@@ -8,7 +8,7 @@ namespace TVTrack.API.Client
 {
     internal class TVTrackEndpoints
     {
-        public const string SEARCH = "search/shows";
+        public const string SEARCH = "shows/search";
         public const string SHOW = "shows/{id}";
         public const string NOTIFICATION = "shows/{id}/notifications";
         public const string CALENDAR = "shows/{id}/calendar";
@@ -18,6 +18,7 @@ namespace TVTrack.API.Client
         public const string LISTS = "showlists";
         public const string LIST_DETAIL = "showlists/{id}";
         public const string LIST_DEFAULT = "showlists/default/shows";
+        public const string LIST_DEFAULT_DELETE = "/showlists/default/shows/{id}";
         public const string LIST_USER = "showlists/{id}/shows";
 
         public const string USERS = "users";

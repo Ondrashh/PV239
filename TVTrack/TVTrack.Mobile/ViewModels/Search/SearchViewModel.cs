@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVTrack.API.Client;
 using TVTrack.Mobile.Models;
 using TVTrack.TVMaze.Client;
 
@@ -14,13 +15,13 @@ namespace TVTrack.Mobile.ViewModels.Search
 {
     public partial class SearchViewModel: ViewModelBase
     {
-        private readonly TVMazeClient _client;
+        private readonly TVTrackClient _client;
 
         public ObservableCollection<TVTrack.Models.TvMaze.Search> Results { get; set; } = new ObservableCollection<TVTrack.Models.TvMaze.Search>();
 
         public string SearchInput { get; set; }
 
-        public SearchViewModel(TVMazeClient client,
+        public SearchViewModel(TVTrackClient client,
             IMapper mapper): base(mapper)
         {
             _client = client;
