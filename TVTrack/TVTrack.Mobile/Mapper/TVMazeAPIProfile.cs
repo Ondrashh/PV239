@@ -37,7 +37,8 @@ namespace TVTrack.Mobile.Mapper
                 .ForMember(x => x.ImageUrl, opt => opt.MapFrom(src => src.Image.Original))
                 .ForMember(x => x.Aired, opt => opt.MapFrom(src => src.Airstamp))
                 .ForMember(x => x.AverageRating, opt => opt.MapFrom(src => src.Rating.Average))
-                .ForMember(x => x.FormattedName, opt => opt.Ignore());
+                .ForMember(x => x.FormattedName, opt => opt.Ignore())
+                .ForMember(x => x.Watched, opt => opt.MapFrom(src => src.UserWatched));
         }
     }
 }

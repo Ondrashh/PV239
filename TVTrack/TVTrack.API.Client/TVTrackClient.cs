@@ -89,10 +89,25 @@ namespace TVTrack.API.Client
             request.Method = Method.Delete;
             await _client.DeleteAsync(request);
         }
+
+        public async Task ToggleWatchedEpisode(int showId, int episodeId, string username, bool watched)
+        {
+            var request = new RestRequest(TVTrackEndpoints.EPISODE_WATCHED)
+                .AddUrlSegment("showId", showId)
+                .AddUrlSegment("epId", episodeId)
+                .AddQueryParameter("username", username)
+                .AddBody(new WatchedDto() { Watched = watched });
+            request.Method = Method.Patch;
+            await _client.PatchAsync(request);
+        }
     }
     public class EnabledDto
     {
         public bool Enabled { get; set; }
+    }
+    public class WatchedDto
+    {
+        public bool Watched { get; set; }
     }
 
 }

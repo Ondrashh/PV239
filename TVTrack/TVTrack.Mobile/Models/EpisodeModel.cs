@@ -36,6 +36,9 @@ namespace TVTrack.Mobile.Models
         [ObservableProperty]
         public double? averageRating;
 
+        [ObservableProperty] 
+        public bool watched;
+
         public string FormattedName
         {
             get

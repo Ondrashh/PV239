@@ -8,18 +8,27 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVTrack.API.Client;
 using TVTrack.Mobile.Models;
 
 namespace TVTrack.Mobile.ViewModels.Shows
 {
+    [QueryProperty(nameof(ShowId), "showId")]
     [QueryProperty(nameof(Season), "season")]
     [QueryProperty(nameof(Episodes), "episodes")]
     public partial class SeasonDetailViewModel : ViewModelBase
     {
-        public SeasonDetailViewModel(IMapper mapper) : base(mapper)
+        private readonly TVTrackClient _client;
+        private string _username = "TODO";
+
+        public SeasonDetailViewModel(TVTrackClient client, 
+            IMapper mapper) : base(mapper)
         {
+            _client = client;
         }
 
+        [ObservableProperty]
+        public int showId;
         [ObservableProperty]
         public SeasonModel season;
         [ObservableProperty]
@@ -27,13 +36,22 @@ namespace TVTrack.Mobile.ViewModels.Shows
 
         public override Task OnAppearingAsync()
         {
+            // TODO ADD USER MANAGEMENT
+            _username = "TODO!";
             return base.OnAppearingAsync();
         }
 
         [RelayCommand]
         public async Task OpenEpisodeDetailAsync(Image chevron)
         {
-            await chevron.RotateTo(180, 1000);
+        }
+
+        [RelayCommand]
+        public async Task MarkEpisodeAsWatchedAsync(int id)
+        {
+            var episode = episodes.FirstOrDefault(x => x.id == id);
+            episode.Watched = !episode.watched;
+            await _client.ToggleWatchedEpisode(showId, id, _username, episode.Watched);
         }
     }
 }

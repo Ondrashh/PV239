@@ -1,153 +1,215 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TVTrack.Mobile.Views.Shows.SeasonDetailView"
-             xmlns:views="clr-namespace:TVTrack.Mobile.Views"
-             xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Shows"
-             xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
-             xmlns:m="clr-namespace:TVTrack.Mobile.Models"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             Title="{Binding Season.FormattedName}"
-             x:Name="Root"
-             x:DataType="vm:SeasonDetailViewModel">
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.Views.Shows.SeasonDetailView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
+    xmlns:m="clr-namespace:TVTrack.Mobile.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Shows"
+    x:Name="Root"
+    Title="{Binding Season.FormattedName}"
+    x:DataType="vm:SeasonDetailViewModel">
     <ScrollView Padding="10">
-        <Grid ColumnSpacing="10" RowSpacing="5" Padding="3">
+        <Grid
+            Padding="3"
+            ColumnSpacing="10"
+            RowSpacing="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="140" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Column="0"
-                   Grid.Row="0"
-                   Aspect="AspectFit"
-                   VerticalOptions="Start"
-                   Source="{Binding Season.ImageUrl, TargetNullValue='/Images/dotnet_bot.svg'}"/>
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                Aspect="AspectFit"
+                Source="{Binding Season.ImageUrl, TargetNullValue='/Images/dotnet_bot.svg'}"
+                VerticalOptions="Start" />
 
-            <Grid Grid.Row="0" Grid.Column="1" >
+            <Grid Grid.Row="0" Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0"
-                       Grid.Column="0"
-                       Text="Network"/>
-                <Label Grid.Row="0"
-                       Grid.Column="1"
-                       TextType="Html"
-                       Text="{Binding Season.Network}"/>
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Network" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="{Binding Season.Network}"
+                    TextType="Html" />
 
-                <Label Grid.Row="1"
-                       Grid.Column="0"
-                       Text="Premiered"/>
-                <Label Grid.Row="1"
-                       Grid.Column="1"
-                       TextType="Html"
-                       Text="{Binding Season.Premiered, StringFormat='{0:dd. MM. yyy}'}"/>
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="Premiered" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="{Binding Season.Premiered, StringFormat='{0:dd. MM. yyy}'}"
+                    TextType="Html" />
 
-                <Label Grid.Row="2"
-                       Grid.Column="0"
-                       Text="Ended"/>
-                <Label Grid.Row="2"
-                       Grid.Column="1"
-                       TextType="Html"
-                       Text="{Binding Season.Ended, StringFormat='{0:dd. MM. yyy}'}"/>
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="Ended" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{Binding Season.Ended, StringFormat='{0:dd. MM. yyy}'}"
+                    TextType="Html" />
             </Grid>
 
-            <Label Grid.Row="1" Grid.ColumnSpan="2" TextType="Html" Text="{Binding Season.Summary}" Padding="2"/>
-            <CollectionView Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Episodes}" Margin="0, -10, 0 ,0">
+            <Label
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Padding="2"
+                Text="{Binding Season.Summary}"
+                TextType="Html" />
+            <CollectionView
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="0,-10,0,0"
+                ItemsSource="{Binding Episodes}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Padding="8, 0" Margin="0, 3">
+                        <Grid Margin="0,3" Padding="8,0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <toolkit:Expander x:DataType="m:EpisodeModel" Grid.Row="0">
+                            <toolkit:Expander Grid.Row="0" x:DataType="m:EpisodeModel">
                                 <toolkit:Expander.Header>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="12"/>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="12" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="20" />
                                         </Grid.RowDefinitions>
                                         <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenEpisodeDetailCommand}" 
-                                                          CommandParameter="{x:Reference DetailChevron}"/>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenEpisodeDetailCommand}" CommandParameter="{x:Reference DetailChevron}" />
                                         </Grid.GestureRecognizers>
-                                        <Label Text="{Binding Number, StringFormat='{0}.'}" 
-                                               Grid.Row="0" 
-                                               Grid.Column="0"
-                                               Margin="0, 0, 4, 0"
-                                               VerticalTextAlignment="Center"
-                                               StyleClass="SeasonHeader"/>
-                                        <Label Text="{Binding FormattedName}" 
-                                               Grid.Row="0" 
-                                               Grid.Column="1" 
-                                               StyleClass="SeasonHeader"
-                                               VerticalTextAlignment="Center" />
-                                        <Image Grid.Column="2" Grid.RowSpan="2" x:Name="DetailChevron" >
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Margin="0,0,4,0"
+                                            StyleClass="SeasonHeader"
+                                            Text="{Binding Number, StringFormat='{0}.'}"
+                                            VerticalTextAlignment="Center" />
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            StyleClass="SeasonHeader"
+                                            Text="{Binding FormattedName}"
+                                            VerticalTextAlignment="Center" />
+                                        <Image
+                                            x:Name="DetailChevron"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="2">
                                             <Image.Source>
-                                                <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}"
-                                                                         FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                                                <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.ChevronDown}" />
                                             </Image.Source>
                                         </Image>
 
-                                        <Grid Grid.Row="1"
-                                              Grid.Column="0"
-                                              Grid.ColumnSpan="2"
-                                              ColumnSpacing="10">
+                                        <Grid
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            ColumnSpacing="10">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <Label Text="{Binding Runtime, StringFormat='{0} min'}" Grid.Column="0" StyleClass="SeasonSubtext" TextColor="LightGray"/>
-                                            <Label Text="{Binding Aired, StringFormat='{0:dd. MM. yyyy}'}" Grid.Column="1" StyleClass="SeasonSubtext" TextColor="LightGray"/>
-                                            <Label Text="" Grid.Column="2" TextColor="LightGrey"/>
-                                            <Label Text="{Binding AverageRating, StringFormat='{0} average'}" Grid.Column="3" StyleClass="SeasonSubtext" TextColor="LightGray"/>
+                                            <Label
+                                                Grid.Column="0"
+                                                StyleClass="SeasonSubtext"
+                                                Text="{Binding Runtime, StringFormat='{0} min'}"
+                                                TextColor="LightGray" />
+                                            <Label
+                                                Grid.Column="1"
+                                                StyleClass="SeasonSubtext"
+                                                Text="{Binding Aired, StringFormat='{0:dd. MM. yyyy}'}"
+                                                TextColor="LightGray" />
+                                            <Label
+                                                Grid.Column="2"
+                                                Text=""
+                                                TextColor="LightGrey" />
+                                            <Label
+                                                Grid.Column="3"
+                                                StyleClass="SeasonSubtext"
+                                                Text="{Binding AverageRating, StringFormat='{0} average'}"
+                                                TextColor="LightGray" />
                                         </Grid>
-                                    </Grid> 
+                                    </Grid>
                                 </toolkit:Expander.Header>
-                                <Grid Padding="5" Margin="0, 10, 0, 0" RowSpacing="5">
+                                <Grid
+                                    Margin="0,10,0,0"
+                                    Padding="5"
+                                    RowSpacing="5">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <Border StrokeShape="RoundRectangle 5">
-                                        <Image Aspect="AspectFit"
-                                            Source="{Binding ImageUrl}"/>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="20" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Column="0"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Watched"
+                                            VerticalTextAlignment="Center" />
+                                        <CheckBox
+                                            Grid.Column="1"
+                                            IsChecked="{Binding Watched}"
+                                            VerticalOptions="Center">
+                                            <CheckBox.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.MarkEpisodeAsWatchedCommand}" CommandParameter="{Binding Id}" />
+                                            </CheckBox.GestureRecognizers>
+                                        </CheckBox>
+                                    </Grid>
+                                    <Border Grid.Row="1" StrokeShape="RoundRectangle 5">
+                                        <Image Aspect="AspectFit" Source="{Binding ImageUrl}" />
                                     </Border>
-                                    <Label 
-                                        Grid.Row="1"
+                                    <Label
+                                        Grid.Row="2"
+                                        HorizontalOptions="Center"
                                         Text="{Binding Summary}"
                                         TextType="Html"
-                                        VerticalOptions="StartAndExpand" 
-                                        HorizontalOptions="Center" />
+                                        VerticalOptions="StartAndExpand" />
                                 </Grid>
                             </toolkit:Expander>
-                            <BoxView HeightRequest="1"
-                               BackgroundColor="Black"
-                               Color="#4E4E4E"
-                               Grid.ColumnSpan="2"
-                               Grid.Row="1"
-                               Margin="0, 5, 0 ,0"
-                               VerticalOptions="End"/>
+                            <BoxView
+                                Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                Margin="0,5,0,0"
+                                BackgroundColor="Black"
+                                HeightRequest="1"
+                                VerticalOptions="End"
+                                Color="#4E4E4E" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
