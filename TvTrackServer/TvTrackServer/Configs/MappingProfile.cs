@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TvTrackServer.Models.Database;
+using TVTrack.Models.Database;
 using TvTrackServer.Models.Dto;
 
 namespace TvTrackServer.Configs;

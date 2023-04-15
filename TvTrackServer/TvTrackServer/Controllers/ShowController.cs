@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
-using TvTrackServer.Models.Database;
+using TVTrack.Models.Database;
+using TVTrack.Models.TvMaze;
 using TvTrackServer.Models.Dto;
-using TvTrackServer.Models.TvMaze;
 using TvTrackServer.TvMazeConnector;
 
 namespace TvTrackServer.Controllers;

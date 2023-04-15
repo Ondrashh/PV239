@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using TvTrackServer.Models.TvMaze;
 using RestSharp;
+using TVTrack.Models.TvMaze;
 
 namespace TvTrackServer.TvMazeConnector;
 

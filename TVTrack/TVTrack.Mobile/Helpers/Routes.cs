@@ -27,6 +27,7 @@ namespace TVTrack.Mobile.Helpers
         {
             SettingsRoutes.ForEach(x => Routing.RegisterRoute(x.Route, x.ViewType));
 
+            Routing.RegisterRoute("///home/detail", typeof(ShowDetailView));
             Routing.RegisterRoute("///search/detail", typeof(ShowDetailView));
             Routing.RegisterRoute("///search/detail/season", typeof(SeasonDetailView));
 

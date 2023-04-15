@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TVTrack.TVMaze.Client.Models;
 using TVTrack.Mobile.Models;
 using System.Globalization;
+using TVTrack.Models.TvMaze;
 
 namespace TVTrack.Mobile.Mapper
 {

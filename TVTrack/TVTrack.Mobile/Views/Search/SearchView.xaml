@@ -1,64 +1,76 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Search"
-             xmlns:m="clr-namespace:TVTrack.TVMaze.Client.Models;assembly=TVTrack.TVMaze.Client"
-             xmlns:views="clr-namespace:TVTrack.Mobile.Views"
-             xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="TVTrack.Mobile.Views.Search.SearchView"
-             x:Name="Root"
-             x:DataType="vm:SearchViewModel">
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.Views.Search.SearchView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
+    xmlns:m="clr-namespace:TVTrack.Models.TvMaze;assembly=TVTrack.Models.TvMaze"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Search"
+    x:Name="Root"
+    x:DataType="vm:SearchViewModel">
     <Grid Padding="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
-            <SearchBar Grid.Column="0" Text="{Binding SearchInput}" Margin="-12, 0, 5, 0">
+            <SearchBar
+                Grid.Column="0"
+                Margin="-12,0,5,0"
+                Text="{Binding SearchInput}">
                 <SearchBar.Behaviors>
-                    <toolkit:UserStoppedTypingBehavior Command="{Binding SearchCommand}"
-                                                        StoppedTypingTimeThreshold="1000"
-                                                        MinimumLengthThreshold="3"/>
+                    <toolkit:UserStoppedTypingBehavior
+                        Command="{Binding SearchCommand}"
+                        MinimumLengthThreshold="3"
+                        StoppedTypingTimeThreshold="1000" />
                 </SearchBar.Behaviors>
             </SearchBar>
-            <Button Grid.Column="1" 
-                    Margin="0, 0, 0, 10"
-                    Text="Search" 
-                    Command="{Binding SearchCommand}"
-                    HeightRequest="40"/>
+            <Button
+                Grid.Column="1"
+                Margin="0,0,0,10"
+                Command="{Binding SearchCommand}"
+                HeightRequest="40"
+                Text="Search" />
         </Grid>
         <ScrollView Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <CollectionView ItemsSource="{Binding Results}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid HeightRequest="120" Margin="10" x:DataType="m:Search">
+                                <Grid
+                                    Margin="10"
+                                    x:DataType="m:Search"
+                                    HeightRequest="120">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="12" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenShowDetailCommand}"
-                                                              CommandParameter="{Binding Show.Id}"/>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenShowDetailCommand}" CommandParameter="{Binding Show.Id}" />
                                     </Grid.GestureRecognizers>
-                                    <Image Grid.Column="0" 
-                                           Source="{Binding Show.Image.Original, TargetNullValue='/Images/dotnet_bot.svg'}" 
-                                           Aspect="AspectFill"/>
-                                    <Label Grid.Column="1" Text="{Binding Show.Name}" VerticalOptions="Center" Padding="10, 0"/>
-                                    <Image Grid.Column="2" >
+                                    <Image
+                                        Grid.Column="0"
+                                        Aspect="AspectFill"
+                                        Source="{Binding Show.Image.Original, TargetNullValue='/Images/dotnet_bot.svg'}" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0"
+                                        Text="{Binding Show.Name}"
+                                        VerticalOptions="Center" />
+                                    <Image Grid.Column="2">
                                         <Image.Source>
-                                            <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}"
-                                                             FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                                            <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}" />
                                         </Image.Source>
                                     </Image>
                                 </Grid>

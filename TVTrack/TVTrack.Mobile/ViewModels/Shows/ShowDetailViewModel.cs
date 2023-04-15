@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TVTrack.TVMaze.Client;
-using TVTrack.TVMaze.Client.Models;
 using TVTrack.Mobile.Models;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using TVTrack.Mobile.Views.Popup;
 using CommunityToolkit.Maui.Views;
 using Microsoft.Extensions.DependencyInjection;
+using TVTrack.API.Client;
 using TVTrack.Mobile.Helpers;
 
 namespace TVTrack.Mobile.ViewModels.Shows
@@ -22,13 +22,16 @@ namespace TVTrack.Mobile.ViewModels.Shows
     {
         public int Id { get; set; }
 
-        private readonly TVMazeClient _client;
+        private readonly TVTrackClient _client;
         private readonly PopupHelper _popupHelper;
 
         [ObservableProperty]
         public ShowDetailModel show;
 
-        public ShowDetailViewModel(TVMazeClient client,
+        [ObservableProperty] 
+        public bool hasManagedShow;
+
+        public ShowDetailViewModel(TVTrackClient client,
             PopupHelper popupHelper,
             IMapper mapper) : base(mapper)
         {
@@ -39,6 +42,10 @@ namespace TVTrack.Mobile.ViewModels.Shows
         public override async Task OnAppearingAsync()
         {
             var apiShow = await _client.GetShowDetails(Id);
+            HasManagedShow = (apiShow.UserRated ?? false)
+                || (apiShow.InUsersDefaultList ?? false)
+                || (apiShow.Notifications ?? false)
+                || (apiShow.Calendar ?? false);
             Show = _mapper.Map<ShowDetailModel>(apiShow);
         }
 

@@ -10,6 +10,8 @@ namespace TVTrack.Mobile.Models
     public class AppSettings
     {
         public string FCMServerKey { get; set; }
+        public string APIURL { get; set; }
+        public string TVMazeURL { get; set; }
 
         public static AppSettings Get(IConfiguration configuration)
         {

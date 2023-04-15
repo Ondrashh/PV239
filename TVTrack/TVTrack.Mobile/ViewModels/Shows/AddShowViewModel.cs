@@ -4,18 +4,79 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using TVTrack.API.Client;
+using TVTrack.Models.TvMaze;
 
 namespace TVTrack.Mobile.ViewModels.Shows
 {
     public partial class AddShowViewModel : ViewModelBase
     {
-        public AddShowViewModel(IMapper mapper) : base(mapper)
+        private readonly TVTrackClient _client;
+        private string _username = "TODO";
+
+        public AddShowViewModel(TVTrackClient client, 
+            IMapper mapper) : base(mapper)
         {
+            _client = client;
         }
 
-        public override Task OnAppearingAsync()
+        [ObservableProperty] 
+        public Show showDetails;
+
+        [ObservableProperty]
+        public int rating;
+
+        [ObservableProperty]
+        public bool enableNotifications;
+
+        [ObservableProperty] 
+        public bool isAddedToList;
+
+        [ObservableProperty] 
+        public bool addToCalendar;
+
+        public override async Task OnAppearingAsync()
         {
-            return base.OnAppearingAsync();
+            ShowDetails = await _client.GetShowDetails(ID);
+            EnableNotifications = ShowDetails.Notifications ?? false;
+            IsAddedToList = ShowDetails.InUsersDefaultList ?? false;
+            AddToCalendar = ShowDetails.Calendar ?? false;
+
+            // TODO USER MANAGEMENT!!!!!
+            _username = "TODO!";
+        }
+
+        [RelayCommand]
+        public async Task ToggleNotificationsAsync()
+        {
+            await _client.ToggleNotifications(ID, _username, EnableNotifications);
+        }
+
+        [RelayCommand]
+        public async Task ToggleCalendarAsync()
+        {
+            await _client.ToggleCalendar(ID, _username, AddToCalendar);
+        }
+
+        [RelayCommand]
+        public async Task ToggleDefaultListAsync()
+        {
+            if (IsAddedToList)
+            {
+                await _client.AddWatchNext(ID, _username);
+            }
+            else
+            {
+                await _client.RemoveWatchNext(ID, _username);
+            }
+        }
+
+        [RelayCommand]
+        public async Task SaveShowDetailsAsync()
+        {
+            await _client.PostRating(ID, _username, Rating);
         }
     }
 }
