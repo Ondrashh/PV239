@@ -23,11 +23,13 @@ namespace TVTrack.Mobile.Helpers
             }
         };
 
-        public static MauiAppBuilder RegisterRoutes(this MauiAppBuilder builder)
+        public static MauiAppBuilder ConfigureRoutes(this MauiAppBuilder builder)
         {
             SettingsRoutes.ForEach(x => Routing.RegisterRoute(x.Route, x.ViewType));
 
             Routing.RegisterRoute("///home/detail", typeof(ShowDetailView));
+            Routing.RegisterRoute("///home/detail/season", typeof(SeasonDetailView));
+
             Routing.RegisterRoute("///search/detail", typeof(ShowDetailView));
             Routing.RegisterRoute("///search/detail/season", typeof(SeasonDetailView));
 

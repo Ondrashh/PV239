@@ -18,7 +18,7 @@ namespace TVTrack.Mobile.ViewModels
         }
 
         [ObservableProperty]
-        public int iD;
+        public int itemID;
 
         public virtual Task OnAppearingAsync()
         {

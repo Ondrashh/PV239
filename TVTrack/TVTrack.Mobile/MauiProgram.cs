@@ -37,7 +37,7 @@ public static class MauiProgram
             .ConfigureAPI()
             .ConfigureViews()
             .ConfigureViewModels()
-            .RegisterRoutes();
+            .ConfigureRoutes();
 
         builder.Services.AddAutoMapper(typeof(TVMazeAPIProfile));
 

@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Firebase.Installations;
-using Firebase.Messaging;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;

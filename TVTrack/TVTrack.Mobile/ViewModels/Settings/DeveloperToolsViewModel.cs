@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+#if ANDROID
 using Firebase.Installations;
 using Firebase.Messaging;
+#endif
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using TVTrack.Mobile.Models;
@@ -37,7 +39,7 @@ namespace TVTrack.Mobile.ViewModels.Settings
             {
                 return;
             }
-
+#if ANDROID
             var FCMtoken = FirebaseMessaging.Instance.GetToken().GetResult(Java.Lang.Class.FromType(typeof(InstallationTokenResult))).ToString();
 
             var pushNotificationRequest = new PushNotificationRequest
@@ -53,21 +55,21 @@ namespace TVTrack.Mobile.ViewModels.Settings
 
             string url = "https://fcm.googleapis.com/fcm/send";
 
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("key", "=" + _settings.FCMServerKey);
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("key", "=" + _settings.FCMServerKey);
 
-                string serializeRequest = JsonConvert.SerializeObject(pushNotificationRequest);
-                var response = await client.PostAsync(url, new StringContent(serializeRequest, Encoding.UTF8, "application/json"));
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    Console.WriteLine("OK");
-                }
-                else
-                {
-                    Console.WriteLine("Not OK!");
-                }
+            string serializeRequest = JsonConvert.SerializeObject(pushNotificationRequest);
+            var response = await client.PostAsync(url, new StringContent(serializeRequest, Encoding.UTF8, "application/json"));
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Console.WriteLine("OK");
             }
+            else
+            {
+                Console.WriteLine("Not OK!");
+            }
+
+#endif
         }
     }
 }

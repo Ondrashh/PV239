@@ -39,7 +39,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
 
         public override async Task OnAppearingAsync()
         {
-            ShowDetails = await _client.GetShowDetails(ID);
+            ShowDetails = await _client.GetShowDetails(ItemID);
             EnableNotifications = ShowDetails.Notifications ?? false;
             IsAddedToList = ShowDetails.InUsersDefaultList ?? false;
             AddToCalendar = ShowDetails.Calendar ?? false;
@@ -51,13 +51,13 @@ namespace TVTrack.Mobile.ViewModels.Shows
         [RelayCommand]
         public async Task ToggleNotificationsAsync()
         {
-            await _client.ToggleNotifications(ID, _username, EnableNotifications);
+            await _client.ToggleNotifications(ItemID, _username, EnableNotifications);
         }
 
         [RelayCommand]
         public async Task ToggleCalendarAsync()
         {
-            await _client.ToggleCalendar(ID, _username, AddToCalendar);
+            await _client.ToggleCalendar(ItemID, _username, AddToCalendar);
         }
 
         [RelayCommand]
@@ -65,18 +65,18 @@ namespace TVTrack.Mobile.ViewModels.Shows
         {
             if (IsAddedToList)
             {
-                await _client.AddWatchNext(ID, _username);
+                await _client.AddWatchNext(ItemID, _username);
             }
             else
             {
-                await _client.RemoveWatchNext(ID, _username);
+                await _client.RemoveWatchNext(ItemID, _username);
             }
         }
 
         [RelayCommand]
         public async Task SaveShowDetailsAsync()
         {
-            await _client.PostRating(ID, _username, Rating);
+            await _client.PostRating(ItemID, _username, Rating);
         }
     }
 }
