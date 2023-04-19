@@ -11,7 +11,7 @@
     HorizontalOptions="Fill"
     VerticalOptions="End">
     <Grid
-        Padding="10,10,30,30"
+        Padding="10"
         BackgroundColor="Black"
         HorizontalOptions="FillAndExpand"
         RowSpacing="10">
