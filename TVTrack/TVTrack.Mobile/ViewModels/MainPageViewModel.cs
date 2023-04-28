@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVTrack.Mobile.Helpers;
 using TVTrack.Mobile.Models;
 
 namespace TVTrack.Mobile.ViewModels
@@ -30,6 +31,14 @@ namespace TVTrack.Mobile.ViewModels
             {
                 [nameof(id)] = int.Parse(id)
             });
+        }
+
+        [RelayCommand]
+        public async Task LogOut()
+        {
+            await StorageHelper.LogOut();
+            await Shell.Current.GoToAsync("///login");
+            // TODO success message
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using AndroidX.Fragment.App.StrictMode;
+using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVTrack.Mobile.Helpers;
 
 namespace TVTrack.Mobile.ViewModels
 {
@@ -20,9 +22,23 @@ namespace TVTrack.Mobile.ViewModels
         [ObservableProperty]
         public int itemID;
 
-        public virtual Task OnAppearingAsync()
+        [ObservableProperty]
+        public bool loadingInProgress = false;
+
+        [ObservableProperty]
+        public bool noLoadingInProgress = true;
+
+        [ObservableProperty]
+        public string loggedUsername = null;
+
+        public virtual async Task OnAppearingAsync()
         {
-            return Task.CompletedTask;
+            LoggedUsername = await StorageHelper.GetUsername();
+
+            if (LoggedUsername == null)
+            {
+                await Shell.Current.GoToAsync("///login");
+            }
         }
 
         [RelayCommand]
@@ -34,6 +50,18 @@ namespace TVTrack.Mobile.ViewModels
             }
 
             return Task.CompletedTask;
+        }
+
+        protected void LoadingStart()
+        {
+            LoadingInProgress = true;
+            NoLoadingInProgress = false;
+        }
+
+        protected void LoadingEnd()
+        {
+            LoadingInProgress = false;
+            NoLoadingInProgress = true;
         }
     }
 }

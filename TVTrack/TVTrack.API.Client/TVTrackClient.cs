@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
+using TVTrack.Models.Database;
 using TVTrack.Models.TvMaze;
 
 namespace TVTrack.API.Client
@@ -17,6 +18,15 @@ namespace TVTrack.API.Client
         public void Dispose()
         {
             _client.Dispose();
+        }
+
+        public async Task<ICollection<User>> GetUsers()
+        {
+            var request = new RestRequest(TVTrackEndpoints.USERS);
+            request.Method = Method.Get;
+            var response = await _client.GetAsync<ICollection<User>>(request);
+
+            return response;
         }
 
         public async Task<ICollection<Search>> Search(string query)
