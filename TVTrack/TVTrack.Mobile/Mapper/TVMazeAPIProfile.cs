@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TVTrack.Mobile.Models;
 using System.Globalization;
 using TVTrack.Models.TvMaze;
+using TVTrack.Models.Database;
 
 namespace TVTrack.Mobile.Mapper
 {
@@ -39,6 +40,9 @@ namespace TVTrack.Mobile.Mapper
                 .ForMember(x => x.AverageRating, opt => opt.MapFrom(src => src.Rating.Average))
                 .ForMember(x => x.FormattedName, opt => opt.Ignore())
                 .ForMember(x => x.Watched, opt => opt.MapFrom(src => src.UserWatched));
+
+            CreateMap<User, UserListItemModel>()
+                .ForMember(x => x.Username, opt => opt.MapFrom(src => src.Username));
         }
     }
 }

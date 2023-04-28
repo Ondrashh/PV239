@@ -8,10 +8,15 @@
     x:DataType="vm:MainPageViewModel">
     <VerticalStackLayout Padding="10">
         <Label Text="Hello, World" />
+        <Label Text="Logged in as:"/>
+        <Label Text="{Binding LoggedUsername}"/>
         <Button
             Command="{Binding OpenShowDetailCommand}"
             CommandParameter="1825"
             Text="Open Debug Show" />
+        <Button
+            Command="{Binding LogOutCommand}"
+            Text="Log Out"/>
     </VerticalStackLayout>
 
 </views:ContentPageBase>
