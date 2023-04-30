@@ -15,10 +15,10 @@ public class ShowController : CustomControllerBase
 {
     private readonly TvTrackServerDbContext _context;
     private readonly TvMazeClient _tvMazeClient;
-    public ShowController(TvTrackServerDbContext dbContext) : base(dbContext)
+    public ShowController(TvMazeClient client, TvTrackServerDbContext dbContext) : base(dbContext)
     {
         _context = dbContext;
-        _tvMazeClient = new TvMazeClient();
+        _tvMazeClient = client;
     }
 
     [SwaggerOperation(Summary = "Search for show")]

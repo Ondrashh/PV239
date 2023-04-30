@@ -8,9 +8,9 @@ public class TvMazeClient
 {
     private readonly RestClient _client;
 
-    public TvMazeClient()
+    public TvMazeClient(RestClient client)
     {
-        _client = new RestClient(TvMazeEndpoints.URL);
+        _client = client;
     }
 
     public async Task<ICollection<Search>> Search(string query)

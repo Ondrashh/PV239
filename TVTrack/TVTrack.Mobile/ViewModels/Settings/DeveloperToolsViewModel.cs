@@ -13,7 +13,7 @@ using Firebase.Messaging;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using TVTrack.Mobile.Models;
-using TVTrack.Mobile.Models.Notifications;
+using TVTrack.Models.API.Notifications;
 
 namespace TVTrack.Mobile.ViewModels.Settings
 {
