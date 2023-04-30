@@ -7,16 +7,22 @@ using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
+using TVTrack.API.Client;
 using TVTrack.Mobile.Models;
+using TVTrack.Mobile.Models.Calendar;
 
 namespace TVTrack.Mobile.ViewModels.Settings
 {
     public partial class GoogleCalendarAuthViewModel: ViewModelBase
     {
+        private readonly TVTrackClient _client;
         private readonly AppSettings _settings;
 
-        public GoogleCalendarAuthViewModel(IMapper mapper, AppSettings settings) : base(mapper)
+        public GoogleCalendarAuthViewModel(IMapper mapper, 
+            TVTrackClient client,
+            AppSettings settings) : base(mapper)
         {
+            _client = client;
             _settings = settings;
         }
 
@@ -56,17 +62,26 @@ namespace TVTrack.Mobile.ViewModels.Settings
                     new KeyValuePair<string, string>("code", codeToken),
                 });
 
-                HttpClient client = new HttpClient();
-                var accessTokenResponse = await client.PostAsync(token_uri, parameters);
+                using var client = new HttpClient();
+                using var accessTokenResponse = await client.PostAsync(token_uri, parameters);
 
                 if (accessTokenResponse.IsSuccessStatusCode)
                 {
                     var data = await accessTokenResponse.Content.ReadAsStringAsync();
+                    var tokens = JsonConvert.DeserializeObject<LoginResponse>(data);
+
+                    // TODO GET USERNAME
+                    var username = "TODO";
+                    await _client.PutGoogleCalendarToken(username, tokens.AccessToken, tokens.RefreshToken);
+
+                    Authenticated = true;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+
+                Authenticated = false;
             }
         }
     }

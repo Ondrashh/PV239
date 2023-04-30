@@ -18,6 +18,12 @@ public class CustomControllerBase : ControllerBase
         return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
     }
 
+    protected async Task<User?> FindByUsernameWithTokensAsync(string? username)
+    {
+        if (username == null) return null;
+        return await _context.Users.Include(x => x.Tokens).FirstOrDefaultAsync(u => u.Username == username);
+    }
+
     protected async Task<User?> FindByUsernameWithShowListsAsync(string? username)
     {
         if (username == null) return null;
