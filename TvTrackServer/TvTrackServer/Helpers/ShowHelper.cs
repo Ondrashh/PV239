@@ -4,7 +4,7 @@ namespace TvTrackServer.Helpers
 {
     public static class ShowHelper
     {
-        public static DateTime GetLatestEpisodeDateTime(this Show show)
+        public static DateTime GetLatestEpisodeDate(this Show show)
         {
             var date = DateTimeHelper.GetByDayOfWeek(show.Schedule.Days.FirstOrDefault() ?? "Monday");
 

@@ -22,6 +22,8 @@ namespace TvTrackServer.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
+            // TODO TEST CALENDAR JOB
+
             return;
 
             var syncableActivities = await _dbContext.ShowActivities
@@ -37,10 +39,11 @@ namespace TvTrackServer.Jobs
                 // get show from api
                 var show = await _tvMazeClient.GetShowDetails(activity.TvMazeId);
 
-                await _calendarService.Synchronize(activity.User.Tokens.GoogleCalendarToken,
+                await _calendarService.Synchronize(activity.User.Username,
+                    activity.User.Tokens.GoogleCalendarToken,
                     activity.User.Tokens.GoogleCalendarRefreshToken,
                     DateTime.Today,
-                    $"{show.Name} New Episode");
+                    show);
 
                 await Task.Delay(500);
             }

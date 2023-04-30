@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TvTrackServer.Services;
 
 namespace TvTrackServer.Controllers
 {
@@ -8,10 +9,13 @@ namespace TvTrackServer.Controllers
     public class TokensController : CustomControllerBase
     {
         private readonly TvTrackServerDbContext _dbContext;
+        private readonly TVGoogleCalendarService _calendarService;
 
-        public TokensController(TvTrackServerDbContext dbContext) : base(dbContext)
+        public TokensController(TvTrackServerDbContext dbContext,
+            TVGoogleCalendarService calendarService) : base(dbContext)
         {
             _dbContext = dbContext;
+            _calendarService = calendarService;
         }
 
         // PUT: tokens/fcm/{username}
@@ -49,6 +53,14 @@ namespace TvTrackServer.Controllers
             await _dbContext.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DebugCalendar()
+        {
+            await _calendarService.Debug();
+
+            return Ok();
         }
     }
 }

@@ -23,7 +23,6 @@ namespace TvTrackServer.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-
             // TODO test notification job
             return;
 
@@ -46,7 +45,7 @@ namespace TvTrackServer.Jobs
 
 
 
-                var nextDate = show.GetLatestEpisodeDateTime();
+                var nextDate = show.GetLatestEpisodeDate();
                 if (!string.IsNullOrEmpty(show.Schedule?.Days.FirstOrDefault())
                     && nextDate > activity.NextNotifyDate)
                 {
