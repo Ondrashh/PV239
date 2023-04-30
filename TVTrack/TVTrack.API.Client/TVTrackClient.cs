@@ -100,6 +100,25 @@ namespace TVTrack.API.Client
             request.Method = Method.Patch;
             await _client.PatchAsync(request);
         }
+
+        public async Task PutGoogleCalendarToken(string username, string accessToken, string refreshToken)
+        {
+            var request = new RestRequest(TVTrackEndpoints.GCAL_TOKEN)
+                .AddUrlSegment("username", username)
+                .AddQueryParameter("gcApiToken", accessToken)
+                .AddQueryParameter("gcRefreshToken", refreshToken);
+            request.Method = Method.Put;
+            await _client.PatchAsync(request);
+        }
+
+        public async Task PutFCMToken(string username, string deviceToken)
+        {
+            var request = new RestRequest(TVTrackEndpoints.FCM_TOKEN)
+                .AddUrlSegment("username", username)
+                .AddQueryParameter("fcmDeviceToken", deviceToken);
+            request.Method = Method.Put;
+            await _client.PatchAsync(request);
+        }
     }
     public class EnabledDto
     {

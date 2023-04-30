@@ -17,11 +17,11 @@ public class ShowListsController : CustomControllerBase
     private readonly IMapper _mapper;
     private readonly TvMazeClient _tvMazeClient;
 
-    public ShowListsController(TvTrackServerDbContext context, IMapper mapper) : base(context)
+    public ShowListsController(TvMazeClient client, TvTrackServerDbContext context, IMapper mapper) : base(context)
     {
         _context = context;
         _mapper = mapper;
-        _tvMazeClient = new TvMazeClient();
+        _tvMazeClient = client;
     }
 
     // GET: /showlists?username=user

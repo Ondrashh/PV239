@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.Views.Settings.GoogleCalendarAuthView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:settings="clr-namespace:TVTrack.Mobile.ViewModels.Settings"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    x:Name="Root"
+    Title="Google Calendar"
+    x:DataType="settings:GoogleCalendarAuthViewModel">
+    <VerticalStackLayout Padding="15" Spacing="15">
+        <Label FontSize="20" HorizontalOptions="Center">
+            <Label.Text>
+                <Binding Path="Authenticated">
+                    <Binding.Converter>
+                        <toolkit:BoolToObjectConverter
+                            x:TypeArguments="x:String"
+                            FalseObject="Not Authenticated"
+                            TrueObject="Authenticated" />
+                    </Binding.Converter>
+                </Binding>
+            </Label.Text>
+            <Label.TextColor>
+                <Binding Path="Authenticated">
+                    <Binding.Converter>
+                        <toolkit:BoolToObjectConverter
+                            x:TypeArguments="Color"
+                            FalseObject="Red"
+                            TrueObject="Green" />
+                    </Binding.Converter>
+                </Binding>
+            </Label.TextColor>
+        </Label>
+        <Button Command="{Binding OpenAuthenticateCommand}" Text="Authenticate" />
+    </VerticalStackLayout>
+</views:ContentPageBase>

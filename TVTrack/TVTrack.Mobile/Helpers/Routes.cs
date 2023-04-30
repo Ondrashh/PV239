@@ -20,6 +20,13 @@ namespace TVTrack.Mobile.Helpers
                 FontIcon = FontAwesomeIcons.Wrench, 
                 Route = "///settings/developer",
                 ViewType = typeof(DeveloperToolsView)
+            },
+            new()
+            {
+                Name = "Google Calendar",
+                FontIcon = FontAwesomeIcons.Calendar,
+                Route = "///settings/googlecal",
+                ViewType = typeof(GoogleCalendarAuthView)
             }
         };
 
