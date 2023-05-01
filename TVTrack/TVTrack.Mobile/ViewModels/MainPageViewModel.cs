@@ -37,8 +37,8 @@ namespace TVTrack.Mobile.ViewModels
         public async Task LogOut()
         {
             await StorageHelper.LogOut();
+            await AlertHelper.ShowToast("Logged out!");
             await Shell.Current.GoToAsync("///login");
-            // TODO success message
         }
     }
 }

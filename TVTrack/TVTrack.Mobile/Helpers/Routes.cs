@@ -40,6 +40,8 @@ namespace TVTrack.Mobile.Helpers
             Routing.RegisterRoute("///search/detail", typeof(ShowDetailView));
             Routing.RegisterRoute("///search/detail/season", typeof(SeasonDetailView));
 
+            Routing.RegisterRoute("///login", typeof(LoginView));
+
             return builder;
         }
     }

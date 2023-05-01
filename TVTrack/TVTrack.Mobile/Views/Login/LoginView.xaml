@@ -23,6 +23,7 @@
                     IsEnabled="{Binding NoLoadingInProgress}"
                     Command="{Binding LogInCommand}"
                     CommandParameter="{Binding Source={x:Reference UsernameSelector}, Path=SelectedItem}"/>
+            <custom:BasicActivityIndicator/>
         </StackLayout>
     </Grid>
 </views:ContentPageBase>
