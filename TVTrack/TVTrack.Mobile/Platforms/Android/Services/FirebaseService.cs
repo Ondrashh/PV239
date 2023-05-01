@@ -22,8 +22,6 @@ namespace TVTrack.Mobile.Platforms.Android.Services
                 Preferences.Remove("DeviceToken");
             }
             Preferences.Set("DeviceToken", token);
-
-            // TODO: Send token to server!
         }
 
         public override void OnMessageReceived(RemoteMessage message)

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TVTrack.API.Client;
+using TVTrack.Mobile.Helpers;
 using TVTrack.Models.TvMaze;
 
 namespace TVTrack.Mobile.ViewModels.Shows
@@ -14,7 +15,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
     public partial class AddShowViewModel : ViewModelBase
     {
         private readonly TVTrackClient _client;
-        private string _username = "TODO";
+        private string _username = "";
 
         public AddShowViewModel(TVTrackClient client, 
             IMapper mapper) : base(mapper)
@@ -39,13 +40,12 @@ namespace TVTrack.Mobile.ViewModels.Shows
 
         public override async Task OnAppearingAsync()
         {
-            ShowDetails = await _client.GetShowDetails(ItemID);
+            _username = await StorageHelper.GetUsername();
+
+            ShowDetails = await _client.GetShowDetails(ItemID, _username);
             EnableNotifications = ShowDetails.Notifications ?? false;
             IsAddedToList = ShowDetails.InUsersDefaultList ?? false;
             AddToCalendar = ShowDetails.Calendar ?? false;
-
-            // TODO USER MANAGEMENT!!!!!
-            _username = "TODO!";
         }
 
         [RelayCommand]
@@ -65,11 +65,13 @@ namespace TVTrack.Mobile.ViewModels.Shows
         {
             if (IsAddedToList)
             {
-                await _client.AddWatchNext(ItemID, _username);
+                await _client.RemoveWatchNext(ItemID, _username);
+                IsAddedToList = false;
             }
             else
             {
-                await _client.RemoveWatchNext(ItemID, _username);
+                await _client.AddWatchNext(ItemID, _username);
+                IsAddedToList = true;
             }
         }
 
