@@ -1,12 +1,6 @@
-﻿using AndroidX.Fragment.App.StrictMode;
-using AutoMapper;
+﻿using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TVTrack.Mobile.Helpers;
 
 namespace TVTrack.Mobile.ViewModels

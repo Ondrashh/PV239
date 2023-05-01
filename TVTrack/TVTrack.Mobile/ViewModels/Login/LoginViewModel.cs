@@ -39,10 +39,14 @@ namespace TVTrack.Mobile.ViewModels.Login
         [RelayCommand]
         public async Task LogIn(UserListItemModel userListItem)
         {
-            if (userListItem == null) return; // TODO warning
+            if (userListItem == null)
+            {
+                await AlertHelper.ShowErrorSnackbar("You have to pick username to log in.");
+                return;
+            }
             await StorageHelper.StoreUsername(userListItem.Username);
             await Shell.Current.GoToAsync("///home");
-            // TODO success message
+            await AlertHelper.ShowToast("Logged in");
         }
     }
 }
