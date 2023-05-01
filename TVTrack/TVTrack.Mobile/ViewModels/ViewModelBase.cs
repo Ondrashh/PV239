@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TVTrack.Mobile.Helpers;
+using TVTrack.Mobile.Views.Login;
 
 namespace TVTrack.Mobile.ViewModels
 {
@@ -31,7 +32,7 @@ namespace TVTrack.Mobile.ViewModels
 
             if (LoggedUsername == null)
             {
-                await Shell.Current.GoToAsync("///login");
+                await Shell.Current.GoToAsync("//login");
             }
         }
 

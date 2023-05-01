@@ -14,9 +14,6 @@
             Command="{Binding OpenShowDetailCommand}"
             CommandParameter="1825"
             Text="Open Debug Show" />
-        <Button
-            Command="{Binding LogOutCommand}"
-            Text="Log Out"/>
     </VerticalStackLayout>
 
 </views:ContentPageBase>
