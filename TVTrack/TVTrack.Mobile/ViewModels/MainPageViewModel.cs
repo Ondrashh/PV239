@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TVTrack.Mobile.Models;
-using TVTrack.Mobile.Models.Notifications;
 
 namespace TVTrack.Mobile.ViewModels
 {
