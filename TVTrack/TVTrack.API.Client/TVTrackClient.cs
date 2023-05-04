@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
+using TVTrack.Models.API.Responses;
 using TVTrack.Models.Database;
 using TVTrack.Models.TvMaze;
 
@@ -132,6 +133,15 @@ namespace TVTrack.API.Client
                 .AddQueryParameter("fcmDeviceToken", deviceToken);
             request.Method = Method.Put;
             var res = await _client.PutAsync(request);
+        }
+
+        public async Task<UserHasTokensModel> GetHasTokens(string username)
+        {
+            var request = new RestRequest(TVTrackEndpoints.HAS_TOKENS)
+                .AddUrlSegment("username", username);
+            request.Method = Method.Get;
+            var res = await _client.GetAsync<UserHasTokensModel>(request);
+            return res;
         }
     }
     public class EnabledDto
