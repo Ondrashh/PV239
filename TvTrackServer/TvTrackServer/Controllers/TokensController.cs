@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TVTrack.Models.API.Responses;
 using TvTrackServer.Services;
 
 namespace TvTrackServer.Controllers
@@ -55,12 +56,23 @@ namespace TvTrackServer.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> DebugCalendar()
+        // GET: tokens/hastokens/{username}
+        [HttpGet("hastokens/{username}")]
+        public async Task<IActionResult> GetUserHasTokens(string username)
         {
-            await _calendarService.Debug();
+            var user = await FindByUsernameWithTokensAsync(username);
 
-            return Ok();
+            bool hasGoogleCal = !string.IsNullOrEmpty(user.Tokens.GoogleCalendarRefreshToken) &&
+                                !string.IsNullOrEmpty(user.Tokens.GoogleCalendarRefreshToken);
+
+            bool hasFCM = !string.IsNullOrEmpty(user.Tokens.FCMDeviceToken);
+
+            return Ok(new UserHasTokensModel()
+            {
+                Username = username,
+                HasGoogleCalendar = hasGoogleCal,
+                HasFCM = hasFCM
+            });
         }
     }
 }

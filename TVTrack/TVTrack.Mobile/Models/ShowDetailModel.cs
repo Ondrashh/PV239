@@ -10,6 +10,9 @@ namespace TVTrack.Mobile.Models
 {
     public partial class ShowDetailModel: ObservableObject
     {
+        [ObservableProperty] 
+        public int id;
+
         [ObservableProperty]
         public string name;
 

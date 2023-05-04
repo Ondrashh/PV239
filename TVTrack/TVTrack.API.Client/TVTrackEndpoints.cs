@@ -26,5 +26,7 @@ namespace TVTrack.API.Client
 
         public const string FCM_TOKEN = "tokens/fcm/{username}";
         public const string GCAL_TOKEN = "tokens/gc/{username}";
+
+        public const string HAS_TOKENS = "tokens/hastokens/{username}";
     }
 }

@@ -3,6 +3,8 @@
     x:Class="TVTrack.Mobile.Views.Popup.AddShowPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
+    xmlns:rating="http://www.tsjdev-apps.de/maui/controls"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:views="clr-namespace:TVTrack.Mobile.Views.Popup"
     xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Shows"
@@ -33,41 +35,31 @@
                 Text="Manage Show"
                 VerticalTextAlignment="Center" />
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Padding="15,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="17" />
+                <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="17" />
+                <ColumnDefinition Width="20" />
             </Grid.ColumnDefinitions>
-            <Label
-                Grid.Row="0"
-                Grid.ColumnSpan="3"
-                HorizontalOptions="FillAndExpand"
-                Text="{Binding Rating, StringFormat='Rating: {0}'}"
-                VerticalOptions="Center" />
-            <Label
-                Grid.Row="1"
-                Grid.Column="0"
-                HorizontalTextAlignment="Center"
-                Text="0"
-                VerticalTextAlignment="Center" />
-            <Slider
-                Grid.Row="1"
+            <ImageButton Grid.Column="0" Command="{Binding DecrementRatingCommand}">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Minus}" />
+                </ImageButton.Source>
+            </ImageButton>
+            <rating:SimpleRatingControl
                 Grid.Column="1"
-                Maximum="10"
-                Minimum="0"
-                VerticalOptions="Center"
-                Value="{Binding Rating}" />
-            <Label
-                Grid.Row="1"
-                Grid.Column="2"
-                HorizontalTextAlignment="Center"
-                Text="10"
-                VerticalTextAlignment="Center" />
+                AccentColor="Gold"
+                Amount="5"
+                CurrentValue="{Binding Rating}"
+                FontSize="36" />
+            <ImageButton Grid.Column="2" Command="{Binding IncrementRatingCommand}">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Plus}" />
+                </ImageButton.Source>
+            </ImageButton>
 
         </Grid>
         <Grid Grid.Row="2" Margin="0,5">
@@ -88,7 +80,7 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Text="Receive Notifications" />
-            <CheckBox Grid.Column="1" IsChecked="{Binding EnableNotifications}">
+            <CheckBox Grid.Column="1" IsChecked="{Binding IsNotificationEnabled}">
                 <CheckBox.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ToggleNotificationsCommand}" />
                 </CheckBox.GestureRecognizers>
@@ -100,7 +92,7 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Text="Add Premieres To Calendar" />
-            <CheckBox Grid.Column="1" IsChecked="{Binding AddToCalendar}">
+            <CheckBox Grid.Column="1" IsChecked="{Binding IsAddedToCalendar}">
                 <CheckBox.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ToggleCalendarCommand}" />
                 </CheckBox.GestureRecognizers>

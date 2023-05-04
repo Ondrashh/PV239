@@ -26,7 +26,7 @@ namespace TvTrackServer.Services
             _client = client;
         }
 
-        public async Task<string> GetRefreshToken(string refreshToken)
+        public async Task<string> GetNewAccessToken(string refreshToken)
         {
             var parameters = new FormUrlEncodedContent(new[]
             {
@@ -65,84 +65,22 @@ namespace TvTrackServer.Services
             return calendarService;
         }
 
-        public async Task Debug()
-        {
-            var show = await _client.GetShowDetails(23470);
-            var date = DateTime.Today;
 
-            var eventId = $"285:{date.ToFileTimeUtc()}";
-
-            CalendarService calendarService;
-            Events events;
-
-            try
-            {
-                calendarService = GetService("ya29.a0AWY7Ckl9bnsbh5s7rs23TrPwxG_nv7Xu0XpWs9fNg6VnSn0UxpS733x2JEFvqGJT8G8qC1R1PQx-hnKJXlSCJ9XUqTM1wkBvfH7r4eIHuWmLKhS-boJdmFAERShehlra4EJ868RfKGX4W1ZhVC67SgDP_tX0aCgYKAZ0SARASFQG1tDrps9hfsBgW8mq1Ryf1NIuKUQ0163");
-
-                events = await calendarService.Events.List("primary").ExecuteAsync();
-            }
-            catch (Google.GoogleApiException)
-            {
-                var newToken = await GetRefreshToken("1//09ySjd8jNSE64CgYIARAAGAkSNwF-L9IrQ6lH4Sz4df9JWvqOC9WdEwiXOAE-pxIMozI3aRYKs90mOM25ZOQJu0_zVWvOCT61nIQ");
-
-                calendarService = GetService(newToken);
-
-                events = await calendarService.Events.List("primary").ExecuteAsync();
-            }
-
-            var exists = events.Items.Any(x => x.Description.Contains(eventId));
-
-            if (exists)
-            {
-                calendarService.Dispose();
-                return;
-            }
-
-            var res = await calendarService.Events.Insert(new Event()
-            {
-                Summary = "Debug Event",
-                Description = $"A debug event created from TV Track Web Service ({eventId})",
-                Start = new EventDateTime()
-                {
-                    DateTime = DateTime.Now,
-                    TimeZone = "Europe/Prague"
-                },
-                End = new EventDateTime()
-                {
-                    DateTime = DateTime.Now.AddHours(1),
-                    TimeZone = "Europe/Prague"
-                },
-            }, "primary").ExecuteAsync();
-
-            calendarService.Dispose();
-        }
-
-        public async Task Synchronize(string username, string accessToken, string refreshToken, DateTime date, Show show)
+        public async Task Synchronize(string username, string accessToken, string refreshToken, DateTime date,
+            Show show)
         {
             var eventId = $"{show.Id}:{date.ToFileTimeUtc()}";
 
-            CalendarService calendarService;
-            Events events;
+            var newToken = await GetNewAccessToken(refreshToken);
 
-            try
-            {
-                calendarService = GetService(accessToken);
+            var calendarService = GetService(newToken);
 
-                events = await calendarService.Events.List("primary").ExecuteAsync();
-            }
-            catch (Google.GoogleApiException)
-            {
-                var newToken = await GetRefreshToken(refreshToken);
+            var events = await calendarService.Events.List("primary").ExecuteAsync();
 
-                calendarService = GetService(newToken);
-
-                events = await calendarService.Events.List("primary").ExecuteAsync();
-
-                var user = await _dbContext.Users.Include(x => x.Tokens).FirstOrDefaultAsync(x => x.Username == username);
-                user.Tokens.GoogleCalendarToken = newToken;
-                _dbContext.Attach(user);
-                await _dbContext.SaveChangesAsync();
-            }
+            var user = await _dbContext.Users.Include(x => x.Tokens).FirstOrDefaultAsync(x => x.Username == username);
+            user.Tokens.GoogleCalendarToken = newToken;
+            _dbContext.Attach(user);
+            await _dbContext.SaveChangesAsync();
 
             var exists = events.Items.Any(x => x.Description.Contains(eventId));
 
