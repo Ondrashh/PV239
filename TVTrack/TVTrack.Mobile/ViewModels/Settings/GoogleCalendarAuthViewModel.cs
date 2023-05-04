@@ -30,6 +30,14 @@ namespace TVTrack.Mobile.ViewModels.Settings
         [ObservableProperty] 
         public bool authenticated;
 
+        public override async Task OnAppearingAsync()
+        {
+            var username = await StorageHelper.GetUsername();
+            var hasTokensModel = await _client.GetHasTokens(username);
+
+            Authenticated = hasTokensModel.HasGoogleCalendar;
+        }
+
         [RelayCommand]
         public async Task OpenAuthenticateAsync()
         {
