@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TVTrack.API.Client;
 using TVTrack.Mobile.Helpers;
+using TVTrack.Models.API.Responses;
 using TVTrack.Models.TvMaze;
 
 namespace TVTrack.Mobile.ViewModels.Shows
@@ -23,6 +24,8 @@ namespace TVTrack.Mobile.ViewModels.Shows
             _client = client;
         }
 
+        private UserHasTokensModel userHasTokens;
+
         [ObservableProperty] 
         public Show showDetails;
 
@@ -30,34 +33,45 @@ namespace TVTrack.Mobile.ViewModels.Shows
         public int rating;
 
         [ObservableProperty]
-        public bool enableNotifications;
+        public bool isNotificationEnabled;
 
         [ObservableProperty] 
         public bool isAddedToList;
 
         [ObservableProperty] 
-        public bool addToCalendar;
+        public bool isAddedToCalendar;
 
         public override async Task OnAppearingAsync()
         {
             _username = await StorageHelper.GetUsername();
 
             ShowDetails = await _client.GetShowDetails(ItemID, _username);
-            EnableNotifications = ShowDetails.Notifications ?? false;
+            userHasTokens = await _client.GetHasTokens(_username);
+
+            Rating = ShowDetails.UserRating ?? 0;
+            IsNotificationEnabled = ShowDetails.Notifications ?? false;
             IsAddedToList = ShowDetails.InUsersDefaultList ?? false;
-            AddToCalendar = ShowDetails.Calendar ?? false;
+            IsAddedToCalendar = ShowDetails.Calendar ?? false;
         }
 
         [RelayCommand]
         public async Task ToggleNotificationsAsync()
         {
-            await _client.ToggleNotifications(ItemID, _username, EnableNotifications);
+            IsNotificationEnabled = !isNotificationEnabled;
+            await _client.ToggleNotifications(ItemID, _username, IsNotificationEnabled);
         }
 
         [RelayCommand]
         public async Task ToggleCalendarAsync()
         {
-            await _client.ToggleCalendar(ItemID, _username, AddToCalendar);
+            if (!userHasTokens.HasGoogleCalendar)
+            {
+                await AlertHelper.ShowToast("Please log in to Google Calendar before enabling synchronization");
+                return;
+            }
+
+            IsAddedToCalendar = !isAddedToCalendar;
+            await _client.ToggleCalendar(ItemID, _username, IsAddedToCalendar);
         }
 
         [RelayCommand]

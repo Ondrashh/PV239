@@ -80,7 +80,7 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Text="Receive Notifications" />
-            <CheckBox Grid.Column="1" IsChecked="{Binding EnableNotifications}">
+            <CheckBox Grid.Column="1" IsChecked="{Binding IsNotificationEnabled}">
                 <CheckBox.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ToggleNotificationsCommand}" />
                 </CheckBox.GestureRecognizers>
@@ -92,7 +92,7 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Text="Add Premieres To Calendar" />
-            <CheckBox Grid.Column="1" IsChecked="{Binding AddToCalendar}">
+            <CheckBox Grid.Column="1" IsChecked="{Binding IsAddedToCalendar}">
                 <CheckBox.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ToggleCalendarCommand}" />
                 </CheckBox.GestureRecognizers>
