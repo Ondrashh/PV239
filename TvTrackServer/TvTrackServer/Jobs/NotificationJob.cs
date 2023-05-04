@@ -43,7 +43,6 @@ namespace TvTrackServer.Jobs
                     $"New episode of {show.Name} is premiering today!");
 
 
-
                 var nextDate = show.GetLatestEpisodeDate();
                 if (!string.IsNullOrEmpty(show.Schedule?.Days.FirstOrDefault())
                     && nextDate > activity.NextNotifyDate)
@@ -51,10 +50,11 @@ namespace TvTrackServer.Jobs
                     activity.NextNotifyDate = nextDate;
                 }
 
+                _dbContext.Attach(activity);
+
                 await Task.Delay(500);
             }
 
-            _dbContext.Attach(notifiableActivities);
             await _dbContext.SaveChangesAsync();
 
             Console.WriteLine(DateTime.Now.ToLongTimeString());

@@ -66,12 +66,12 @@ builder.Services.AddQuartz(q =>
     q.ScheduleJob<NotificationJob>(trigger => trigger
         .WithIdentity("Daily Notification")
         .StartNow()
-        .WithSimpleSchedule(x => x.WithInterval(TimeSpan.FromSeconds(10)).RepeatForever()));
+        .WithSimpleSchedule(x => x.WithIntervalInHours(24).RepeatForever()));
 
     q.ScheduleJob<GoogleCalendarSyncJob>(trigger => trigger
         .WithIdentity("Daily Calendar Synchronization")
         .StartNow()
-        .WithSimpleSchedule(x => x.WithInterval(TimeSpan.FromSeconds(10)).RepeatForever()));
+        .WithSimpleSchedule(x => x.WithIntervalInHours(24).RepeatForever()));
 });
 
 builder.Services.AddQuartzHostedService(options =>
