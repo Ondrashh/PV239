@@ -29,11 +29,11 @@ namespace TvTrackServer.Controllers
             }
 
             user.Tokens.FCMDeviceToken = fcmDeviceToken;
-            _dbContext.Entry(user).State = EntityState.Modified;
+            _dbContext.Entry(user.Tokens).State = EntityState.Modified;
 
             await _dbContext.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         // PUT: tokens/gc/{username}
@@ -48,11 +48,11 @@ namespace TvTrackServer.Controllers
 
             user.Tokens.GoogleCalendarToken = gcApiToken;
             user.Tokens.GoogleCalendarRefreshToken = gcRefreshToken;
-            _dbContext.Entry(user).State = EntityState.Modified;
+            _dbContext.Entry(user.Tokens).State = EntityState.Modified;
 
             await _dbContext.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpGet]

@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using TVTrack.API.Client;
+using TVTrack.Mobile.Helpers;
 using TVTrack.Mobile.Models;
 using TVTrack.Mobile.Models.Calendar;
 
@@ -70,8 +71,7 @@ namespace TVTrack.Mobile.ViewModels.Settings
                     var data = await accessTokenResponse.Content.ReadAsStringAsync();
                     var tokens = JsonConvert.DeserializeObject<LoginResponse>(data);
 
-                    // TODO GET USERNAME
-                    var username = "TODO";
+                    var username = await StorageHelper.GetUsername();
                     await _client.PutGoogleCalendarToken(username, tokens.AccessToken, tokens.RefreshToken);
 
                     Authenticated = true;

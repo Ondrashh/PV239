@@ -47,6 +47,12 @@ namespace TVTrack.Mobile.ViewModels.Login
             await StorageHelper.StoreUsername(userListItem.Username);
             await Shell.Current.GoToAsync("///home");
             await AlertHelper.ShowToast("Logged in");
+
+            if (Preferences.ContainsKey("DeviceToken"))
+            {
+                var token = Preferences.Get("DeviceToken", null);
+                await _client.PutFCMToken(userListItem.username, token);
+            }
         }
     }
 }

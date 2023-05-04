@@ -37,7 +37,7 @@ public class UsersController : CustomControllerBase
         {
             return NotFound();
         }
-        var user = await FindByUsernameAsync(username);
+        var user = await FindByUsernameWithTokensAsync(username);
 
         if (user == null)
         {
