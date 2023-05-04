@@ -39,12 +39,16 @@ namespace TVTrack.API.Client
             return response;
         }
 
-        public async Task<Show> GetShowDetails(int id)
+        public async Task<Show> GetShowDetails(int id, string username = null)
         {
             var request = new RestRequest(TVTrackEndpoints.SHOW)
                 .AddUrlSegment("id", id)
                 .AddQueryParameter("embed[]", "episodes", false)
                 .AddQueryParameter("embed[]", "seasons", false);
+            if (!string.IsNullOrEmpty(username))
+            {
+                request.AddQueryParameter("username", username);
+            }
             request.Method = Method.Get;
             var response = await _client.GetAsync<Show>(request);
 
@@ -118,7 +122,7 @@ namespace TVTrack.API.Client
                 .AddQueryParameter("gcApiToken", accessToken)
                 .AddQueryParameter("gcRefreshToken", refreshToken);
             request.Method = Method.Put;
-            await _client.PatchAsync(request);
+            await _client.PutAsync(request);
         }
 
         public async Task PutFCMToken(string username, string deviceToken)
@@ -127,7 +131,7 @@ namespace TVTrack.API.Client
                 .AddUrlSegment("username", username)
                 .AddQueryParameter("fcmDeviceToken", deviceToken);
             request.Method = Method.Put;
-            await _client.PatchAsync(request);
+            var res = await _client.PutAsync(request);
         }
     }
     public class EnabledDto
