@@ -58,6 +58,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
 
             await Shell.Current.GoToAsync("season", new Dictionary<string, object>
             {
+                ["showId"] = show.Id,
                 ["season"] = season,
                 ["episodes"] = episodes,
             });
