@@ -15,6 +15,9 @@ using TVTrack.Mobile.Helpers;
 using TVTrack.Mobile.Models;
 using TVTrack.Mobile.Resources.Fonts;
 using Microsoft.Extensions.DependencyInjection;
+using TVTrack.Mobile.Platforms;
+using TVTrack.Mobile.Services;
+using TVTrack.Mobile.Services.Interfaces;
 
 namespace TVTrack.Mobile;
 
@@ -37,7 +40,8 @@ public static class MauiProgram
             .ConfigureAPI()
             .ConfigureViews()
             .ConfigureViewModels()
-            .ConfigureRoutes();
+            .ConfigureRoutes()
+            .ConfigureServices();
 
         builder.Services.AddAutoMapper(typeof(TVMazeAPIProfile));
 
@@ -98,6 +102,13 @@ public static class MauiProgram
             .AddClasses(filter => filter.AssignableTo<PopupBase>())
             .AsSelf()
             .WithTransientLifetime());
+        return builder;
+    }
+
+    private static MauiAppBuilder ConfigureServices(this MauiAppBuilder builder)
+    {
+        builder.Services.AddSingleton<IGlobalExceptionService, GlobalExceptionService>();
+        builder.Services.AddSingleton<IGlobalExceptionServiceInitializer, GlobalExceptionServiceInitializer>();
         return builder;
     }
 
