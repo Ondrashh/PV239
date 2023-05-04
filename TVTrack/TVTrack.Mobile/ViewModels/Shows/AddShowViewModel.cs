@@ -80,5 +80,29 @@ namespace TVTrack.Mobile.ViewModels.Shows
         {
             await _client.PostRating(ItemID, _username, Rating);
         }
+
+        [RelayCommand]
+        public void IncrementRating()
+        {
+            if (Rating >= 5)
+            {
+                Rating = 5;
+                return;
+            }
+
+            Rating += 1;
+        }
+
+        [RelayCommand]
+        public void DecrementRating()
+        {
+            if (Rating <= 0)
+            {
+                Rating = 0;
+                return;
+            }
+
+            Rating -= 1;
+        }
     }
 }

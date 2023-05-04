@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TVTrack.Mobile.Platforms;
 using TVTrack.Mobile.Services;
 using TVTrack.Mobile.Services.Interfaces;
+using SimpleRatingControlMaui;
 
 namespace TVTrack.Mobile;
 
@@ -29,6 +30,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseSimpleRatingControl()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
