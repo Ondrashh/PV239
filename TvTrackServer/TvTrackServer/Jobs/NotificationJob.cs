@@ -24,7 +24,6 @@ namespace TvTrackServer.Jobs
         public async Task Execute(IJobExecutionContext context)
         {
             // TODO test notification job
-            return;
 
             var notifiableActivities = await _dbContext.ShowActivities
                 .Include(x => x.User)
