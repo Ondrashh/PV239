@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using TVTrack.API.Client.Models;
 using TVTrack.API.Models;
 using TVTrack.Models.Database;
+using System.Net;
 using TVTrack.Models.API.Responses;
 using TVTrack.Models.Database;
 using TVTrack.Models.TvMaze;
@@ -25,6 +26,32 @@ namespace TVTrack.API.Client
             _client.Dispose();
         }
 
+        private TVTrackRequestResult CreateTVTrackRequestResult(RestResponse? response)
+        {
+            if (response == null)
+            {
+                return new TVTrackRequestResult()
+                {
+                    Success = false,
+                    Reason = "Failed to fetch response from server, was null."
+                };
+            }
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return new TVTrackRequestResult()
+                {
+                    Success = true
+                };
+            }
+
+            return new TVTrackRequestResult()
+            {
+                Success = false,
+                Reason = response.Content ?? $"Remote server returned {response.StatusCode}."
+            };
+        }
+
         public async Task<ICollection<User>> GetUsers()
         {
             var request = new RestRequest(TVTrackEndpoints.USERS);
@@ -33,6 +60,18 @@ namespace TVTrack.API.Client
 
             return response;
         }
+
+        public async Task<TVTrackRequestResult> RegisterUser(string username)
+        {
+            var request = new RestRequest(TVTrackEndpoints.USERS)
+                .AddQueryParameter("username", username);
+            request.Method = Method.Post;
+
+            var response = await _client.ExecuteAsync(request);
+
+            return CreateTVTrackRequestResult(response);
+        }
+
 
         public async Task<ICollection<Search>> Search(string query)
         {

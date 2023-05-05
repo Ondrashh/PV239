@@ -57,6 +57,11 @@
 	<ItemGroup>
 	  <None Remove="appsettings.json" />
 	  <None Remove="Platforms\Android\google-services.json" />
+	  <None Remove="Resources\Fonts\SubwayBlack.ttf" />
+	  <None Remove="Resources\Fonts\SubwayShadow.ttf" />
+	  <None Remove="Resources\Images\blacklogo.png" />
+	  <None Remove="Resources\Images\whitelogo.png" />
+	  <None Remove="Resources\Raw\termsandconditions.txt" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -119,7 +124,16 @@
 	  <MauiXaml Update="Views\CustomComponents\BasicActivityIndicator.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\CustomComponents\WelcomeWithLogo.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Login\LoginView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Login\RegisterView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Login\TermsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Popup\AddShowPopup.xaml">

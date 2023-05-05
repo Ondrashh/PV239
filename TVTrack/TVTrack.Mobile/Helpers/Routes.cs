@@ -42,6 +42,8 @@ namespace TVTrack.Mobile.Helpers
             Routing.RegisterRoute("///search/detail/add", typeof(AddToUserShowListView));
 
             Routing.RegisterRoute("//login", typeof(LoginView));
+            Routing.RegisterRoute("//login/register", typeof(RegisterView));
+            Routing.RegisterRoute("//login/register/terms", typeof(TermsView));
 
             return builder;
         }

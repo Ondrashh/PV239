@@ -14,6 +14,8 @@ namespace TVTrack.Mobile.ViewModels
             _mapper = mapper;
         }
 
+        protected bool _redirectIfNotLoggedIn = true;
+
         [ObservableProperty]
         public int itemID;
 
@@ -30,7 +32,7 @@ namespace TVTrack.Mobile.ViewModels
         {
             LoggedUsername = await StorageHelper.GetUsername();
 
-            if (LoggedUsername == null)
+            if (_redirectIfNotLoggedIn && LoggedUsername == null)
             {
                 await Shell.Current.GoToAsync("//login");
             }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Login"
+    xmlns:custom="clr-namespace:TVTrack.Mobile.Views.CustomComponents"
+    x:Class="TVTrack.Mobile.Views.Login.RegisterView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <custom:WelcomeWithLogo Grid.Row="0"/>
+        <StackLayout Grid.Row="1" Spacing="10" Margin="20,0,20,0">
+            <Label
+                Text="Account registration"
+                FontSize="Body"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"/>
+            <StackLayout>
+                <Label
+                    Margin="3,0"
+                    Text="Username:"/>
+                <Entry x:Name="NewUsernameEntry"
+                       Placeholder="Write a username..."/>
+            </StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="9*"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Column="0"
+                    IsChecked="{Binding AgreedToTerms}"
+                    VerticalOptions="Center" />
+                <Label VerticalOptions="Center" Grid.Column="1">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="I have read the "/>
+                            <Span Text="Terms and Conditions"
+                                  TextColor="{StaticResource Primary}"
+                                  TextDecorations="Underline">
+                            </Span>
+                            <Span Text=" and I agree with them."/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShowTermsCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1"
+                    Text="Register"
+                    IsEnabled="{Binding NoLoadingInProgress}"
+                    Command="{Binding RegisterCommand}"
+                    CommandParameter="{Binding Source={x:Reference NewUsernameEntry}, Path=.}"/>
+            </Grid>
+            <custom:BasicActivityIndicator/>
+        </StackLayout>
+    </Grid>
+</views:ContentPageBase>
+
+    

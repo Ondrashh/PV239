@@ -23,12 +23,13 @@ namespace TVTrack.Mobile.ViewModels.Login
         public LoginViewModel(TVTrackClient client, IMapper mapper) : base(mapper)
         {
             _client = client;
+            _redirectIfNotLoggedIn = false;
         }
 
         public override async Task OnAppearingAsync()
         {
             LoadingStart();
-
+            
             var usersFromApi = await _client.GetUsers();
             Users = _mapper.Map<ObservableCollection<UserListItemModel>>(usersFromApi);
             await base.OnAppearingAsync();
@@ -53,6 +54,12 @@ namespace TVTrack.Mobile.ViewModels.Login
                 var token = Preferences.Get("DeviceToken", null);
                 await _client.PutFCMToken(userListItem.username, token);
             }
+        }
+
+        [RelayCommand]
+        public async Task GoToRegister()
+        {
+            await Shell.Current.GoToAsync("register");
         }
     }
 }
