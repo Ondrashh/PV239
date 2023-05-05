@@ -205,6 +205,7 @@ public class ShowController : CustomControllerBase
                 User = user
             };
             _context.ShowActivities.Add(userShowActivity);
+            await _context.SaveChangesAsync();
         }
 
         return userShowActivity;
@@ -221,6 +222,7 @@ public class ShowController : CustomControllerBase
                 ShowActivityId = showActivityId
             };
             _context.EpisodeActivities.Add(episodeActivity);
+            await _context.SaveChangesAsync();
         }
         return episodeActivity;
     }
@@ -237,6 +239,7 @@ public class ShowController : CustomControllerBase
                 UserRating = newRating
             };
             _context.UserRatedShows.Add(newUserRatedShow);
+            await _context.SaveChangesAsync();
             return;
         }
 
