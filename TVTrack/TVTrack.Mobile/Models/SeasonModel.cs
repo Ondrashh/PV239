@@ -38,6 +38,9 @@ namespace TVTrack.Mobile.Models
         [ObservableProperty]
         public string network;
 
+        [ObservableProperty] 
+        public int? watchedEpisodes;
+
         public string FormattedName
         {
             get
@@ -48,6 +51,19 @@ namespace TVTrack.Mobile.Models
                 }
 
                 return Name;
+            }
+        }
+
+        public string FormattedEpisodes
+        {
+            get
+            {
+                if (WatchedEpisodes == null)
+                {
+                    return EpisodeOrder?.ToString() ?? "0";
+                }
+
+                return $"{WatchedEpisodes}/{EpisodeOrder}";
             }
         }
     }
