@@ -23,7 +23,16 @@ namespace TVTrack.Mobile.Mapper
                 .ForMember(x => x.Premiered, opt => opt.MapFrom(src => DateTime.Parse(src.Premiered)))
                 .ForMember(x => x.Ended, opt => opt.MapFrom(src => DateTime.Parse(src.Ended)))
                 .ForMember(x => x.AverageRating, opt => opt.MapFrom(src => src.Rating.Average))
-                .AfterMap((src, dest) => dest.Network = src.WebChannel != null ? src.WebChannel.Name : (src.Network != null ? src.Network.Name : "<i>Unknown</i>"));
+                .AfterMap((src, dest) => dest.Network = src.WebChannel != null
+                    ? src.WebChannel.Name
+                    : (src.Network != null ? src.Network.Name : "<i>Unknown</i>"))
+                .AfterMap((src, dest) =>
+                {
+                    foreach (var season in dest.Seasons)
+                    {
+                        season.WatchedEpisodes = dest.Episodes?.Count(x => x.Watched && x.Season == season.Number) ?? 0;
+                    }
+                });
 
             CreateMap<Show, ShowPreviewModel>()
                 .ForMember(x => x.ImageURL, opt => opt.MapFrom(src => src.Image.Original));

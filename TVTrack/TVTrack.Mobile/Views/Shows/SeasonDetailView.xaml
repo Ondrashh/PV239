@@ -99,6 +99,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="12" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
@@ -121,10 +122,21 @@
                                             StyleClass="SeasonHeader"
                                             Text="{Binding FormattedName}"
                                             VerticalTextAlignment="Center" />
+                                        <CheckBox
+                                            Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="2"
+                                            HorizontalOptions="Start"
+                                            IsChecked="{Binding Watched}"
+                                            VerticalOptions="Center">
+                                            <CheckBox.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.MarkEpisodeAsWatchedCommand}" CommandParameter="{Binding Id}" />
+                                            </CheckBox.GestureRecognizers>
+                                        </CheckBox>
                                         <Image
                                             x:Name="DetailChevron"
                                             Grid.RowSpan="2"
-                                            Grid.Column="2">
+                                            Grid.Column="3">
                                             <Image.Source>
                                                 <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.ChevronDown}" />
                                             </Image.Source>
