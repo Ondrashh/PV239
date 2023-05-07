@@ -164,8 +164,40 @@ public class ShowController : CustomControllerBase
         return Ok();
     }
 
-    // TODO mark all show as watched
-    // TODO mark all episodes from season as watched
+    [SwaggerOperation(Summary = "Set whether the user has watched the entire series or not.")]
+    [HttpPatch("{showTvMazeId}")]
+    public async Task<IActionResult> SetWatchStatusOfShow(int showTvMazeId, [FromQuery] string username, [FromBody] WatchedDto watchedDto)
+    {
+        var user = await FindByUsernameAsync(username);
+        if (user == null) return BadRequest("No user with given username.");
+
+        Show showInfo = await _tvMazeClient.GetShowDetailsWithSeasonsAndEpisodes(showTvMazeId);
+   
+        foreach(var episode in showInfo.Embedded.Episodes)
+        {
+            await SetOneEpisodeWatchedStatus(showTvMazeId, episode.Id, user, watchedDto.Watched);
+        }
+
+        return Ok();
+    }
+
+    [SwaggerOperation(Summary = "Set whether the user has watched the whole season or not.")]
+    [HttpPatch("{showTvMazeId}/season/{seasonNumber}")]
+    public async Task<IActionResult> SetWatchStatusOfShow(int showTvMazeId, int seasonNumber, [FromQuery] string username, [FromBody] WatchedDto watchedDto)
+    {
+        var user = await FindByUsernameAsync(username);
+        if (user == null) return BadRequest("No user with given username.");
+
+        Show showInfo = await _tvMazeClient.GetShowDetailsWithSeasonsAndEpisodes(showTvMazeId);
+
+        foreach (var episode in showInfo.Embedded.Episodes)
+        {
+            if(episode.Season == seasonNumber)
+                await SetOneEpisodeWatchedStatus(showTvMazeId, episode.Id, user, watchedDto.Watched);
+        }
+
+        return Ok();
+    }
 
     [SwaggerOperation(Summary = "Set whether the user has watched this episode or not")]
     [HttpPatch("{showTvMazeId}/episodes/{episodeTvMazeId}")]
@@ -174,10 +206,17 @@ public class ShowController : CustomControllerBase
         var user = await FindByUsernameAsync(username);
         if (user == null) return BadRequest("No user with given username.");
 
+        await SetOneEpisodeWatchedStatus(showTvMazeId, episodeTvMazeId, user, watchedDto.Watched);
+
+        return Ok();
+    }
+
+    private async Task SetOneEpisodeWatchedStatus(int showTvMazeId, int episodeTvMazeId, User user, bool watched)
+    {
         var userShowActivity = await FetchOrCreateUserShowActivityAsync(showTvMazeId, user);
         var episodeShowActivity = await FetchOrCreateUserEpisodeActivityAsync(userShowActivity.Id, episodeTvMazeId);
 
-        if (watchedDto.Watched)
+        if (watched)
         {
             episodeShowActivity.Watched = true;
         }
@@ -186,8 +225,6 @@ public class ShowController : CustomControllerBase
             _context.EpisodeActivities.Remove(episodeShowActivity);
         }
         await _context.SaveChangesAsync();
-
-        return Ok();
     }
 
     [SwaggerOperation(Summary = "Post user's show rating")]
