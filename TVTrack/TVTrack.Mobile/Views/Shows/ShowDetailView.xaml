@@ -121,11 +121,25 @@
                 <Label
                     Grid.Row="5"
                     Grid.Column="0"
+                    IsVisible="{Binding HasShowEnded}"
                     Text="Ended" />
                 <Label
                     Grid.Row="5"
                     Grid.Column="1"
+                    IsVisible="{Binding HasShowEnded}"
                     Text="{Binding Show.Ended, StringFormat='{0:dd. MM. yyy}'}"
+                    TextType="Html" />
+
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    IsVisible="{Binding IsShowRunning}"
+                    Text="Schedule" />
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    IsVisible="{Binding IsShowRunning}"
+                    Text="{Binding Show.Schedule}"
                     TextType="Html" />
 
                 <Label

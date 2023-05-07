@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Diagnostics;
 using TVTrack.Models.Database;
 using TVTrack.Models.TvMaze;
 using TvTrackServer.Models.Dto;
 using TvTrackServer.TvMazeConnector;
+using TvTrackServer.Helpers;
 
 namespace TvTrackServer.Controllers;
 
@@ -92,21 +94,32 @@ public class ShowController : CustomControllerBase
         var userShowActivity = user.ShowActivities.FirstOrDefault(s=> s.TvMazeId == tvMazeId);
         if (userShowActivity == null)
         {
-            var newShowActivity = new ShowActivity()
+            userShowActivity = new ShowActivity()
             {
                 Notifications = enabledDto.Enabled,
                 UserId = user.Id,
-                TvMazeId = tvMazeId
+                TvMazeId = tvMazeId,
+                NextNotifyDate = DateTime.Today
             };
-            _context.ShowActivities.Add(newShowActivity);
-            await _context.SaveChangesAsync();
+
+            _context.ShowActivities.Add(userShowActivity);
         }
         else
         {
             userShowActivity.Notifications = enabledDto.Enabled;
             _context.Entry(userShowActivity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
         }
+
+        var show = await _tvMazeClient.GetShowDetails(tvMazeId);
+
+        var nextDate = show.GetNextEpisodeDate();
+        if (!string.IsNullOrEmpty(show.Schedule?.Days.FirstOrDefault())
+            && nextDate > userShowActivity.NextNotifyDate)
+        {
+            userShowActivity.NextNotifyDate = nextDate;
+        }
+
+        await _context.SaveChangesAsync();
 
         return Ok();
     }
@@ -121,21 +134,32 @@ public class ShowController : CustomControllerBase
         var userShowActivity = user.ShowActivities.FirstOrDefault(s => s.TvMazeId == tvMazeId);
         if (userShowActivity == null)
         {
-            var newShowActivity = new ShowActivity()
+            userShowActivity = new ShowActivity()
             {
                 Calendar = enabledDto.Enabled,
                 UserId = user.Id,
-                TvMazeId = tvMazeId
+                TvMazeId = tvMazeId,
+                NextNotifyDate = DateTime.Today
             };
-            _context.ShowActivities.Add(newShowActivity);
-            await _context.SaveChangesAsync();
+
+            _context.ShowActivities.Add(userShowActivity);
         }
         else
         {
             userShowActivity.Calendar = enabledDto.Enabled;
             _context.Entry(userShowActivity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
         }
+
+        var show = await _tvMazeClient.GetShowDetails(tvMazeId);
+
+        var nextDate = show.GetNextEpisodeDate();
+        if (!string.IsNullOrEmpty(show.Schedule?.Days.FirstOrDefault())
+            && nextDate > userShowActivity.NextNotifyDate)
+        {
+            userShowActivity.NextNotifyDate = nextDate;
+        }
+
+        await _context.SaveChangesAsync();
 
         return Ok();
     }

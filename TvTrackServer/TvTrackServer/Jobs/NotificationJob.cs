@@ -23,8 +23,6 @@ namespace TvTrackServer.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-            // TODO test notification job
-
             var notifiableActivities = await _dbContext.ShowActivities
                 .Include(x => x.User)
                 .ThenInclude(x => x.Tokens)
@@ -43,7 +41,7 @@ namespace TvTrackServer.Jobs
                     $"New episode of {show.Name} is premiering today!");
 
 
-                var nextDate = show.GetLatestEpisodeDate();
+                var nextDate = show.GetNextEpisodeDate();
                 if (!string.IsNullOrEmpty(show.Schedule?.Days.FirstOrDefault())
                     && nextDate > activity.NextNotifyDate)
                 {
@@ -57,7 +55,7 @@ namespace TvTrackServer.Jobs
 
             await _dbContext.SaveChangesAsync();
 
-            Console.WriteLine(DateTime.Now.ToLongTimeString());
+            Console.WriteLine($"[NotificationJob]: {DateTime.Now.ToLongTimeString()}");
         }
     }
 }
