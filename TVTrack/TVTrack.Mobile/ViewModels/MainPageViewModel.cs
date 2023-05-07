@@ -1,15 +1,8 @@
 ﻿using AutoMapper;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TVTrack.Mobile.Helpers;
 using TVTrack.Mobile.Models;
-using TVTrack.Mobile.Models.Notifications;
 
 namespace TVTrack.Mobile.ViewModels
 {

@@ -4,6 +4,8 @@ using System.Xml.Linq;
 using TVTrack.API.Client.Models;
 using TVTrack.API.Models;
 using TVTrack.Models.Database;
+using TVTrack.Models.API.Responses;
+using TVTrack.Models.Database;
 using TVTrack.Models.TvMaze;
 
 namespace TVTrack.API.Client
@@ -23,6 +25,15 @@ namespace TVTrack.API.Client
             _client.Dispose();
         }
 
+        public async Task<ICollection<User>> GetUsers()
+        {
+            var request = new RestRequest(TVTrackEndpoints.USERS);
+            request.Method = Method.Get;
+            var response = await _client.GetAsync<ICollection<User>>(request);
+
+            return response;
+        }
+
         public async Task<ICollection<Search>> Search(string query)
         {
             var request = new RestRequest(TVTrackEndpoints.SEARCH)
@@ -33,12 +44,16 @@ namespace TVTrack.API.Client
             return response;
         }
 
-        public async Task<Show> GetShowDetails(int id)
+        public async Task<Show> GetShowDetails(int id, string username = null)
         {
             var request = new RestRequest(TVTrackEndpoints.SHOW)
                 .AddUrlSegment("id", id)
                 .AddQueryParameter("embed[]", "episodes", false)
                 .AddQueryParameter("embed[]", "seasons", false);
+            if (!string.IsNullOrEmpty(username))
+            {
+                request.AddQueryParameter("username", username);
+            }
             request.Method = Method.Get;
             var response = await _client.GetAsync<Show>(request);
 
@@ -103,6 +118,34 @@ namespace TVTrack.API.Client
                 .AddBody(new WatchedDto() { Watched = watched });
             request.Method = Method.Patch;
             await _client.PatchAsync(request);
+        }
+
+        public async Task PutGoogleCalendarToken(string username, string accessToken, string refreshToken)
+        {
+            var request = new RestRequest(TVTrackEndpoints.GCAL_TOKEN)
+                .AddUrlSegment("username", username)
+                .AddQueryParameter("gcApiToken", accessToken)
+                .AddQueryParameter("gcRefreshToken", refreshToken);
+            request.Method = Method.Put;
+            await _client.PutAsync(request);
+        }
+
+        public async Task PutFCMToken(string username, string deviceToken)
+        {
+            var request = new RestRequest(TVTrackEndpoints.FCM_TOKEN)
+                .AddUrlSegment("username", username)
+                .AddQueryParameter("fcmDeviceToken", deviceToken);
+            request.Method = Method.Put;
+            var res = await _client.PutAsync(request);
+        }
+
+        public async Task<UserHasTokensModel> GetHasTokens(string username)
+        {
+            var request = new RestRequest(TVTrackEndpoints.HAS_TOKENS)
+                .AddUrlSegment("username", username);
+            request.Method = Method.Get;
+            var res = await _client.GetAsync<UserHasTokensModel>(request);
+            return res;
         }
 
         public async Task<IEnumerable<ShowListPreview>> GetUserShowsLists(string username)

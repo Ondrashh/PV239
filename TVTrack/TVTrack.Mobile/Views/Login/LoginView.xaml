@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.Views.Login.LoginView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
+    xmlns:m="clr-namespace:TVTrack.Mobile.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Login"
+    xmlns:custom="clr-namespace:TVTrack.Mobile.Views.CustomComponents"
+    x:Name="Root">
+    <Grid Padding="10">
+        <StackLayout Margin="5">
+            <Label Text="Welcome to TVTrack App!"/>
+            <Label Text="You need to be logged in to access any features."/>
+            <Label Text="Please select user to log in, or create a new one!"/>
+            <Picker x:Name="UsernameSelector"
+                    ItemsSource="{Binding Users}"
+                    ItemDisplayBinding="{Binding Username}"
+                    Title="Pick a user..."/>
+            <Button Text="Log In"
+                    IsEnabled="{Binding NoLoadingInProgress}"
+                    Command="{Binding LogInCommand}"
+                    CommandParameter="{Binding Source={x:Reference UsernameSelector}, Path=SelectedItem}"/>
+            <custom:BasicActivityIndicator/>
+        </StackLayout>
+    </Grid>
+</views:ContentPageBase>

@@ -39,7 +39,7 @@
                     x:Name="UserListSelector"
                     ItemsSource="{Binding Titles}"
                     ItemDisplayBinding="{Binding Name}"
-                    Title="Pick a user..."/>
+                    Title="Pick user list..."/>
         </Grid>
         <Grid Grid.Row="2" Padding="10">
             <Button 

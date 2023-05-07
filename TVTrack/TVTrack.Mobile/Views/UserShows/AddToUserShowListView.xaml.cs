@@ -13,15 +13,4 @@ public partial class AddToUserShowListView
         _client = client;
 		InitializeComponent();
     }
-
-    async void OnButtonClicked(object sender, EventArgs args)
-    {
-        //if (nameEntry.Text != null && nameEntry.Text.Length > 0)
-        //{
-        //    await _client.CreateUserShow("test", nameEntry.Text, descriptionEntry.Text);
-        //    await Shell.Current.GoToAsync("///userLists", new Dictionary<string, object>
-        //    {
-        //    });
-        //}
-    }
 }

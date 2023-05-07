@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TVTrack.API.Client;
+using TVTrack.Mobile.Helpers;
 using TVTrack.Mobile.Models;
 
 namespace TVTrack.Mobile.ViewModels.Shows
@@ -19,7 +20,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
     public partial class SeasonDetailViewModel : ViewModelBase
     {
         private readonly TVTrackClient _client;
-        private string _username = "TODO";
+        private string _username = "";
 
         public SeasonDetailViewModel(TVTrackClient client, 
             IMapper mapper) : base(mapper)
@@ -34,11 +35,9 @@ namespace TVTrack.Mobile.ViewModels.Shows
         [ObservableProperty]
         public List<EpisodeModel> episodes;
 
-        public override Task OnAppearingAsync()
+        public override async Task OnAppearingAsync()
         {
-            // TODO ADD USER MANAGEMENT
-            _username = "TODO!";
-            return base.OnAppearingAsync();
+            _username = await StorageHelper.GetUsername();
         }
 
         [RelayCommand]

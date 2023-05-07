@@ -11,6 +11,7 @@ public class ShowActivity
 
     public bool Notifications { get; set; } = false;
     public bool Calendar { get; set; } = false;
+    public DateTime NextNotifyDate { get; set; }
 
     public bool UserRated { get; set; } = false;
     public int UserRating { get; set; } = 0;

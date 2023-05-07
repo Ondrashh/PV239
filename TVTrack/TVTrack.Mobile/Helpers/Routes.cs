@@ -1,5 +1,6 @@
 ﻿using TVTrack.Mobile.Models;
 using TVTrack.Mobile.Resources.Fonts;
+using TVTrack.Mobile.Views.Login;
 using TVTrack.Mobile.Views.Settings;
 using TVTrack.Mobile.Views.Shows;
 using TVTrack.Mobile.Views.UserShows;
@@ -16,6 +17,13 @@ namespace TVTrack.Mobile.Helpers
                 FontIcon = FontAwesomeIcons.Wrench, 
                 Route = "///settings/developer",
                 ViewType = typeof(DeveloperToolsView)
+            },
+            new()
+            {
+                Name = "Google Calendar",
+                FontIcon = FontAwesomeIcons.Calendar,
+                Route = "///settings/googlecal",
+                ViewType = typeof(GoogleCalendarAuthView)
             }
         };
 
@@ -32,6 +40,8 @@ namespace TVTrack.Mobile.Helpers
             Routing.RegisterRoute("///search/detail", typeof(ShowDetailView));
             Routing.RegisterRoute("///search/detail/season", typeof(SeasonDetailView));
             Routing.RegisterRoute("///search/detail/add", typeof(AddToUserShowListView));
+
+            Routing.RegisterRoute("//login", typeof(LoginView));
 
             return builder;
         }

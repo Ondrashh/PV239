@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using TVTrack.API.Client;
 using TVTrack.API.Client.Models;
+using TVTrack.Mobile.Helpers;
 using TVTrack.Mobile.Models;
 
 namespace TVTrack.Mobile.ViewModels.UserShows
@@ -53,7 +54,8 @@ namespace TVTrack.Mobile.ViewModels.UserShows
         [RelayCommand]
         public async Task Delete()
         {
-            await _client.DeleteUserShow("test", UserShowsDetail.Id);
+            var username = await StorageHelper.GetUsername();
+            await _client.DeleteUserShow(username, UserShowsDetail.Id);
             await Shell.Current.GoToAsync("///userLists", new Dictionary<string, object>
             {
             });

@@ -36,5 +36,13 @@ namespace TVTrack.Mobile.ViewModels.Settings
         {
             await Shell.Current.GoToAsync(item.Route);
         }
+
+        [RelayCommand]
+        public async Task LogOut()
+        {
+            await StorageHelper.LogOut();
+            await AlertHelper.ShowToast("Logged out!");
+            await Shell.Current.GoToAsync("//login");
+        }
     }
 }

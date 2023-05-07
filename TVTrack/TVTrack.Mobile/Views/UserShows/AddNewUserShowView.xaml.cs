@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
 using TVTrack.API.Client;
+using TVTrack.Mobile.Helpers;
 using TVTrack.Mobile.ViewModels.UserShows;
 
 namespace TVTrack.Mobile.Views.UserShows;
@@ -18,7 +19,8 @@ public partial class AddNewUserShowView
     {
         if (nameEntry.Text != null && nameEntry.Text.Length > 0)
         {
-            await _client.CreateUserShow("test", nameEntry.Text, descriptionEntry.Text);
+            var username = await StorageHelper.GetUsername();
+            await _client.CreateUserShow(username, nameEntry.Text, descriptionEntry.Text);
             await Shell.Current.GoToAsync("///userLists", new Dictionary<string, object>
             {
             });

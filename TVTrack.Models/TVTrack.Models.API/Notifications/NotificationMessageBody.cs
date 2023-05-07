@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TVTrack.Mobile.Models.Notifications
+namespace TVTrack.Models.API.Notifications
 {
     public class NotificationMessageBody
     {

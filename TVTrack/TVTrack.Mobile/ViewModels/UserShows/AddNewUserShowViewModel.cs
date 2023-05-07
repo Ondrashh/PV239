@@ -24,21 +24,5 @@ namespace TVTrack.Mobile.ViewModels.UserShows
             _client = client;
 
         }
-
-        public override async Task OnAppearingAsync()
-        {
-            //var results = await _client.GetUserShowsLists("test");
-
-            //var resMapped = _mapper.Map<IEnumerable<ShowListPreviewModel>>(results);
-            //Results.Clear();
-            //foreach (var searchResult in resMapped)
-            //{
-            //    if (!Results.Contains(searchResult))
-            //    {
-            //        Results.Add(searchResult);
-            //    }
-            //}
-        }
-
     }
 }

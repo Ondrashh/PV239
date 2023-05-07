@@ -8,8 +8,13 @@
     xmlns:vsearch="clr-namespace:TVTrack.Mobile.Views.Search"
     xmlns:vsettings="clr-namespace:TVTrack.Mobile.Views.Settings"
     xmlns:vusershows="clr-namespace:TVTrack.Mobile.Views.UserShows"
+    xmlns:vlogin="clr-namespace:TVTrack.Mobile.Views.Login"
     xmlns:vshows="clr-namespace:TVTrack.Mobile.Views.Shows"
     Shell.FlyoutBehavior="Disabled">
+
+    <ShellItem Route="login">
+        <ShellContent ContentTemplate="{DataTemplate vlogin:LoginView}"/>
+    </ShellItem>
 
     <TabBar>
         <Tab>

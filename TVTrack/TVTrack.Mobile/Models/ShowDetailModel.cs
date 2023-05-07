@@ -10,6 +10,9 @@ namespace TVTrack.Mobile.Models
 {
     public partial class ShowDetailModel: ObservableObject
     {
+        [ObservableProperty] 
+        public int id;
+
         [ObservableProperty]
         public string name;
 
@@ -47,6 +50,9 @@ namespace TVTrack.Mobile.Models
         public double? averageRating;
 
         [ObservableProperty]
+        public string schedule;
+
+        [ObservableProperty]
         public ObservableCollection<string> genres;
 
         [ObservableProperty]
@@ -54,5 +60,6 @@ namespace TVTrack.Mobile.Models
 
         [ObservableProperty]
         public ObservableCollection<EpisodeModel> episodes;
+
     }
 }

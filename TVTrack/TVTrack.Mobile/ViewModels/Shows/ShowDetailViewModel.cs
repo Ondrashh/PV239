@@ -23,6 +23,12 @@ namespace TVTrack.Mobile.ViewModels.Shows
         [ObservableProperty] 
         public bool hasManagedShow;
 
+        [ObservableProperty]
+        public bool hasShowEnded;
+
+        [ObservableProperty]
+        public bool isShowRunning;
+
         public ShowDetailViewModel(TVTrackClient client,
             PopupHelper popupHelper,
             IMapper mapper) : base(mapper)
@@ -33,11 +39,14 @@ namespace TVTrack.Mobile.ViewModels.Shows
 
         public override async Task OnAppearingAsync()
         {
-            var apiShow = await _client.GetShowDetails(Id);
+            var username = await StorageHelper.GetUsername();
+            var apiShow = await _client.GetShowDetails(Id, username);
             HasManagedShow = (apiShow.UserRated ?? false)
                 || (apiShow.InUsersDefaultList ?? false)
                 || (apiShow.Notifications ?? false)
                 || (apiShow.Calendar ?? false);
+            HasShowEnded = apiShow.Status == "Ended";
+            IsShowRunning = apiShow.Status == "Running";
             Show = _mapper.Map<ShowDetailModel>(apiShow);
         }
 
@@ -49,6 +58,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
 
             await Shell.Current.GoToAsync("season", new Dictionary<string, object>
             {
+                ["showId"] = show.Id,
                 ["season"] = season,
                 ["episodes"] = episodes,
             });
