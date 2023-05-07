@@ -22,9 +22,6 @@ namespace TvTrackServer.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-            // TODO TEST CALENDAR JOB
-            return;
-
             var syncableActivities = await _dbContext.ShowActivities
                 .Include(x => x.User)
                 .ThenInclude(x => x.Tokens)
