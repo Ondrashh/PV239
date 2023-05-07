@@ -182,7 +182,7 @@ public class ShowController : CustomControllerBase
     }
 
     [SwaggerOperation(Summary = "Set whether the user has watched the whole season or not.")]
-    [HttpPatch("{showTvMazeId}/season/{seasonNumber}")]
+    [HttpPatch("{showTvMazeId}/seasons/{seasonNumber}")]
     public async Task<IActionResult> SetWatchStatusOfShow(int showTvMazeId, int seasonNumber, [FromQuery] string username, [FromBody] WatchedDto watchedDto)
     {
         var user = await FindByUsernameAsync(username);
