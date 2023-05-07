@@ -55,7 +55,7 @@ namespace TVTrack.Mobile.ViewModels.Login
             if (result.Success)
             {
                 await StorageHelper.StoreUsername(newUsername);
-                await Shell.Current.GoToAsync("///home");
+                await Shell.Current.GoToAsync("///userLists");
                 await AlertHelper.ShowToast("Account successfully created.");
             }
             else

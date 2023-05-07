@@ -37,7 +37,7 @@ namespace TVTrack.API.Client
                 };
             }
 
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created)
             {
                 return new TVTrackRequestResult()
                 {
