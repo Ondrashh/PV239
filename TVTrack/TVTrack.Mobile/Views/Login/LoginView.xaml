@@ -10,20 +10,59 @@
     xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Login"
     xmlns:custom="clr-namespace:TVTrack.Mobile.Views.CustomComponents"
     x:Name="Root">
-    <Grid Padding="10">
-        <StackLayout Margin="5">
-            <Label Text="Welcome to TVTrack App!"/>
-            <Label Text="You need to be logged in to access any features."/>
-            <Label Text="Please select user to log in, or create a new one!"/>
-            <Picker x:Name="UsernameSelector"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <custom:WelcomeWithLogo Grid.Row="0"/>
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0" Spacing="10">
+                <Label
+                HorizontalOptions="Center"
+                FontSize="Body"
+                FontAttributes="Bold"
+                Text="Choose your account:"/>
+                <Picker x:Name="UsernameSelector"
+                    FontSize="Body"
                     ItemsSource="{Binding Users}"
                     ItemDisplayBinding="{Binding Username}"
-                    Title="Pick a user..."/>
-            <Button Text="Log In"
-                    IsEnabled="{Binding NoLoadingInProgress}"
-                    Command="{Binding LogInCommand}"
-                    CommandParameter="{Binding Source={x:Reference UsernameSelector}, Path=SelectedItem}"/>
-            <custom:BasicActivityIndicator/>
-        </StackLayout>
+                    Title="Select user"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="1"
+                        Text="Log In"
+                        IsEnabled="{Binding NoLoadingInProgress}"
+                        Command="{Binding LogInCommand}"
+                        CommandParameter="{Binding Source={x:Reference UsernameSelector}, Path=SelectedItem}"/>
+                </Grid>
+                <custom:BasicActivityIndicator Grid.Row="1"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Spacing="10">
+                <Label
+                    HorizontalOptions="Center"
+                    FontSize="Body"
+                    Text="Or create new account:"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1"
+                        Text="Register"
+                        Command="{Binding GoToRegisterCommand}"/>
+                </Grid>
+            </StackLayout>
+        </Grid>
     </Grid>
 </views:ContentPageBase>
