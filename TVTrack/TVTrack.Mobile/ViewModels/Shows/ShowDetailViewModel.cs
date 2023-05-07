@@ -31,6 +31,8 @@ namespace TVTrack.Mobile.ViewModels.Shows
         [ObservableProperty] 
         public bool hasManagedShow;
 
+        public bool HasShowEnded => show.Ended != null;
+
         public ShowDetailViewModel(TVTrackClient client,
             PopupHelper popupHelper,
             IMapper mapper) : base(mapper)
