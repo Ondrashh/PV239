@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using TvTrackServer;
-using TvTrackServer.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,11 +32,8 @@ builder.Services.AddAutoMapper(typeof(TvTrackServer.Configs.MappingProfile));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseAuthorization();
 

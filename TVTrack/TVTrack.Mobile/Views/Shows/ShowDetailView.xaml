@@ -14,6 +14,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+
             </Grid.ColumnDefinitions>
             <Label Text="{Binding Show.Name}"
                    FontSize="Medium"
@@ -28,6 +30,16 @@
                          Command="{Binding AddToListCommand}">
                 <ImageButton.Source>
                     <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.Plus}"
+                                     FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                </ImageButton.Source>
+            </ImageButton>
+            <ImageButton VerticalOptions="Center"
+                         HorizontalOptions="End"
+                         Grid.Column="2"
+                         Padding="0, 0, 10, 0"
+                         Command="{Binding AddToUserListCommand}">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.AddressCard}"
                                      FontFamily="{Static fonts:Fonts.FontAwesome}"/>
                 </ImageButton.Source>
             </ImageButton>

@@ -94,6 +94,21 @@
 	  <Compile Update="Views\Popup\AddShowPopup.xaml.cs">
 	    <DependentUpon>AddShowPopup.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\UserShows\AddToUserShowListView.xaml.cs">
+	    <DependentUpon>AddToUserShowListView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\UserShows\EditUserShowView.xaml.cs">
+	    <DependentUpon>EditUserShowView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\UserShows\AddNewUserShowView.xaml.cs">
+	    <DependentUpon>AddNewUserShowView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\UserShows\UserShowDetailView.xaml.cs">
+	    <DependentUpon>UserShowDetailView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\UserShows\UserShowsView.xaml.cs">
+	    <DependentUpon>UserShowsView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -119,6 +134,21 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Shows\ShowDetailView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UserShows\AddToUserShowListView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UserShows\EditUserShowView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UserShows\AddNewUserShowView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UserShows\UserShowDetailView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UserShows\UserShowsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

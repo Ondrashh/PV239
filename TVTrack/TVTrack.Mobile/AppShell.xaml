@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:TVTrack.Mobile"
     xmlns:vsearch="clr-namespace:TVTrack.Mobile.Views.Search"
     xmlns:vsettings="clr-namespace:TVTrack.Mobile.Views.Settings"
+    xmlns:vusershows="clr-namespace:TVTrack.Mobile.Views.UserShows"
     xmlns:vshows="clr-namespace:TVTrack.Mobile.Views.Shows"
     Shell.FlyoutBehavior="Disabled">
 
@@ -16,12 +17,12 @@
                 <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.House}" />
             </Tab.Icon>
             <Tab.Title>
-                Home
+                User lists
             </Tab.Title>
             <ShellContent
-                Title="Home"
-                ContentTemplate="{DataTemplate local:MainPage}"
-                Route="home" />
+                Title="User lists"
+                ContentTemplate="{DataTemplate vusershows:UserShowsView}"
+                Route="userLists" />
         </Tab>
         <Tab>
             <Tab.Icon>

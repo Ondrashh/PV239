@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using TVTrack.Mobile.Models;
 using System.Globalization;
 using TVTrack.Models.TvMaze;
+using TVTrack.API.Models;
+using TVTrack.API.Client.Models;
 
 namespace TVTrack.Mobile.Mapper
 {
@@ -14,6 +16,8 @@ namespace TVTrack.Mobile.Mapper
     {
         public TVMazeAPIProfile()
         {
+            CreateMap<ShowListPreview, ShowListPreviewModel>();
+            CreateMap<ShowListDetail, UserShowsDetailModel>();
             CreateMap<Show, ShowDetailModel>()
                 .ForMember(x => x.ImageURL, opt => opt.MapFrom(src => src.Image.Original))
                 .ForMember(x => x.Seasons, opt => opt.MapFrom(src => src.Embedded.Seasons))

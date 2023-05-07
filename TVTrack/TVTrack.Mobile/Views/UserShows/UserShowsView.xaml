@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.Views.UserShows.UserShowsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
+    xmlns:m="clr-namespace:TVTrack.Mobile.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.UserShows"
+    x:Name="Root"
+    x:DataType="vm:UserShowsViewModel">
+    <Grid Padding="10">
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"  />
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        Padding="10,0"
+                        Margin="0,0,0,10"
+                        HeightRequest="20"
+                        FontAttributes="Bold"
+                        Text="Name">
+                    </Label>
+                    <Label
+                        FontAttributes="Bold"
+                        Grid.Column="1"
+                        Margin="0,0,0,10"
+                        HeightRequest="20"
+                        Text="Series Count" />
+                    <Button
+                Grid.Column="2"
+                Margin="0,0,0,10"
+                Command="{Binding AddNewCommand}"
+                HeightRequest="40"
+                Text="+ New" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <BoxView HeightRequest="1" Color="Red"/>
+
+                </Grid>
+                <Grid Grid.Row="2">
+                    <CollectionView ItemsSource="{Binding Results}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    x:DataType="m:ShowListPreviewModel"
+                                    HeightRequest="60">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition Width="80" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenShowDetailCommand}" CommandParameter="{Binding Id}" />
+                                    </Grid.GestureRecognizers>
+                                    <Label
+                                        Grid.Column="0"
+                                        Padding="10,0"
+                                        Text="{Binding Name}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0"
+                                        Text="{Binding ShowCount}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</views:ContentPageBase>

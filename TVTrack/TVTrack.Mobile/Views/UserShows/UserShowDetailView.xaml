@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.Views.UserShows.UserShowDetailView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
+    xmlns:m="clr-namespace:TVTrack.Models.TvMaze;assembly=TVTrack.Models.TvMaze"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.UserShows"
+    x:Name="Root"
+    x:DataType="vm:UserShowsDetailViewModel">
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                Padding="10,0"
+                Text="Name:"
+                FontAttributes="Bold"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Column="1"
+                Padding="0,0"
+                Text="{Binding UserShowsDetail.Name}"
+                VerticalOptions="Center" />
+            <Button
+                Grid.Column="2"
+                Margin="0,0,5,10"
+                Command="{Binding EditCommand}"
+                HeightRequest="40"
+                BackgroundColor="Orange"
+                Text="Edit" />
+            <Button
+                Grid.Column="3"
+                Margin="5,0,0,10"
+                Command="{Binding DeleteCommand}"
+                HeightRequest="40"
+                BackgroundColor="Red"
+                Text="Delete" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                Padding="10,0"
+                Text="Description:"
+                FontAttributes="Bold"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Column="1"
+                Padding="10,0"
+                Text="{Binding UserShowsDetail.Description}"
+                VerticalOptions="Center" />
+        </Grid>
+        <Grid Grid.Row="2">
+            <Label
+                Grid.Column="0"
+                Padding="10,0"
+                Text="Shows:"
+                FontAttributes="Bold"
+                VerticalOptions="Center" />
+        </Grid>
+        <ScrollView Grid.Row="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <CollectionView ItemsSource="{Binding UserShowsDetail.Shows}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    Margin="10"
+                                    x:DataType="m:Show"
+                                    HeightRequest="120">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="70" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenShowDetailCommand}" CommandParameter="{Binding Id}" />
+                                    </Grid.GestureRecognizers>
+                                    <Image
+                                        Grid.Column="0"
+                                        Aspect="AspectFill"
+                                        Source="{Binding Image.Original, TargetNullValue='/Images/dotnet_bot.svg'}" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0"
+                                        Text="{Binding Name}"
+                                        VerticalOptions="Center" />
+                                    <ImageButton VerticalOptions="Center"
+                         HorizontalOptions="End"
+                         Grid.Column="1"
+                         Padding="0, 0, 10, 0"
+                         Command="{Binding Source={x:Reference Root}, Path=BindingContext.RemoveShowCommand}"  CommandParameter="{Binding Id}">
+                                        <ImageButton.Source>
+                                            <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.Minus}"
+                                                             Color="Red"
+                                     FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                                        </ImageButton.Source>
+                                    </ImageButton>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</views:ContentPageBase>
