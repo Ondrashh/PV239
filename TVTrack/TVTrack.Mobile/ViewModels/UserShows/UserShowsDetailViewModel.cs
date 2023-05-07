@@ -26,7 +26,9 @@ namespace TVTrack.Mobile.ViewModels.UserShows
 
         public override async Task OnAppearingAsync()
         {
-            var results = await _client.GetUserShowsDetail(Id);
+            var username = await StorageHelper.GetUsername();
+
+            var results = await _client.GetUserShowsDetail(Id, username);
 
             UserShowsDetail = _mapper.Map<UserShowsDetailModel> (results);
         }
@@ -64,8 +66,10 @@ namespace TVTrack.Mobile.ViewModels.UserShows
         [RelayCommand]
         public async Task RemoveShow(int id)
         {
+            var username = await StorageHelper.GetUsername();
+
             await _client.DeleteShowFromUserShow(UserShowsDetail.Id, id);
-            var results = await _client.GetUserShowsDetail(Id);
+            var results = await _client.GetUserShowsDetail(Id, username);
 
             UserShowsDetail = _mapper.Map<UserShowsDetailModel>(results);
         }

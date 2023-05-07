@@ -44,18 +44,37 @@ public class ShowListsController : CustomControllerBase
     // GET: /showlists/5
     [SwaggerOperation(Summary = "Get show list detail including detail of shows in it")]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetShowList(int id)
+    public async Task<IActionResult> GetShowList(int id, [FromQuery]string username)
     {
         var showList = await _context.ShowLists.AsNoTracking().Include(e => e.Shows).FirstOrDefaultAsync(e => e.Id == id);
         if (showList == null) return BadRequest("No show list with given id exists.");
         var newShowList = new List<ShowPreviewDto>();
+        var user = await FindByUsernameAsync(username);
         foreach (var showListItem in showList.Shows)
         {
-            newShowList.Add(_mapper.Map<ShowPreviewDto>(await _tvMazeClient.GetShowDetails(showListItem.TvMazeId)));
+            var show = await _tvMazeClient.GetShowDetails(showListItem.TvMazeId);
+            if (!string.IsNullOrEmpty(username))
+            {
+                await LoadUserActivityInfo(show.Id, user, show);
+            }
+
+            newShowList.Add(_mapper.Map<ShowPreviewDto>(show));
         }
         var showListDto = _mapper.Map<ShowListDetailDto>(showList);
         showListDto.Shows = newShowList;
         return Ok(showListDto);
+    }
+
+    private async Task LoadUserActivityInfo(int tvMazeId, User user, Show showDetails)
+    {
+        var usersShowActivity = await _context.ShowActivities.Include(s => s.EpisodeActivities).FirstOrDefaultAsync(s => s.UserId == user.Id && s.TvMazeId == tvMazeId);
+        if (usersShowActivity != null)
+        {
+            showDetails.UserRated = usersShowActivity.UserRated;
+            showDetails.UserRating = usersShowActivity.UserRating;
+            showDetails.Notifications = usersShowActivity.Notifications;
+            showDetails.Calendar = usersShowActivity.Calendar;
+        }
     }
 
     // GET: /showlists/available/5/2

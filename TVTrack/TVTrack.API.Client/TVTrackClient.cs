@@ -158,10 +158,11 @@ namespace TVTrack.API.Client
             return response;
         }
 
-        public async Task<ShowListDetail> GetUserShowsDetail(int id)
+        public async Task<ShowListDetail> GetUserShowsDetail(int id, string username)
         {
             var request = new RestRequest(TVTrackEndpoints.LIST_DETAIL)
-                .AddUrlSegment("id", id);
+                .AddUrlSegment("id", id)
+                .AddQueryParameter("username", username);
             request.Method = Method.Get;
             var response = await _client.GetAsync<ShowListDetail>(request);
 

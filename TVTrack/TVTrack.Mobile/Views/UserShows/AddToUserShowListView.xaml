@@ -9,6 +9,7 @@
     xmlns:views="clr-namespace:TVTrack.Mobile.Views"
     xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.UserShows"
     x:Name="Root"
+    Title="Add To List"
     x:DataType="vm:AddToUserShowListViewModel">
     <Grid Padding="10">
         <Grid.RowDefinitions>
@@ -20,12 +21,12 @@
             <Label
                 Grid.Column="0"
                 Padding="10,0"
-                Text="Choose user list to add to:"
-                FontSize="16"
                 FontAttributes="Bold"
+                FontSize="16"
+                Text="Choose user list to add to:"
                 VerticalOptions="Center" />
         </Grid>
-        <Grid Padding="0,10,0,0" Grid.Row="1">
+        <Grid Grid.Row="1" Padding="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="60" />
                 <ColumnDefinition Width="*" />
@@ -35,18 +36,19 @@
                 Padding="10,0"
                 Text="Lists:"
                 VerticalOptions="Center" />
-            <Picker  Grid.Column="1"
-                    x:Name="UserListSelector"
-                    ItemsSource="{Binding Titles}"
-                    ItemDisplayBinding="{Binding Name}"
-                    Title="Pick user list..."/>
+            <Picker
+                x:Name="UserListSelector"
+                Title="Pick user list..."
+                Grid.Column="1"
+                ItemDisplayBinding="{Binding Name}"
+                ItemsSource="{Binding Titles}" />
         </Grid>
         <Grid Grid.Row="2" Padding="10">
-            <Button 
-                Text="Save"
+            <Button
                 x:Name="submitButton"
                 Command="{Binding AssignButtonClickedCommand}"
-                CommandParameter="{Binding Source={x:Reference UserListSelector}, Path=SelectedItem}"/>
+                CommandParameter="{Binding Source={x:Reference UserListSelector}, Path=SelectedItem}"
+                Text="Save" />
         </Grid>
     </Grid>
 </views:ContentPageBase>

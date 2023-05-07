@@ -9,72 +9,69 @@
     xmlns:views="clr-namespace:TVTrack.Mobile.Views"
     xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.UserShows"
     x:Name="Root"
+    Title="{Binding UserShowsDetail.Name}"
     x:DataType="vm:UserShowsDetailViewModel">
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Label
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding UserShowsDetail.Name}"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+            <ImageButton
+                Grid.Column="1"
+                Padding="0,0,10,0"
+                Command="{Binding EditCommand}"
+                HorizontalOptions="End"
+                VerticalOptions="Center">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Pencil}" />
+                </ImageButton.Source>
+            </ImageButton>
+            <ImageButton
+                Grid.Column="2"
+                Padding="0,0,10,0"
+                Command="{Binding DeleteCommand}"
+                HorizontalOptions="End"
+                VerticalOptions="Center">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Xmark}" />
+                </ImageButton.Source>
+            </ImageButton>
+        </Grid>
+    </Shell.TitleView>
     <Grid Padding="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="70" />
-                <ColumnDefinition Width="120" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label
-                Grid.Column="0"
-                Padding="10,0"
-                Text="Name:"
-                FontAttributes="Bold"
-                VerticalOptions="Center" />
-            <Label
-                Grid.Column="1"
-                Padding="0,0"
-                Text="{Binding UserShowsDetail.Name}"
-                VerticalOptions="Center" />
-            <Button
-                Grid.Column="2"
-                Margin="0,0,5,10"
-                Command="{Binding EditCommand}"
-                HeightRequest="40"
-                BackgroundColor="Orange"
-                Text="Edit" />
-            <Button
-                Grid.Column="3"
-                Margin="5,0,0,10"
-                Command="{Binding DeleteCommand}"
-                HeightRequest="40"
-                BackgroundColor="Red"
-                Text="Delete" />
-        </Grid>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label
-                Grid.Column="0"
-                Padding="10,0"
-                Text="Description:"
-                FontAttributes="Bold"
-                VerticalOptions="Center" />
-            <Label
-                Grid.Column="1"
-                Padding="10,0"
-                Text="{Binding UserShowsDetail.Description}"
-                VerticalOptions="Center" />
-        </Grid>
-        <Grid Grid.Row="2">
-            <Label
-                Grid.Column="0"
-                Padding="10,0"
-                Text="Shows:"
-                FontAttributes="Bold"
-                VerticalOptions="Center" />
-        </Grid>
+        <Label
+            Padding="10,0"
+            FontAttributes="Bold"
+            FontSize="Medium"
+            Text="Description"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="1"
+            Padding="10,0"
+            Text="{Binding UserShowsDetail.Description}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="2"
+            Padding="10,0"
+            FontAttributes="Bold"
+            FontSize="Medium"
+            Text="Shows"
+            VerticalOptions="Center" />
         <ScrollView Grid.Row="3">
             <Grid>
                 <Grid.RowDefinitions>
@@ -88,32 +85,54 @@
                                     Margin="10"
                                     x:DataType="m:Show"
                                     HeightRequest="120">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="80" />
                                         <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="30" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenShowDetailCommand}" CommandParameter="{Binding Id}" />
                                     </Grid.GestureRecognizers>
                                     <Image
+                                        Grid.RowSpan="2"
                                         Grid.Column="0"
                                         Aspect="AspectFill"
                                         Source="{Binding Image.Original, TargetNullValue='/Images/dotnet_bot.svg'}" />
                                     <Label
+                                        Grid.Row="0"
+                                        Grid.RowSpan="0"
                                         Grid.Column="1"
                                         Padding="10,0"
+                                        FontSize="Medium"
                                         Text="{Binding Name}"
                                         VerticalOptions="Center" />
-                                    <ImageButton VerticalOptions="Center"
-                         HorizontalOptions="End"
-                         Grid.Column="1"
-                         Padding="0, 0, 10, 0"
-                         Command="{Binding Source={x:Reference Root}, Path=BindingContext.RemoveShowCommand}"  CommandParameter="{Binding Id}">
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+                                        <HorizontalStackLayout>
+                                            <CheckBox IsChecked="{Binding Notifications}" IsEnabled="False" />
+                                            <Label Text="Notifications" VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <CheckBox IsChecked="{Binding Calendar}" IsEnabled="False" />
+                                            <Label Text=" Calendar" VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                    <ImageButton
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="2"
+                                        Command="{Binding Source={x:Reference Root}, Path=BindingContext.RemoveShowCommand}"
+                                        CommandParameter="{Binding Id}"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center">
                                         <ImageButton.Source>
-                                            <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.Minus}"
-                                                             Color="Red"
-                                     FontFamily="{Static fonts:Fonts.FontAwesome}"/>
+                                            <FontImageSource
+                                                FontFamily="{Static fonts:Fonts.FontAwesome}"
+                                                Glyph="{Static fonts:FontAwesomeIcons.Minus}"
+                                                Color="Tomato" />
                                         </ImageButton.Source>
                                     </ImageButton>
                                 </Grid>

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using TVTrack.API.Client;
+using TVTrack.Mobile.Helpers;
 using TVTrack.Mobile.Models;
 
 namespace TVTrack.Mobile.ViewModels.UserShows
@@ -31,7 +32,9 @@ namespace TVTrack.Mobile.ViewModels.UserShows
 
         public override async Task OnAppearingAsync()
         {
-            var results = await _client.GetUserShowsDetail(Id);
+            var username = await StorageHelper.GetUsername();
+
+            var results = await _client.GetUserShowsDetail(Id, username);
 
             UserShowsDetail = _mapper.Map<UserShowsDetailModel>(results);
         }

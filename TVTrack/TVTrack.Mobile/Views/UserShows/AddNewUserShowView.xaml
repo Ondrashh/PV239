@@ -9,6 +9,7 @@
     xmlns:views="clr-namespace:TVTrack.Mobile.Views"
     xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.UserShows"
     x:Name="Root"
+    Title="Create New List"
     x:DataType="vm:EditUserShowViewModel">
     <Grid Padding="10">
         <Grid.RowDefinitions>
@@ -21,12 +22,12 @@
             <Label
                 Grid.Column="0"
                 Padding="10,0"
-                Text="New user list"
-                FontSize="16"
                 FontAttributes="Bold"
+                FontSize="16"
+                Text="New user list"
                 VerticalOptions="Center" />
         </Grid>
-        <Grid Padding="0,10,0,0" Grid.Row="1">
+        <Grid Grid.Row="1" Padding="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
@@ -36,11 +37,12 @@
                 Padding="10,0"
                 Text="Name:"
                 VerticalOptions="Center" />
-            <Entry Grid.Column="1" x:Name="nameEntry"
-               Placeholder="Enter name"
-            />
+            <Entry
+                x:Name="nameEntry"
+                Grid.Column="1"
+                Placeholder="Enter name" />
         </Grid>
-        <Grid Padding="0,10,0,0"  Grid.Row="2">
+        <Grid Grid.Row="2" Padding="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
@@ -50,16 +52,16 @@
                 Padding="10,0"
                 Text="Description:"
                 VerticalOptions="Center" />
-            <Entry Grid.Column="1" x:Name="descriptionEntry"
-               Placeholder="Enter description"
-            />
+            <Entry
+                x:Name="descriptionEntry"
+                Grid.Column="1"
+                Placeholder="Enter description" />
         </Grid>
         <Grid Grid.Row="3" Padding="10">
-            <Button 
-                Text="Save"
+            <Button
                 x:Name="submitButton"
-                Clicked="OnButtonClicked">
-            </Button>
+                Clicked="OnButtonClicked"
+                Text="Save" />
         </Grid>
 
     </Grid>

@@ -9,25 +9,16 @@
     xmlns:views="clr-namespace:TVTrack.Mobile.Views"
     xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.UserShows"
     x:Name="Root"
+    Title="{Binding UserShowsDetail.Name, StringFormat='Edit {0}'}"
     x:DataType="vm:EditUserShowViewModel">
     <Grid Padding="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
             <RowDefinition Height="60" />
             <RowDefinition Height="0" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Label
-                Grid.Column="0"
-                Padding="10,0"
-                Text="Edit user list"
-                FontSize="16"
-                FontAttributes="Bold"
-                VerticalOptions="Center" />
-        </Grid>
-        <Grid Padding="0,10,0,0" Grid.Row="1">
+        <Grid Grid.Row="0" Padding="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
@@ -37,11 +28,12 @@
                 Padding="10,0"
                 Text="Name:"
                 VerticalOptions="Center" />
-            <Entry Grid.Column="1" x:Name="nameEntry"
-                   Text="{Binding UserShowsDetail.Name}"
-            />
+            <Entry
+                x:Name="nameEntry"
+                Grid.Column="1"
+                Text="{Binding UserShowsDetail.Name}" />
         </Grid>
-        <Grid Padding="0,10,0,0"  Grid.Row="2">
+        <Grid Grid.Row="1" Padding="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
@@ -51,22 +43,19 @@
                 Padding="10,0"
                 Text="Description:"
                 VerticalOptions="Center" />
-            <Entry Grid.Column="1" x:Name="descriptionEntry"
-                   Text="{Binding UserShowsDetail.Description}"
-            />
+            <Entry
+                x:Name="descriptionEntry"
+                Grid.Column="1"
+                Text="{Binding UserShowsDetail.Description}" />
         </Grid>
-        <Grid Grid.Row="3" Padding="10">
-            <Button 
-                Text="Save"
+        <Grid Grid.Row="2" Padding="10">
+            <Button
                 x:Name="submitButton"
-                Clicked="OnButtonClicked">
-            </Button>
+                Clicked="OnButtonClicked"
+                Text="Save" />
         </Grid>
-        <Grid Grid.Row="4">
-            <Label 
-                x:Name="id"
-                Text="{Binding UserShowsDetail.Id}">
-            </Label>
+        <Grid Grid.Row="3">
+            <Label x:Name="id" Text="{Binding UserShowsDetail.Id}" />
         </Grid>
     </Grid>
 </views:ContentPageBase>
