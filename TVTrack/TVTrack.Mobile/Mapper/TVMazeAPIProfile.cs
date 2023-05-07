@@ -26,8 +26,8 @@ namespace TVTrack.Mobile.Mapper
                 .AfterMap((src, dest) => dest.Network = src.WebChannel != null
                     ? src.WebChannel.Name
                     : (src.Network != null ? src.Network.Name : "<i>Unknown</i>"))
-                .AfterMap((src, dest) => dest.Schedule = src.Schedule != null
-                    ? $"{src.Schedule.Days.FirstOrDefault()} at {src.Schedule.Time}"
+                .AfterMap((src, dest) => dest.Schedule = src.Schedule != null && src.Schedule.Days.Any()
+                    ? $"{src.Schedule.Days.FirstOrDefault()} at {src.Schedule.Time ?? ""}"
                     : "<i>Unknown</i>")
                 .AfterMap((src, dest) =>
                 {

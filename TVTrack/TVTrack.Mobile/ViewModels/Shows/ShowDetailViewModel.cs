@@ -31,7 +31,11 @@ namespace TVTrack.Mobile.ViewModels.Shows
         [ObservableProperty] 
         public bool hasManagedShow;
 
-        public bool HasShowEnded => show.Ended != null;
+        [ObservableProperty]
+        public bool hasShowEnded;
+
+        [ObservableProperty]
+        public bool isShowRunning;
 
         public ShowDetailViewModel(TVTrackClient client,
             PopupHelper popupHelper,
@@ -49,6 +53,8 @@ namespace TVTrack.Mobile.ViewModels.Shows
                 || (apiShow.InUsersDefaultList ?? false)
                 || (apiShow.Notifications ?? false)
                 || (apiShow.Calendar ?? false);
+            HasShowEnded = apiShow.Status == "Ended";
+            IsShowRunning = apiShow.Status == "Running";
             Show = _mapper.Map<ShowDetailModel>(apiShow);
         }
 
