@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TVTrack.Mobile.Models;
+﻿using TVTrack.Mobile.Models;
 using TVTrack.Mobile.Resources.Fonts;
 using TVTrack.Mobile.Views.Login;
 using TVTrack.Mobile.Views.Settings;
 using TVTrack.Mobile.Views.Shows;
+using TVTrack.Mobile.Views.UserShows;
 
 namespace TVTrack.Mobile.Helpers
 {
@@ -35,11 +31,15 @@ namespace TVTrack.Mobile.Helpers
         {
             SettingsRoutes.ForEach(x => Routing.RegisterRoute(x.Route, x.ViewType));
 
-            Routing.RegisterRoute("///home/detail", typeof(ShowDetailView));
-            Routing.RegisterRoute("///home/detail/season", typeof(SeasonDetailView));
+            Routing.RegisterRoute("///userLists/detail", typeof(UserShowDetailView));
+            Routing.RegisterRoute("///userLists/detail/edit", typeof(EditUserShowView));
+            Routing.RegisterRoute("///userLists/new", typeof(AddNewUserShowView));
+            Routing.RegisterRoute("///userLists/detail/show", typeof(ShowDetailView));
+            Routing.RegisterRoute("///userLists/detail/show/add", typeof(AddToUserShowListView));
 
             Routing.RegisterRoute("///search/detail", typeof(ShowDetailView));
             Routing.RegisterRoute("///search/detail/season", typeof(SeasonDetailView));
+            Routing.RegisterRoute("///search/detail/add", typeof(AddToUserShowListView));
 
             Routing.RegisterRoute("//login", typeof(LoginView));
 

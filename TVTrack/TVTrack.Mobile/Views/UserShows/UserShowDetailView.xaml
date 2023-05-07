@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.Views.UserShows.UserShowDetailView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
+    xmlns:m="clr-namespace:TVTrack.Models.TvMaze;assembly=TVTrack.Models.TvMaze"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.UserShows"
+    x:Name="Root"
+    Title="{Binding UserShowsDetail.Name}"
+    x:DataType="vm:UserShowsDetailViewModel">
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Label
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding UserShowsDetail.Name}"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+            <ImageButton
+                Grid.Column="1"
+                Padding="0,0,10,0"
+                Command="{Binding EditCommand}"
+                HorizontalOptions="End"
+                VerticalOptions="Center">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Pencil}" />
+                </ImageButton.Source>
+            </ImageButton>
+            <ImageButton
+                Grid.Column="2"
+                Padding="0,0,10,0"
+                Command="{Binding DeleteCommand}"
+                HorizontalOptions="End"
+                VerticalOptions="Center">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Xmark}" />
+                </ImageButton.Source>
+            </ImageButton>
+        </Grid>
+    </Shell.TitleView>
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label
+            Padding="10,0"
+            FontAttributes="Bold"
+            FontSize="Medium"
+            Text="Description"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="1"
+            Padding="10,0"
+            Text="{Binding UserShowsDetail.Description}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="2"
+            Padding="10,0"
+            FontAttributes="Bold"
+            FontSize="Medium"
+            Text="Shows"
+            VerticalOptions="Center" />
+        <ScrollView Grid.Row="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <CollectionView ItemsSource="{Binding UserShowsDetail.Shows}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    Margin="10"
+                                    x:DataType="m:Show"
+                                    HeightRequest="120">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="30" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenShowDetailCommand}" CommandParameter="{Binding Id}" />
+                                    </Grid.GestureRecognizers>
+                                    <Image
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Aspect="AspectFill"
+                                        Source="{Binding Image.Original, TargetNullValue='/Images/dotnet_bot.svg'}" />
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.RowSpan="0"
+                                        Grid.Column="1"
+                                        Padding="10,0"
+                                        FontSize="Medium"
+                                        Text="{Binding Name}"
+                                        VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+                                        <HorizontalStackLayout>
+                                            <CheckBox IsChecked="{Binding Notifications}" IsEnabled="False" />
+                                            <Label Text="Notifications" VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <CheckBox IsChecked="{Binding Calendar}" IsEnabled="False" />
+                                            <Label Text=" Calendar" VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                    <ImageButton
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="2"
+                                        Command="{Binding Source={x:Reference Root}, Path=BindingContext.RemoveShowCommand}"
+                                        CommandParameter="{Binding Id}"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center">
+                                        <ImageButton.Source>
+                                            <FontImageSource
+                                                FontFamily="{Static fonts:Fonts.FontAwesome}"
+                                                Glyph="{Static fonts:FontAwesomeIcons.Minus}"
+                                                Color="Tomato" />
+                                        </ImageButton.Source>
+                                    </ImageButton>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</views:ContentPageBase>

@@ -15,6 +15,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Label
                 FontAttributes="Bold"
@@ -31,6 +32,16 @@
                 VerticalOptions="Center">
                 <ImageButton.Source>
                     <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Plus}" />
+                </ImageButton.Source>
+            </ImageButton>
+            <ImageButton VerticalOptions="Center"
+                         HorizontalOptions="End"
+                         Grid.Column="2"
+                         Padding="0, 0, 10, 0"
+                         Command="{Binding AddToUserListCommand}">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.AddressCard}"
+                                     FontFamily="{Static fonts:Fonts.FontAwesome}"/>
                 </ImageButton.Source>
             </ImageButton>
         </Grid>

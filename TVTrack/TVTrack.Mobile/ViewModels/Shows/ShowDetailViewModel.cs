@@ -1,19 +1,11 @@
 ﻿using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TVTrack.TVMaze.Client;
 using TVTrack.Mobile.Models;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json;
 using TVTrack.Mobile.Views.Popup;
-using CommunityToolkit.Maui.Views;
-using Microsoft.Extensions.DependencyInjection;
 using TVTrack.API.Client;
 using TVTrack.Mobile.Helpers;
+using TVTrack.Models.TvMaze;
 
 namespace TVTrack.Mobile.ViewModels.Shows
 {
@@ -72,6 +64,15 @@ namespace TVTrack.Mobile.ViewModels.Shows
             });
         }
 
+
+        [RelayCommand]
+        public async Task AddToUserList()
+        {
+            await Shell.Current.GoToAsync("add", new Dictionary<string, object>
+            {
+                ["Id"] = Id,
+            });
+        }
 
         [RelayCommand]
         public async Task AddToListAsync()

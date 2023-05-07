@@ -16,10 +16,16 @@ namespace TVTrack.API.Client
         public const string RATE = "shows/{id}/ratings";
 
         public const string LISTS = "showlists";
+        public const string LIST_CREATE = "showlists";
+        public const string LIST_UPDATE = "showlists/{id}";
+        public const string LIST_ADD_NEW_SHOW = "showlists/{listId}/shows";
+        public const string LIST_DELETE_SHOW = "showlists/{listId}/shows/{showId}";
         public const string LIST_DETAIL = "showlists/{id}";
+        public const string LIST_DELETE = "showlists/{id}";
+        public const string LIST_AVAILABLE = "showlists/available/{username}/{id}";
         public const string LIST_DEFAULT = "showlists/default/shows";
         public const string LIST_DEFAULT_DELETE = "/showlists/default/shows/{id}";
-        public const string LIST_USER = "showlists/{id}/shows";
+        public const string LIST_USER = "showlists";
 
         public const string USERS = "users";
         public const string USER_SINGLE = "users/{username}";

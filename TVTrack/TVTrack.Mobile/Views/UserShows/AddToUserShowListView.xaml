@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    x:Class="TVTrack.Mobile.Views.UserShows.AddToUserShowListView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
+    xmlns:m="clr-namespace:TVTrack.Models.TvMaze;assembly=TVTrack.Models.TvMaze"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:TVTrack.Mobile.Views"
+    xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.UserShows"
+    x:Name="Root"
+    Title="Add To List"
+    x:DataType="vm:AddToUserShowListViewModel">
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label
+                Grid.Column="0"
+                Padding="10,0"
+                FontAttributes="Bold"
+                FontSize="16"
+                Text="Choose user list to add to:"
+                VerticalOptions="Center" />
+        </Grid>
+        <Grid Grid.Row="1" Padding="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                Padding="10,0"
+                Text="Lists:"
+                VerticalOptions="Center" />
+            <Picker
+                x:Name="UserListSelector"
+                Title="Pick user list..."
+                Grid.Column="1"
+                ItemDisplayBinding="{Binding Name}"
+                ItemsSource="{Binding Titles}" />
+        </Grid>
+        <Grid Grid.Row="2" Padding="10">
+            <Button
+                x:Name="submitButton"
+                Command="{Binding AssignButtonClickedCommand}"
+                CommandParameter="{Binding Source={x:Reference UserListSelector}, Path=SelectedItem}"
+                Text="Save" />
+        </Grid>
+    </Grid>
+</views:ContentPageBase>

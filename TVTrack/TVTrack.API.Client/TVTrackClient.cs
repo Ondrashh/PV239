@@ -1,5 +1,9 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
+using System.Xml.Linq;
+using TVTrack.API.Client.Models;
+using TVTrack.API.Models;
+using TVTrack.Models.Database;
 using TVTrack.Models.API.Responses;
 using TVTrack.Models.Database;
 using TVTrack.Models.TvMaze;
@@ -143,7 +147,95 @@ namespace TVTrack.API.Client
             var res = await _client.GetAsync<UserHasTokensModel>(request);
             return res;
         }
+
+        public async Task<IEnumerable<ShowListPreview>> GetUserShowsLists(string username)
+        {
+            var request = new RestRequest(TVTrackEndpoints.LIST_USER)
+                .AddQueryParameter("username", username);
+            request.Method = Method.Get;
+            var response = await _client.GetAsync<IEnumerable<ShowListPreview>>(request);
+
+            return response;
+        }
+
+        public async Task<ShowListDetail> GetUserShowsDetail(int id, string username)
+        {
+            var request = new RestRequest(TVTrackEndpoints.LIST_DETAIL)
+                .AddUrlSegment("id", id)
+                .AddQueryParameter("username", username);
+            request.Method = Method.Get;
+            var response = await _client.GetAsync<ShowListDetail>(request);
+
+            return response;
+        }
+
+        public async Task<ShowListDetail> CreateUserShow(string userName, string name, string description)
+        {
+            var request = new RestRequest(TVTrackEndpoints.LIST_CREATE)
+                .AddQueryParameter("username", userName)
+                .AddBody(new CreateNewDto() { Name = name, Description = description });
+
+            request.Method = Method.Post;
+            var response = await _client.PostAsync<ShowListDetail>(request);
+
+            return response;
+        }
+
+        public async Task DeleteUserShow(string userName, int id)
+        {
+            var request = new RestRequest(TVTrackEndpoints.LIST_DELETE)
+                            .AddQueryParameter("username", userName)
+                            .AddUrlSegment("id", id);
+
+            request.Method = Method.Delete;
+            await _client.DeleteAsync(request);
+        }
+
+        public async Task EditUserShow(string userName, int id, string name, string description)
+        {
+            var request = new RestRequest(TVTrackEndpoints.LIST_UPDATE)
+                .AddUrlSegment("id", id)
+                .AddQueryParameter("username", userName)
+                .AddBody(new CreateNewDto() { Name = name, Description = description });
+
+            request.Method = Method.Put;
+            await _client.PutAsync(request);
+
+        }
+
+        public async Task DeleteShowFromUserShow(int listId, int showId)
+        {
+            var request = new RestRequest(TVTrackEndpoints.LIST_DELETE_SHOW)
+                 .AddUrlSegment("listId", listId)
+                 .AddUrlSegment("showId", showId);
+
+            request.Method = Method.Delete;
+            await _client.DeleteAsync(request);
+        }
+
+        public async Task<List<ShowListAvailable>> GetAvailalbleUserLists(string username, int id)
+        {
+            var request = new RestRequest(TVTrackEndpoints.LIST_AVAILABLE)
+                .AddUrlSegment("username", username)
+                .AddUrlSegment("id", id);
+
+            request.Method = Method.Get;
+            var response = await _client.GetAsync<List<ShowListAvailable>>(request);
+
+            return response;
+        }
+
+        public async Task AddShowToUserShow(int listId, int showId)
+        {
+            var request = new RestRequest(TVTrackEndpoints.LIST_ADD_NEW_SHOW)
+                .AddUrlSegment("listId", listId)
+                .AddQueryParameter("tvMazeId", showId);
+
+            request.Method = Method.Post;
+            await _client.PostAsync(request);
+        }
     }
+
     public class EnabledDto
     {
         public bool Enabled { get; set; }
@@ -151,6 +243,11 @@ namespace TVTrack.API.Client
     public class WatchedDto
     {
         public bool Watched { get; set; }
+    }
+    public class CreateNewDto
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 
 }
