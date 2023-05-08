@@ -1,10 +1,14 @@
-﻿using Android.App;
+﻿using Android;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.Media;
 using Android.OS;
 using Android.Gms.Common;
+using AndroidX.Core.App;
+using AndroidX.Core.Content;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace TVTrack.Mobile;
 
@@ -17,6 +21,11 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+
+        if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.PostNotifications) != Permission.Granted)
+        {
+            ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.PostNotifications }, 0);
+        }
 
         CreateNotificationChannel();
     }
