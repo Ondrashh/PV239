@@ -7,6 +7,7 @@
     xmlns:m="clr-namespace:TVTrack.Mobile.Models"
     xmlns:views="clr-namespace:TVTrack.Mobile.Views"
     xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Shows"
+    xmlns:custom="clr-namespace:TVTrack.Mobile.Views.CustomComponents"
     x:Name="Root"
     Title="{Binding Show.Name}"
     x:DataType="vm:ShowDetailViewModel">
@@ -185,6 +186,11 @@
                 </CollectionView>
             </HorizontalStackLayout>
 
+            <custom:BasicActivityIndicator
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                IsVisible="{Binding LoadingInProgress}"/>
             <Label
                 Grid.Row="2"
                 Grid.Column="0"
@@ -192,6 +198,7 @@
                 Margin="0,0,0,5"
                 HorizontalOptions="Center"
                 Text="{Binding Show.Summary}"
+                IsVisible="{Binding NoLoadingInProgress}"
                 TextType="Html"
                 VerticalOptions="StartAndExpand" />
 
