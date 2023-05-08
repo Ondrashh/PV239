@@ -273,6 +273,18 @@ namespace TVTrack.API.Client
             request.Method = Method.Post;
             await _client.PostAsync(request);
         }
+
+        public async Task MarkSeasonAsWatched(int showId, int seasonNum, string username, bool watched)
+        {
+            var request = new RestRequest(TVTrackEndpoints.SHOW_SEASON_WATCHED)
+                .AddUrlSegment("showId", showId)
+                .AddUrlSegment("seasonNum", seasonNum)
+                .AddQueryParameter("username", username)
+                .AddBody(new WatchedDto() { Watched = watched });
+
+            request.Method = Method.Patch;
+            await _client.PatchAsync(request);
+        }
     }
 
     public class EnabledDto

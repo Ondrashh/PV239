@@ -35,14 +35,14 @@ namespace TVTrack.Mobile.ViewModels.Shows
         [ObservableProperty]
         public List<EpisodeModel> episodes;
 
+        [ObservableProperty] 
+        public bool isSeasonWatched;
+
         public override async Task OnAppearingAsync()
         {
             _username = await StorageHelper.GetUsername();
-        }
 
-        [RelayCommand]
-        public async Task OpenEpisodeDetailAsync(Image chevron)
-        {
+            IsSeasonWatched = episodes.All(x => x.Watched);
         }
 
         [RelayCommand]
@@ -51,6 +51,25 @@ namespace TVTrack.Mobile.ViewModels.Shows
             var episode = episodes.FirstOrDefault(x => x.id == id);
             episode.Watched = !episode.watched;
             await _client.ToggleWatchedEpisode(showId, id, _username, episode.Watched);
+        }
+
+        [RelayCommand]
+        public async Task MarkSeasonAsWatchedAsync()
+        {
+            if (season.number == null)
+            {
+                return;
+            }
+
+            await _client.MarkSeasonAsWatched(showId, season.number ?? 1, _username, !isSeasonWatched);
+
+            IsSeasonWatched = !isSeasonWatched;
+
+            foreach (var ep in Episodes)
+            {
+                ep.Watched = IsSeasonWatched;
+            }
+
         }
     }
 }

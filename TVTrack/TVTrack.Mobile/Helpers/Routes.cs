@@ -35,6 +35,7 @@ namespace TVTrack.Mobile.Helpers
             Routing.RegisterRoute("///userLists/detail/edit", typeof(EditUserShowView));
             Routing.RegisterRoute("///userLists/new", typeof(AddNewUserShowView));
             Routing.RegisterRoute("///userLists/detail/show", typeof(ShowDetailView));
+            Routing.RegisterRoute("///userLists/detail/season", typeof(SeasonDetailView));
             Routing.RegisterRoute("///userLists/detail/show/add", typeof(AddToUserShowListView));
 
             Routing.RegisterRoute("///search/detail", typeof(ShowDetailView));

@@ -11,6 +11,30 @@
     x:Name="Root"
     Title="{Binding Season.FormattedName}"
     x:DataType="vm:SeasonDetailViewModel">
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Label
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding Season.FormattedName}"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+            <CheckBox
+                Grid.Column="1"
+                HorizontalOptions="End"
+                IsChecked="{Binding IsSeasonWatched}"
+                VerticalOptions="Center">
+                <CheckBox.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MarkSeasonAsWatchedCommand}" />
+                </CheckBox.GestureRecognizers>
+            </CheckBox>
+        </Grid>
+    </Shell.TitleView>
     <ScrollView Padding="10">
         <Grid
             Padding="3"
@@ -106,9 +130,6 @@
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="20" />
                                         </Grid.RowDefinitions>
-                                        <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.OpenEpisodeDetailCommand}" CommandParameter="{x:Reference DetailChevron}" />
-                                        </Grid.GestureRecognizers>
                                         <Label
                                             Grid.Row="0"
                                             Grid.Column="0"
