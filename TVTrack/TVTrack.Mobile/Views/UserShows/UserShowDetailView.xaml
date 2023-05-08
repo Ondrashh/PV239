@@ -117,7 +117,7 @@
                                         </HorizontalStackLayout>
                                         <HorizontalStackLayout>
                                             <CheckBox IsChecked="{Binding Calendar}" IsEnabled="False" />
-                                            <Label Text=" Calendar" VerticalTextAlignment="Center" />
+                                            <Label Text="Calendar" VerticalTextAlignment="Center" />
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
                                     <ImageButton
