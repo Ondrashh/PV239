@@ -14,8 +14,8 @@ namespace TvTrackServer.Migrations
                 name: "TokensId",
                 table: "Users",
                 type: "int",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true,
+                defaultValue: null);
 
             migrationBuilder.CreateTable(
                 name: "Tokens",
@@ -37,7 +37,7 @@ namespace TvTrackServer.Migrations
                 name: "IX_Users_TokensId",
                 table: "Users",
                 column: "TokensId",
-                unique: true);
+                unique: false);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Users_Tokens_TokensId",

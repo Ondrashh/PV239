@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TVTrack.Models.API.Database;
 using TVTrack.Models.Database;
 
 namespace TvTrackServer;
@@ -8,6 +9,7 @@ public class TvTrackServerDbContext : DbContext
     public TvTrackServerDbContext(DbContextOptions<TvTrackServerDbContext> options) : base(options) { }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Tokens> Tokens { get; set; }
     public DbSet<ShowList> ShowLists { get; set; }
     public DbSet<ShowListItem> ShowListItems { get; set; }
     public DbSet<ShowActivity> ShowActivities { get; set; }

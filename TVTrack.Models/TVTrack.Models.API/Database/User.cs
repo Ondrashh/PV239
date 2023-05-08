@@ -11,7 +11,7 @@ namespace TVTrack.Models.Database
         public string? Username { get; set; }
 
         [ForeignKey(nameof(Tokens))]
-        public int TokensId { get; set; }
+        public int? TokensId { get; set; } = null;
         public virtual Tokens Tokens { get; set; } = new();
 
         [InverseProperty(nameof(ShowList.User))]

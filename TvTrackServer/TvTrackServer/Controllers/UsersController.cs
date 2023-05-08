@@ -76,6 +76,7 @@ public class UsersController : CustomControllerBase
         user.ShowLists.Add(defaultList);
         _context.Users.Add(user);
         _context.ShowLists.Add(defaultList);
+        _context.Tokens.Add(user.Tokens);
         await _context.SaveChangesAsync();
 
         return Created(nameof(GetUser), user.Username);
