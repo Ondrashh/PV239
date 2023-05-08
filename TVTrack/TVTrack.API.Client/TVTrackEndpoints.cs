@@ -15,6 +15,7 @@ namespace TVTrack.API.Client
         public const string EPISODE_WATCHED = "shows/{showId}/episodes/{epId}";
         public const string RATE = "shows/{id}/ratings";
         public const string SHOW_SEASON_WATCHED = "shows/{showId}/seasons/{seasonNum}";
+        public const string SHOW_WATCHED = "shows/{showId}";
 
         public const string LISTS = "showlists";
         public const string LIST_CREATE = "showlists";

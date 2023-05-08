@@ -10,6 +10,7 @@ using TVTrack.API.Client;
 using TVTrack.Mobile.Helpers;
 using TVTrack.Models.API.Responses;
 using TVTrack.Models.TvMaze;
+using CommunityToolkit.Maui.Views;
 
 namespace TVTrack.Mobile.ViewModels.Shows
 {
@@ -117,6 +118,16 @@ namespace TVTrack.Mobile.ViewModels.Shows
             }
 
             Rating -= 1;
+        }
+
+        [RelayCommand]
+        public async Task AddToUserList()
+        {
+            PopupHelper.CloseLastPopup();
+            await Shell.Current.GoToAsync("add", new Dictionary<string, object>
+            {
+                ["Id"] = ItemID,
+            });
         }
     }
 }

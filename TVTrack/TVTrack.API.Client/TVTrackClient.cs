@@ -285,6 +285,17 @@ namespace TVTrack.API.Client
             request.Method = Method.Patch;
             await _client.PatchAsync(request);
         }
+
+        public async Task MarkShowAsWatched(int showId, string username, bool watched)
+        {
+            var request = new RestRequest(TVTrackEndpoints.SHOW_WATCHED)
+                .AddUrlSegment("showId", showId)
+                .AddQueryParameter("username", username)
+                .AddBody(new WatchedDto() { Watched = watched });
+
+            request.Method = Method.Patch;
+            await _client.PatchAsync(request);
+        }
     }
 
     public class EnabledDto

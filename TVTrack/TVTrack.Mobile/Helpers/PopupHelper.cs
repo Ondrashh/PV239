@@ -17,6 +17,8 @@ namespace TVTrack.Mobile.Helpers
             _serviceProvider = serviceProvider;
         }
 
+        private static PopupBase _lastPopup;
+
         public async Task ShowPopupAsync<T>()
             where T: PopupBase
         {
@@ -30,9 +32,18 @@ namespace TVTrack.Mobile.Helpers
             popup.ID = id;
             var w = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
             popup.Size = new Size(w, popup.Size.Height);
+            _lastPopup = popup;
 
             await Application.Current.MainPage.ShowPopupAsync(popup);
         }
 
+
+        public static void CloseLastPopup()
+        {
+            if (_lastPopup != null)
+            {
+                _lastPopup.Close();
+            }
+        }
     }
 }

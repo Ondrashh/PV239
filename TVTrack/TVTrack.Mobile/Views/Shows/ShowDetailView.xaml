@@ -34,16 +34,16 @@
                     <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Plus}" />
                 </ImageButton.Source>
             </ImageButton>
-            <ImageButton VerticalOptions="Center"
-                         HorizontalOptions="End"
-                         Grid.Column="2"
-                         Padding="0, 0, 10, 0"
-                         Command="{Binding AddToUserListCommand}">
-                <ImageButton.Source>
-                    <FontImageSource Glyph="{Static fonts:FontAwesomeIcons.AddressCard}"
-                                     FontFamily="{Static fonts:Fonts.FontAwesome}"/>
-                </ImageButton.Source>
-            </ImageButton>
+            <CheckBox
+                Grid.Column="2"
+                Margin="0,2,0,0"
+                HorizontalOptions="End"
+                IsChecked="{Binding IsShowWatched}"
+                VerticalOptions="Center">
+                <CheckBox.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MarkShowAsWatchedCommand}" />
+                </CheckBox.GestureRecognizers>
+            </CheckBox>
         </Grid>
     </Shell.TitleView>
     <ScrollView Padding="10">
@@ -189,6 +189,7 @@
                 Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
+                Margin="0,0,0,5"
                 HorizontalOptions="Center"
                 Text="{Binding Show.Summary}"
                 TextType="Html"

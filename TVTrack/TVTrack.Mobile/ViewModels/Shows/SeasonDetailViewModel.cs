@@ -69,7 +69,6 @@ namespace TVTrack.Mobile.ViewModels.Shows
             {
                 ep.Watched = IsSeasonWatched;
             }
-
         }
     }
 }

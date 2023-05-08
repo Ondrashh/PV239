@@ -24,6 +24,7 @@
             <RowDefinition Height="45" />
             <RowDefinition Height="65" />
             <RowDefinition Height="30" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
             <RowDefinition Height="50" />
@@ -75,6 +76,9 @@
             </CheckBox>
         </Grid>
         <Grid Grid.Row="3" Margin="0,5">
+            <Button Command="{Binding AddToUserListCommand}" Text="Add To List" />
+        </Grid>
+        <Grid Grid.Row="4" Margin="0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="40" />
@@ -86,7 +90,7 @@
                 </CheckBox.GestureRecognizers>
             </CheckBox>
         </Grid>
-        <Grid Grid.Row="4" Margin="0,5">
+        <Grid Grid.Row="5" Margin="0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="40" />
@@ -98,7 +102,7 @@
                 </CheckBox.GestureRecognizers>
             </CheckBox>
         </Grid>
-        <Grid Grid.Row="5" Margin="0,7">
+        <Grid Grid.Row="6" Margin="0,7">
             <Button Command="{Binding SaveShowDetailsCommand}" Text="Save" />
         </Grid>
     </Grid>
