@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:978122374720:android:23bb8332422cdcae2fe9a5",
         "android_client_info": {
-          "package_name": "com.companyname.tvtrack.mobile"
+          "package_name": "com.mobile.tvtrack"
         }
       },
       "oauth_client": [
