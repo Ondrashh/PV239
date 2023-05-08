@@ -30,6 +30,7 @@ namespace TVTrack.Mobile.ViewModels.Search
         [RelayCommand]
         public async Task Search()
         {
+            LoadingStart();
             if (string.IsNullOrWhiteSpace(SearchInput))
             {
                 Results.Clear();
@@ -46,6 +47,7 @@ namespace TVTrack.Mobile.ViewModels.Search
                     Results.Add(searchResult);
                 }
             }
+            LoadingEnd();
         }
 
         [RelayCommand]

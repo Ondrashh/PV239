@@ -43,6 +43,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
 
         public override async Task OnAppearingAsync()
         {
+            LoadingStart();
             _username = await StorageHelper.GetUsername();
             var apiShow = await _client.GetShowDetails(Id, _username);
             HasManagedShow = (apiShow.UserRated ?? false)
@@ -53,11 +54,13 @@ namespace TVTrack.Mobile.ViewModels.Shows
             IsShowRunning = apiShow.Status == "Running";
             IsShowWatched = apiShow.Embedded.Episodes.All(x => x.UserWatched);
             Show = _mapper.Map<ShowDetailModel>(apiShow);
+            LoadingEnd();
         }
 
         [RelayCommand]
         public async Task OpenSeasonAsync(int number)
         {
+            LoadingStart();
             SeasonModel season = Show.Seasons.FirstOrDefault(x => x.Number == number);
             List<EpisodeModel> episodes = Show.Episodes.Where(x => x.Season == number).ToList();
 
@@ -67,6 +70,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
                 ["season"] = season,
                 ["episodes"] = episodes,
             });
+            LoadingEnd();
         }
 
 
@@ -88,6 +92,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
         [RelayCommand]
         public async Task MarkShowAsWatchedAsync()
         {
+            LoadingStart();
             await _client.MarkShowAsWatched(Show.id, _username, !isShowWatched);
 
             IsShowWatched = !isShowWatched;
@@ -101,6 +106,7 @@ namespace TVTrack.Mobile.ViewModels.Shows
             {
                 season.WatchedEpisodes = IsShowWatched ? season.EpisodeOrder : 0;
             }
+            LoadingEnd();
         }
     }
 }
