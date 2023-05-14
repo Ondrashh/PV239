@@ -3,11 +3,11 @@
     x:Class="TVTrack.Mobile.Views.Shows.ShowDetailView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:TVTrack.Mobile.Views.CustomComponents"
     xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
     xmlns:m="clr-namespace:TVTrack.Mobile.Models"
     xmlns:views="clr-namespace:TVTrack.Mobile.Views"
     xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Shows"
-    xmlns:custom="clr-namespace:TVTrack.Mobile.Views.CustomComponents"
     x:Name="Root"
     Title="{Binding Show.Name}"
     x:DataType="vm:ShowDetailViewModel">
@@ -19,9 +19,8 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Label
-                FontAttributes="Bold"
-                FontSize="Medium"
                 HorizontalOptions="StartAndExpand"
+                StyleClass="Navigation"
                 Text="{Binding Show.Name}"
                 VerticalOptions="Center"
                 VerticalTextAlignment="Center" />
@@ -40,6 +39,7 @@
                 Margin="0,2,0,0"
                 HorizontalOptions="End"
                 IsChecked="{Binding IsShowWatched}"
+                StyleClass="NavigationCheckbox"
                 VerticalOptions="Center">
                 <CheckBox.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding MarkShowAsWatchedCommand}" />
@@ -179,7 +179,7 @@
                                 BorderColor="Gray"
                                 CornerRadius="10"
                                 VerticalOptions="Center">
-                                <Label Text="{Binding .}" TextColor="White" />
+                                <Label Text="{Binding .}" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -190,15 +190,15 @@
                 Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                IsVisible="{Binding LoadingInProgress}"/>
+                IsVisible="{Binding LoadingInProgress}" />
             <Label
                 Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Margin="0,0,0,5"
                 HorizontalOptions="Center"
-                Text="{Binding Show.Summary}"
                 IsVisible="{Binding NoLoadingInProgress}"
+                Text="{Binding Show.Summary}"
                 TextType="Html"
                 VerticalOptions="StartAndExpand" />
 
@@ -241,7 +241,11 @@
                                 VerticalTextAlignment="Center" />
                             <Image Grid.RowSpan="2" Grid.Column="2">
                                 <Image.Source>
-                                    <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}" />
+                                    <FontImageSource
+                                        FontFamily="{Static fonts:Fonts.FontAwesome}"
+                                        Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}"
+                                        Color="{AppThemeBinding Light={StaticResource Gray300},
+                                                                Dark={StaticResource White}}" />
                                 </Image.Source>
                             </Image>
 
@@ -260,21 +264,25 @@
                                     Grid.Column="0"
                                     StyleClass="SeasonSubtext"
                                     Text="{Binding FormattedEpisodes, StringFormat='{0} episodes'}"
-                                    TextColor="LightGray" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Gray900},
+                                                                Dark={StaticResource Gray200}}" />
                                 <Label
                                     Grid.Column="1"
                                     StyleClass="SeasonSubtext"
                                     Text="{Binding Premiered, StringFormat='{0:yyyy}'}"
-                                    TextColor="LightGray" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Gray900},
+                                                                Dark={StaticResource Gray200}}" />
                                 <Label
                                     Grid.Column="2"
                                     Text="-"
-                                    TextColor="LightGrey" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Gray900},
+                                                                Dark={StaticResource Gray200}}" />
                                 <Label
                                     Grid.Column="3"
                                     StyleClass="SeasonSubtext"
                                     Text="{Binding Ended, StringFormat='{0:yyyy}'}"
-                                    TextColor="LightGray" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Gray900},
+                                                                Dark={StaticResource Gray200}}" />
                             </Grid>
                             <BoxView
                                 Grid.Row="2"

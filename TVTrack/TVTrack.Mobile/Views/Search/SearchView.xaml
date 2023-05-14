@@ -3,18 +3,18 @@
     x:Class="TVTrack.Mobile.Views.Search.SearchView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:TVTrack.Mobile.Views.CustomComponents"
     xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
     xmlns:m="clr-namespace:TVTrack.Models.TvMaze;assembly=TVTrack.Models.TvMaze"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:views="clr-namespace:TVTrack.Mobile.Views"
     xmlns:vm="clr-namespace:TVTrack.Mobile.ViewModels.Search"
-    xmlns:custom="clr-namespace:TVTrack.Mobile.Views.CustomComponents"
     x:Name="Root"
     x:DataType="vm:SearchViewModel">
     <Grid Padding="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -25,8 +25,7 @@
             <SearchBar
                 Grid.Column="0"
                 Margin="-12,0,5,0"
-                Text="{Binding SearchInput}">
-            </SearchBar>
+                Text="{Binding SearchInput}" />
             <Button
                 Grid.Column="1"
                 Margin="0,0,0,10"
@@ -34,7 +33,7 @@
                 HeightRequest="40"
                 Text="Search" />
         </Grid>
-        <custom:BasicActivityIndicator Grid.Row="1" IsVisible="{Binding LoadingInProgress}"/>
+        <custom:BasicActivityIndicator Grid.Row="1" IsVisible="{Binding LoadingInProgress}" />
         <ScrollView Grid.Row="2">
             <Grid>
                 <Grid.RowDefinitions>
@@ -67,7 +66,11 @@
                                         VerticalOptions="Center" />
                                     <Image Grid.Column="2">
                                         <Image.Source>
-                                            <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}" />
+                                            <FontImageSource
+                                                FontFamily="{Static fonts:Fonts.FontAwesome}"
+                                                Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}"
+                                                Color="{AppThemeBinding Light={StaticResource Gray300},
+                                                                        Dark={StaticResource White}}" />
                                         </Image.Source>
                                     </Image>
                                 </Grid>

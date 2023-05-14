@@ -17,9 +17,8 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Label
-                FontAttributes="Bold"
-                FontSize="Medium"
                 HorizontalOptions="StartAndExpand"
+                StyleClass="Navigation"
                 Text="User Lists"
                 VerticalOptions="Center"
                 VerticalTextAlignment="Center" />
@@ -102,7 +101,11 @@
                                     VerticalOptions="Center" />
                                 <Image Grid.Column="2">
                                     <Image.Source>
-                                        <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}" />
+                                        <FontImageSource
+                                            FontFamily="{Static fonts:Fonts.FontAwesome}"
+                                            Glyph="{Static fonts:FontAwesomeIcons.ChevronRight}"
+                                            Color="{AppThemeBinding Light={StaticResource Gray300},
+                                                                    Dark={StaticResource White}}" />
                                     </Image.Source>
                                 </Image>
                             </Grid>

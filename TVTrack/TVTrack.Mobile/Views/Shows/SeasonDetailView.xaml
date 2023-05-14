@@ -18,9 +18,8 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Label
-                FontAttributes="Bold"
-                FontSize="Medium"
                 HorizontalOptions="StartAndExpand"
+                StyleClass="Navigation"
                 Text="{Binding Season.FormattedName}"
                 VerticalOptions="Center"
                 VerticalTextAlignment="Center" />
@@ -124,7 +123,7 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition Width="15" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
@@ -159,7 +158,11 @@
                                             Grid.RowSpan="2"
                                             Grid.Column="3">
                                             <Image.Source>
-                                                <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.ChevronDown}" />
+                                                <FontImageSource
+                                                    FontFamily="{Static fonts:Fonts.FontAwesome}"
+                                                    Glyph="{Static fonts:FontAwesomeIcons.ChevronDown}"
+                                                    Color="{AppThemeBinding Light={StaticResource Gray300},
+                                                                            Dark={StaticResource White}}" />
                                             </Image.Source>
                                         </Image>
 
@@ -178,21 +181,25 @@
                                                 Grid.Column="0"
                                                 StyleClass="SeasonSubtext"
                                                 Text="{Binding Runtime, StringFormat='{0} min'}"
-                                                TextColor="LightGray" />
+                                                TextColor="{AppThemeBinding Light={StaticResource Gray900},
+                                                                            Dark={StaticResource Gray200}}" />
                                             <Label
                                                 Grid.Column="1"
                                                 StyleClass="SeasonSubtext"
                                                 Text="{Binding Aired, StringFormat='{0:dd. MM. yyyy}'}"
-                                                TextColor="LightGray" />
+                                                TextColor="{AppThemeBinding Light={StaticResource Gray900},
+                                                                            Dark={StaticResource Gray200}}" />
                                             <Label
                                                 Grid.Column="2"
                                                 Text=""
-                                                TextColor="LightGrey" />
+                                                TextColor="{AppThemeBinding Light={StaticResource Gray900},
+                                                                            Dark={StaticResource Gray200}}" />
                                             <Label
                                                 Grid.Column="3"
                                                 StyleClass="SeasonSubtext"
                                                 Text="{Binding AverageRating, StringFormat='{0} average'}"
-                                                TextColor="LightGray" />
+                                                TextColor="{AppThemeBinding Light={StaticResource Gray900},
+                                                                            Dark={StaticResource Gray200}}" />
                                         </Grid>
                                     </Grid>
                                 </toolkit:Expander.Header>

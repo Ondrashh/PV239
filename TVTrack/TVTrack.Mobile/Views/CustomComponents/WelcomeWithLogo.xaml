@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts"
-             x:Class="TVTrack.Mobile.Views.CustomComponents.WelcomeWithLogo">
+<ContentView
+    x:Class="TVTrack.Mobile.Views.CustomComponents.WelcomeWithLogo"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:TVTrack.Mobile.Resources.Fonts">
     <Grid Padding="10">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0,1">
-                <GradientStop Color="{StaticResource Primary}" Offset="0.1" />
-                <GradientStop Color="{StaticResource Black}" Offset="1.0" />
+                <GradientStop Offset="0.1" Color="{StaticResource Primary}" />
+                <GradientStop Offset="1.0" Color="{StaticResource Black}" />
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Label
             Grid.Row="0"
-            Text="Welcome to"
             FontFamily="SubwayBlack"
             FontSize="36"
-            VerticalOptions="End" 
-            HorizontalOptions="Center" />
-        <Image
-            Grid.Row="1"
-            Source="whitelogo.png"/>
+            HorizontalOptions="Center"
+            Text="Welcome to"
+            TextColor="White"
+            VerticalOptions="End" />
+        <Image Grid.Row="1" Source="whitelogo.png" />
         <Label
             Grid.Row="2"
-            Text="TVTrack"
             FontFamily="SubwayShadow"
             FontSize="48"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"/>
+            HorizontalOptions="Center"
+            Text="TVTrack"
+            TextColor="White"
+            VerticalOptions="Center" />
         <Label
             Grid.Row="3"
-            Text="Preview version"
-            VerticalOptions="Start"
             FontFamily="SubwayBlack"
             FontSize="Default"
-            HorizontalOptions="Center"/>
+            HorizontalOptions="Center"
+            Text="Preview version"
+            TextColor="{StaticResource Gray200}"
+            VerticalOptions="Start" />
     </Grid>
 </ContentView>

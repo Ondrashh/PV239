@@ -14,7 +14,8 @@
     VerticalOptions="End">
     <Grid
         Padding="10"
-        BackgroundColor="Black"
+        BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                          Dark={StaticResource Black}}"
         HorizontalOptions="FillAndExpand"
         RowSpacing="10">
         <Grid.ColumnDefinitions>
@@ -47,7 +48,11 @@
             </Grid.ColumnDefinitions>
             <ImageButton Grid.Column="0" Command="{Binding DecrementRatingCommand}">
                 <ImageButton.Source>
-                    <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Minus}" />
+                    <FontImageSource
+                        FontFamily="{Static fonts:Fonts.FontAwesome}"
+                        Glyph="{Static fonts:FontAwesomeIcons.Minus}"
+                        Color="{AppThemeBinding Light={StaticResource Black},
+                                                Dark={StaticResource White}}" />
                 </ImageButton.Source>
             </ImageButton>
             <rating:SimpleRatingControl
@@ -58,7 +63,11 @@
                 FontSize="36" />
             <ImageButton Grid.Column="2" Command="{Binding IncrementRatingCommand}">
                 <ImageButton.Source>
-                    <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Plus}" />
+                    <FontImageSource
+                        FontFamily="{Static fonts:Fonts.FontAwesome}"
+                        Glyph="{Static fonts:FontAwesomeIcons.Plus}"
+                        Color="{AppThemeBinding Light={StaticResource Black},
+                                                Dark={StaticResource White}}" />
                 </ImageButton.Source>
             </ImageButton>
 

@@ -19,9 +19,8 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Label
-                FontAttributes="Bold"
-                FontSize="Medium"
                 HorizontalOptions="StartAndExpand"
+                StyleClass="Navigation"
                 Text="{Binding UserShowsDetail.Name}"
                 VerticalOptions="Center"
                 VerticalTextAlignment="Center" />
@@ -42,7 +41,10 @@
                 HorizontalOptions="End"
                 VerticalOptions="Center">
                 <ImageButton.Source>
-                    <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Xmark}" />
+                    <FontImageSource
+                        FontFamily="{Static fonts:Fonts.FontAwesome}"
+                        Glyph="{Static fonts:FontAwesomeIcons.Xmark}"
+                        Color="White" />
                 </ImageButton.Source>
             </ImageButton>
         </Grid>
