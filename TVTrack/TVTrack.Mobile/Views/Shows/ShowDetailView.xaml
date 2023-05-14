@@ -16,7 +16,6 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <Label
                 HorizontalOptions="StartAndExpand"
@@ -34,17 +33,6 @@
                     <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Plus}" />
                 </ImageButton.Source>
             </ImageButton>
-            <CheckBox
-                Grid.Column="2"
-                Margin="0,2,0,0"
-                HorizontalOptions="End"
-                IsChecked="{Binding IsShowWatched}"
-                StyleClass="NavigationCheckbox"
-                VerticalOptions="Center">
-                <CheckBox.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding MarkShowAsWatchedCommand}" />
-                </CheckBox.GestureRecognizers>
-            </CheckBox>
         </Grid>
     </Shell.TitleView>
     <ScrollView Padding="10">
@@ -54,6 +42,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -67,15 +56,18 @@
                 Source="{Binding Show.ImageURL, TargetNullValue='/Images/dotnet_bot.svg'}"
                 VerticalOptions="Start" />
 
-            <Grid Grid.Row="0" Grid.Column="1">
+            <Grid
+                Grid.Row="0"
+                Grid.Column="1"
+                RowSpacing="10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -195,17 +187,42 @@
                 Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Margin="0,0,0,5"
+                Margin="0,0,0,0"
                 HorizontalOptions="Center"
                 IsVisible="{Binding NoLoadingInProgress}"
                 Text="{Binding Show.Summary}"
                 TextType="Html"
                 VerticalOptions="StartAndExpand" />
 
-            <CollectionView
+            <Grid
                 Grid.Row="3"
+                Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Margin="0,-20,0,0"
+                Padding="10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" VerticalTextAlignment="Center">
+                    All Episodes Watched
+                </Label>
+                <CheckBox
+                    Grid.Column="1"
+                    Margin="0,2,0,0"
+                    HorizontalOptions="End"
+                    IsChecked="{Binding IsShowWatched}"
+                    VerticalOptions="Center">
+                    <CheckBox.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MarkShowAsWatchedCommand}" />
+                    </CheckBox.GestureRecognizers>
+                </CheckBox>
+            </Grid>
+
+            <CollectionView
+                Grid.Row="4"
+                Grid.ColumnSpan="2"
+                Margin="0,-5,0,0"
                 ItemsSource="{Binding Show.Seasons}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
