@@ -77,7 +77,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Text="Watch Next" />
+            <Label Grid.Column="0" Text="Add To Watch Next" />
             <CheckBox Grid.Column="1" IsChecked="{Binding IsAddedToList}">
                 <CheckBox.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ToggleDefaultListCommand}" />

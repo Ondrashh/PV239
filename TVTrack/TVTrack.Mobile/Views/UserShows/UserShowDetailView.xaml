@@ -11,6 +11,11 @@
     x:Name="Root"
     Title="{Binding UserShowsDetail.Name}"
     x:DataType="vm:UserShowsDetailViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Shell.TitleView>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -29,6 +34,8 @@
                 Padding="0,0,10,0"
                 Command="{Binding EditCommand}"
                 HorizontalOptions="End"
+                IsEnabled="{Binding UserShowsDetail.Default, Converter={StaticResource InvertedBoolConverter}}"
+                IsVisible="{Binding UserShowsDetail.Default, Converter={StaticResource InvertedBoolConverter}}"
                 VerticalOptions="Center">
                 <ImageButton.Source>
                     <FontImageSource FontFamily="{Static fonts:Fonts.FontAwesome}" Glyph="{Static fonts:FontAwesomeIcons.Pencil}" />
@@ -39,6 +46,8 @@
                 Padding="0,0,10,0"
                 Command="{Binding DeleteCommand}"
                 HorizontalOptions="End"
+                IsEnabled="{Binding UserShowsDetail.Default, Converter={StaticResource InvertedBoolConverter}}"
+                IsVisible="{Binding UserShowsDetail.Default, Converter={StaticResource InvertedBoolConverter}}"
                 VerticalOptions="Center">
                 <ImageButton.Source>
                     <FontImageSource
@@ -51,7 +60,7 @@
     </Shell.TitleView>
     <Grid Padding="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
@@ -60,11 +69,13 @@
             Padding="10,0"
             FontAttributes="Bold"
             FontSize="Medium"
+            IsVisible="{Binding UserShowsDetail.Default, Converter={StaticResource InvertedBoolConverter}}"
             Text="Description"
             VerticalOptions="Center" />
         <Label
             Grid.Row="1"
             Padding="10,0"
+            IsVisible="{Binding UserShowsDetail.Default, Converter={StaticResource InvertedBoolConverter}}"
             Text="{Binding UserShowsDetail.Description}"
             VerticalOptions="Center" />
         <Label
