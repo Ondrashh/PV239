@@ -18,7 +18,8 @@ namespace TVTrack.Mobile.Mapper
         public TVMazeAPIProfile()
         {
             CreateMap<ShowListPreview, ShowListPreviewModel>();
-            CreateMap<ShowListDetail, UserShowsDetailModel>();
+            CreateMap<ShowListDetail, UserShowsDetailModel>()
+                .ForMember(x => x.IsDefault, opt => opt.MapFrom(src => src.Default));
             CreateMap<Show, ShowDetailModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(x => x.ImageURL, opt => opt.MapFrom(src => src.Image.Original))

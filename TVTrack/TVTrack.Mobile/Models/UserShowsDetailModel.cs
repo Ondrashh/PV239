@@ -1,16 +1,30 @@
-﻿using TVTrack.Models.Database;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using TVTrack.Models.Database;
 using TVTrack.Models.TvMaze;
 
 namespace TVTrack.Mobile.Models
 {
-    public class UserShowsDetailModel
+    public partial class UserShowsDetailModel: ObservableObject
     {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-        public bool Default { get; set; } = false;
-        public int UserId { get; set; }
-        public User? User { get; set; }
-        public List<Show> Shows { get; set; } = new();
+        [ObservableProperty]
+        public int id;
+
+        [ObservableProperty]
+        public string? name;
+
+        [ObservableProperty]
+        public string? description;
+
+        [ObservableProperty]
+        public bool isDefault;
+
+        [ObservableProperty]
+        public int userId;
+
+        [ObservableProperty]
+        public User? user;
+
+        [ObservableProperty]
+        public List<Show> shows;
     }
 }
