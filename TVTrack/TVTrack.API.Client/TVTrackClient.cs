@@ -210,6 +210,8 @@ namespace TVTrack.API.Client
 
         public async Task<ShowListDetail> CreateUserShow(string userName, string name, string description)
         {
+            if (description == null) description = string.Empty;
+
             var request = new RestRequest(TVTrackEndpoints.LIST_CREATE)
                 .AddQueryParameter("username", userName)
                 .AddBody(new CreateNewDto() { Name = name, Description = description });
