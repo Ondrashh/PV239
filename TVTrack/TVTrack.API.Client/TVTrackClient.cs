@@ -234,6 +234,8 @@ namespace TVTrack.API.Client
 
         public async Task EditUserShow(string userName, int id, string name, string description)
         {
+            if (description == null) description = string.Empty;
+
             var request = new RestRequest(TVTrackEndpoints.LIST_UPDATE)
                 .AddUrlSegment("id", id)
                 .AddQueryParameter("username", userName)
