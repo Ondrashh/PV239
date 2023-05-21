@@ -30,6 +30,7 @@
                 VerticalOptions="Center" />
             <Entry
                 x:Name="nameEntry"
+                HeightRequest="48"
                 Grid.Column="1"
                 Text="{Binding UserShowsDetail.Name}" />
         </Grid>
@@ -45,6 +46,7 @@
                 VerticalOptions="Center" />
             <Entry
                 x:Name="descriptionEntry"
+                HeightRequest="48"
                 Grid.Column="1"
                 Text="{Binding UserShowsDetail.Description}" />
         </Grid>
